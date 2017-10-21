@@ -142,6 +142,7 @@ function createSubmit() {
         url: '${basePath}/manage/user/create',
         data: $('#createForm').serialize(),
         beforeSend: function() {
+        	return;
             if ($('#username').val() == '') {
                 $('#username').focus();
                 return false;
