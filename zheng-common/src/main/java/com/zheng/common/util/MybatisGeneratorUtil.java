@@ -59,7 +59,11 @@ public class MybatisGeneratorUtil {
 		String basePath = MybatisGeneratorUtil.class.getResource("/").getPath().replace("/target/classes/", "").replace(targetProject, "").replaceFirst("/", "");
 		String generatorConfig_xml = MybatisGeneratorUtil.class.getResource("/").getPath().replace("/target/classes/", "") + "/src/main/resources/generatorConfig.xml";
 		targetProject = basePath + targetProject;
-		String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "_%';";
+		
+		//该语句只能提供表名前缀，不能提供整个表名，适合批量生成代码
+		//String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "_%';";
+		//该语句不仅能提供表名前缀，还能提供整个表名，适合批量生成代码和生成单个表代码
+		String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "%';";
 
 		System.out.println("========== 开始生成generatorConfig.xml文件 ==========");
 		List<Map<String, Object>> tables = new ArrayList<>();
@@ -89,10 +93,11 @@ public class MybatisGeneratorUtil {
 			context.put("generator_jdbc_password", AESUtil.AESDecode(jdbc_password));
 			context.put("last_insert_id_tables", last_insert_id_tables);
 			VelocityUtil.generate(generatorConfig_vm, generatorConfig_xml, context);
-			// 删除旧代码
-			deleteDir(new File(targetProject + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/dao/model"));
-			deleteDir(new File(targetProject + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/dao/mapper"));
-			deleteDir(new File(targetProject_sqlMap + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/dao/mapper"));
+			
+			// 删除旧代码(当使用批量生成代码时，批量修改以前生成的代码，可以先删除在创建)
+			//deleteDir(new File(targetProject + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/dao/model"));
+			//deleteDir(new File(targetProject + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/dao/mapper"));
+			//deleteDir(new File(targetProject_sqlMap + "/src/main/java/" + package_name.replaceAll("\\.", "/") + "/dao/mapper"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
