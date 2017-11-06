@@ -18,3 +18,4 @@
 <link href="${basePath}/resources/zheng-admin/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet"/>
 <link href="${basePath}/resources/zheng-admin/plugins/webuploader-0.1.5/webuploader.css" rel="stylesheet"/>
 <link href="${basePath}/resources/zheng-admin/css/common.css" rel="stylesheet"/>
+<link href="${basePath}/resources/zheng-admin/css/treepage.css" rel="stylesheet"/>
