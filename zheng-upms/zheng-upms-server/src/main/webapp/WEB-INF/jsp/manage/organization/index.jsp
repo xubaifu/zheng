@@ -27,166 +27,68 @@
 		<div id="openClose" class="close" style="height: 100%;" onclick="shrinkage()">&nbsp;</div>
 	</div>
 	<div id="main" class="treepage-main">
-		<div id="toolbar">
+		<%-- <div id="toolbar">
 			<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
 			<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
 			<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
-		</div>
+		</div> --%>
 		<table id="table"></table>
 	</div>
 
 </div>
-<%-- <div id="main">
-	<div id="toolbar">
-		<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
-	</div>
-	<table id="table"></table>
-</div> --%>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
-<SCRIPT >
-   var zTreeObj;
-   // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-   var setting = {};
-   // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-   var zNodes =[
-			{ name:"父节点1 - 展开", open:true,
-				children: [
-					{ name:"父节点11 - 折叠",
-						children: [
-							{ name:"叶子节点111"},
-							{ name:"叶子节点112"},
-							{ name:"叶子节点113"},
-							{ name:"叶子节点114"}
-						]},
-					{ name:"父节点12 - 折叠",
-						children: [
-							{ name:"叶子节点121"},
-							{ name:"叶子节点122"},
-							{ name:"叶子节点123"},
-							{ name:"叶子节点124"}
-						]},
-					{ name:"父节点13 - 没有子节点", isParent:true}
-				]},
-			{ name:"父节点2 - 折叠",
-				children: [
-					{ name:"父节点21 - 展开", open:true,
-						children: [
-							{ name:"叶子节点211"},
-							{ name:"叶子节点212"},
-							{ name:"叶子节点213"},
-							{ name:"叶子节点214"}
-						]},
-					{ name:"父节点22 - 折叠",
-						children: [
-							{ name:"叶子节点221"},
-							{ name:"叶子节点222"},
-							{ name:"叶子节点223"},
-							{ name:"叶子节点224"}
-						]},
-					{ name:"父节点23 - 折叠",
-						children: [
-							{ name:"叶子节点231"},
-							{ name:"叶子节点232"},
-							{ name:"叶子节点233"},
-							{ name:"叶子节点234"}
-						]}
-				]},
-			{ name:"父节点3 - 没有子节点", isParent:true},
-			{ name:"父节点1 - 展开", open:true,
-				children: [
-					{ name:"父节点11 - 折叠",
-						children: [
-							{ name:"叶子节点111"},
-							{ name:"叶子节点112"},
-							{ name:"叶子节点113"},
-							{ name:"叶子节点114"}
-						]},
-					{ name:"父节点12 - 折叠",
-						children: [
-							{ name:"叶子节点121"},
-							{ name:"叶子节点122"},
-							{ name:"叶子节点123"},
-							{ name:"叶子节点124"}
-						]},
-					{ name:"父节点13 - 没有子节点", isParent:true}
-				]},
-			{ name:"父节点2 - 折叠",
-				children: [
-					{ name:"父节点21 - 展开", open:true,
-						children: [
-							{ name:"叶子节点211"},
-							{ name:"叶子节点212"},
-							{ name:"叶子节点213"},
-							{ name:"叶子节点214"}
-						]},
-					{ name:"父节点22 - 折叠",
-						children: [
-							{ name:"叶子节点221"},
-							{ name:"叶子节点222"},
-							{ name:"叶子节点223"},
-							{ name:"叶子节点224"}
-						]},
-					{ name:"父节点23 - 折叠",
-						children: [
-							{ name:"叶子节点231"},
-							{ name:"叶子节点232"},
-							{ name:"叶子节点233"},
-							{ name:"叶子节点234"}
-						]}
-				]},
-			{ name:"父节点3 - 没有子节点", isParent:true},
-			{ name:"父节点1 - 展开", open:true,
-				children: [
-					{ name:"父节点11 - 折叠",
-						children: [
-							{ name:"叶子节点111"},
-							{ name:"叶子节点112"},
-							{ name:"叶子节点113"},
-							{ name:"叶子节点114"}
-						]},
-					{ name:"父节点12 - 折叠",
-						children: [
-							{ name:"叶子节点121"},
-							{ name:"叶子节点122"},
-							{ name:"叶子节点123"},
-							{ name:"叶子节点124"}
-						]},
-					{ name:"父节点13 - 没有子节点", isParent:true}
-				]},
-			{ name:"父节点2 - 折叠",
-				children: [
-					{ name:"父节点21 - 展开", open:true,
-						children: [
-							{ name:"叶子节点211"},
-							{ name:"叶子节点212"},
-							{ name:"叶子节点213"},
-							{ name:"叶子节点214"}
-						]},
-					{ name:"父节点22 - 折叠",
-						children: [
-							{ name:"叶子节点221"},
-							{ name:"叶子节点222"},
-							{ name:"叶子节点223"},
-							{ name:"叶子节点224"}
-						]},
-					{ name:"父节点23 - 折叠",
-						children: [
-							{ name:"叶子节点231"},
-							{ name:"叶子节点232"},
-							{ name:"叶子节点233"},
-							{ name:"叶子节点234"}
-						]}
-				]},
-			{ name:"父节点3 - 没有子节点", isParent:true}
-
+	<script>
+		var setting = {
+			data : {
+				key : {
+					title : "title"
+				},
+				simpleData : {
+					enable : true
+				}
+			},
+			callback : {
+				beforeClick : beforeClick,
+				onClick : onClick
+			}
+		};
+		var zNodes =[
+			{ id:1, pId:0, name:"普通的父节点", title:"我很普通，随便点我吧", open:true},
+			{ id:11, pId:1, name:"叶子节点 - 1", title:"我很普通，随便点我吧"},
+			{ id:12, pId:1, name:"叶子节点 - 2", title:"我很普通，随便点我吧"},
+			{ id:13, pId:1, name:"叶子节点 - 3", title:"我很普通，随便点我吧"},
+			{ id:2, pId:0, name:"NB的父节点", title:"点我可以，但是不能点我的子节点，有本事点一个你试试看？", open:true},
+			{ id:21, pId:2, name:"叶子节点2 - 1", title:"你哪个单位的？敢随便点我？小心点儿.."},
+			{ id:22, pId:2, name:"叶子节点2 - 2", title:"我有老爸罩着呢，点击我的小心点儿.."},
+			{ id:23, pId:2, name:"叶子节点2 - 3", title:"好歹我也是个领导，别普通群众就来点击我.."},
+			{ id:3, pId:0, name:"郁闷的父节点", title:"别点我，我好害怕...我的子节点随便点吧...", open:true},
+			{ id:31, pId:3, name:"叶子节点3 - 1", title:"唉，随便点我吧"},
+			{ id:32, pId:3, name:"叶子节点3 - 2", title:"唉，随便点我吧"},
+			{ id:33, pId:3, name:"叶子节点3 - 3", title:"唉，随便点我吧"}
 		];
-   $(document).ready(function(){
-      zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-   });
-  </SCRIPT>
-<script>
+		var log, className = "dark";
+		function beforeClick(treeId, treeNode, clickFlag) {
+			console.log("treeId=" + treeId + ";treeNode=" + treeNode
+					+ ";clickFlag=" + clickFlag);
+			console.log(treeNode.id+";"+treeNode.pId);
+		}
+		function onClick(event, treeId, treeNode, clickFlag) {
+			console.log("event=" + event + ";treeId=" + treeId + ";treeNode="
+					+ treeNode + ";clickFlag=" + clickFlag);
+			console.log(event);
+		}
+
+		function getTime() {
+			var now = new Date(), h = now.getHours(), m = now.getMinutes(), s = now
+					.getSeconds();
+			return (h + ":" + m + ":" + s);
+		}
+
+		$(document).ready(function() {
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+	</script>
+	<script>
 var $table = $('#table');
 $(function() {
 	// bootstrap table初始化
