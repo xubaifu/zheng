@@ -38,3 +38,18 @@ function initMaterialInput() {
 		}
 	});
 }
+//树形页面展开收缩
+function shrinkage(){
+	
+	//$table.bootstrapTable('refresh');
+	if($("#treepage").attr("class") == "folded"){
+		$("#treepage").attr("class","unfolded");
+		$("#treepagebtn").attr("class","unfolded-btn");
+		$("#main").attr("class","treepage-main");
+	}else{
+		$("#treepage").attr("class","folded");
+		$("#treepagebtn").attr("class","folded-btn");
+		$("#main").attr("class","treepage-main-folded");
+	}
+	
+}

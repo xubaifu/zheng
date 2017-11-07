@@ -1,0 +1,92 @@
+.unfolded {
+	float: left;
+	position: absolute;
+	width: 19%;
+	height: 100%;
+	box-shadow: 0 0 2px green;
+	overflow: auto;
+	padding-left: 5px
+}
+
+.folded {
+	/* float: left; */
+	position: absolute;
+	width: 0;
+	height: 100%;
+	box-shadow: 0 0 2px green;
+	overflow: auto;
+	padding-left: 5px
+}
+
+.unfolded-btn {
+	float: left;
+	margin-left: 19%;
+	height: 100%;
+	width: 5px;
+}
+
+.folded-btn {
+	float: left;
+	/* margin-left: 19%; */
+	height: 100%;
+	width: 5px;
+}
+
+.treepage-main {
+	float: right;
+	width: 80%
+}
+.treepage-main-folded {
+	float: right;
+	width: 99%
+}
+
+
+
+
+
+
+/* element.style {
+    height: 396px;
+} */
+#openClose.close {
+    background-position: 1px center;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+#openClose, #openClose.close {
+    background: #d2d1d1 url(../images/openclose.png) no-repeat -29px center;
+}
+#openClose {
+    width: 6px;
+    margin: 0 1px;
+    cursor: pointer;
+}
+#left, #right, #openClose {
+    float: left;
+}
+.close:hover {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .4;
+    filter: alpha(opacity=40);
+}
+.close {
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+}
+.close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    filter: alpha(opacity=20);
+}
