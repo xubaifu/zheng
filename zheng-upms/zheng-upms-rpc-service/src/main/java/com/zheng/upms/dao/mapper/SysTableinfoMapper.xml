@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zheng.upms.dao.mapper.SysTableinfoMapper">
+  <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.SysTableinfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="cn_table_name" jdbcType="VARCHAR" property="cnTableName" />
+    <result column="en_table_name" jdbcType="VARCHAR" property="enTableName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="bak" jdbcType="VARCHAR" property="bak" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="updatetime" jdbcType="VARCHAR" property="updatetime" />
+    <result column="available" jdbcType="VARCHAR" property="available" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="updatename" jdbcType="VARCHAR" property="updatename" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cn_table_name, en_table_name, type, bak, createtime, updatetime, available, creator, 
+    updatename
+  </sql>
+  <select id="selectByExample" parameterType="com.zheng.upms.dao.model.SysTableinfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_tableinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_tableinfo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_tableinfo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zheng.upms.dao.model.SysTableinfoExample">
+    delete from sys_tableinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zheng.upms.dao.model.SysTableinfo">
+    insert into sys_tableinfo (id, cn_table_name, en_table_name, 
+      type, bak, createtime, 
+      updatetime, available, creator, 
+      updatename)
+    values (#{id,jdbcType=VARCHAR}, #{cnTableName,jdbcType=VARCHAR}, #{enTableName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{bak,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=VARCHAR}, #{available,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{updatename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.SysTableinfo">
+    insert into sys_tableinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cnTableName != null">
+        cn_table_name,
+      </if>
+      <if test="enTableName != null">
+        en_table_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="bak != null">
+        bak,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="available != null">
+        available,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="updatename != null">
+        updatename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cnTableName != null">
+        #{cnTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="enTableName != null">
+        #{enTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="bak != null">
+        #{bak,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        #{available,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatename != null">
+        #{updatename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zheng.upms.dao.model.SysTableinfoExample" resultType="java.lang.Long">
+    select count(*) from sys_tableinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_tableinfo
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnTableName != null">
+        cn_table_name = #{record.cnTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enTableName != null">
+        en_table_name = #{record.enTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bak != null">
+        bak = #{record.bak,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        updatetime = #{record.updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.available != null">
+        available = #{record.available,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatename != null">
+        updatename = #{record.updatename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_tableinfo
+    set id = #{record.id,jdbcType=VARCHAR},
+      cn_table_name = #{record.cnTableName,jdbcType=VARCHAR},
+      en_table_name = #{record.enTableName,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      bak = #{record.bak,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=VARCHAR},
+      updatetime = #{record.updatetime,jdbcType=VARCHAR},
+      available = #{record.available,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      updatename = #{record.updatename,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zheng.upms.dao.model.SysTableinfo">
+    update sys_tableinfo
+    <set>
+      <if test="cnTableName != null">
+        cn_table_name = #{cnTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="enTableName != null">
+        en_table_name = #{enTableName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="bak != null">
+        bak = #{bak,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        available = #{available,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatename != null">
+        updatename = #{updatename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zheng.upms.dao.model.SysTableinfo">
+    update sys_tableinfo
+    set cn_table_name = #{cnTableName,jdbcType=VARCHAR},
+      en_table_name = #{enTableName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      bak = #{bak,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=VARCHAR},
+      available = #{available,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      updatename = #{updatename,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="createTable" parameterType="String">
+    create table IF NOT EXISTS ${tableName}
+		(
+		   id                   varchar(64) not null,
+		   dept_id              varchar(64),
+		   property             varchar(100),
+		   value                varchar(500),
+		   bak                  varchar(1000),
+		   createtime           varchar(64),
+		   updatetime           varchar(64),
+		   available            varchar(2),
+		   creator              varchar(32),
+		   updatername          varchar(32),
+		   primary key (id)
+		) 
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>
