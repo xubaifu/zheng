@@ -15,7 +15,7 @@ public class Generator {
 	// 根据命名规范，只修改此常量值即可
 	private static String MODULE = "zheng-upms";
 	private static String DATABASE = "zheng";
-	private static String TABLE_PREFIX = "upms_";
+	private static String TABLE_PREFIX = "aaaaaaaaa";
 	private static String PACKAGE_NAME = "com.zheng.upms";
 	private static String JDBC_DRIVER = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.driver");
 	private static String JDBC_URL = PropertiesFileUtil.getInstance("generator").get("generator.jdbc.url");

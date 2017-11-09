@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    organization_id, pid, name, description, ctime
+    organization_id AS organizationId, pid, name, description, ctime
   </sql>
   <select id="selectByExample" parameterType="com.zheng.upms.dao.model.UpmsOrganizationExample" resultMap="BaseResultMap">
     select

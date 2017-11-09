@@ -16,6 +16,14 @@
 			<label for="description">描述</label>
 			<input id="description" type="text" class="form-control" name="description" maxlength="300" value="${organization.description}">
 		</div>
+		<div class="form-group">
+			<label id="pidLable" for="pid">上级组织</label>
+			<input id="pName" type="text" class="form-control" name="pName" maxlength="64" value="${organization.pid}" onclick="loadOrganization()">
+			<input id="pid" type="text" class="form-control" name="pid" maxlength="64" value="${organization.pid}" style="display: none;">
+		</div>
+		<div id="orgtree" style="border:1px solid #d2d1d1;display: none;">
+			<ul id="treeDemo" class="ztree"></ul>
+		</div>
 		<div class="form-group text-right dialog-buttons">
 			<a class="waves-effect waves-button" href="javascript:;" onclick="createSubmit();">保存</a>
 			<a class="waves-effect waves-button" href="javascript:;" onclick="updateDialog.close();">取消</a>
@@ -32,6 +40,10 @@ function createSubmit() {
             if ($('#name').val() == '') {
                 $('#name').focus();
                 return false;
+            }
+            if ($('#pid').val() == '') {
+            	$('#pid').val("0");
+                //return false;
             }
         },
         success: function(result) {
@@ -70,6 +82,7 @@ function createSubmit() {
 			} else {
 				updateDialog.close();
 				$table.bootstrapTable('refresh');
+				getOrganizationList();
 			}
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
