@@ -66,7 +66,7 @@ public class UpmsOrganizationController extends BaseController {
                     .andNameLike("%" + search + "%");
         }
         if (StringUtils.isNotBlank(id)) {
-        	upmsOrganizationExample.or().andPidEqualTo(Integer.valueOf(id));
+        	//upmsOrganizationExample.or().andPidEqualTo(Integer.valueOf(id));
         	upmsOrganizationExample.or().andOrganizationIdEqualTo(Integer.valueOf(id));
         }
         List<UpmsOrganization> rows = upmsOrganizationService.selectByExampleForOffsetPage(upmsOrganizationExample, offset, limit);
