@@ -58,5 +58,18 @@
     <!-- 接口服务 -->
     <bean id="upmsApiService" class="com.zheng.upms.rpc.service.impl.UpmsApiServiceImpl"/>
     <dubbo:service interface="com.zheng.upms.rpc.api.UpmsApiService" ref="upmsApiService" timeout="10000"/>
+    
+    <!-- 部门信息主键存储表相关接口服务 -->
+    <bean id="tDeptUuidService" class="com.zheng.upms.rpc.service.impl.TDeptUuidServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.TDeptUuidService" ref="tDeptUuidService" timeout="10000"/>
+    <!-- 表信息（子集相关表）相关接口服务 -->
+    <bean id="sysTableinfoService" class="com.zheng.upms.rpc.service.impl.SysTableinfoServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.SysTableinfoService" ref="sysTableinfoService" timeout="10000"/>
+    <!-- 列信息（子集相关表的列）相关接口服务 -->
+    <bean id="sysColumnInfoService" class="com.zheng.upms.rpc.service.impl.SysColumnInfoServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.SysColumnInfoService" ref="sysColumnInfoService" timeout="10000"/>
+    <!-- 子集模板表相关接口服务（子集相关表会使用这个服务） -->
+    <bean id="sysTemplateTableService" class="com.zheng.upms.rpc.service.impl.SysTemplateTableServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.SysTemplateTableService" ref="sysTemplateTableService" timeout="10000"/>
 
 </beans>

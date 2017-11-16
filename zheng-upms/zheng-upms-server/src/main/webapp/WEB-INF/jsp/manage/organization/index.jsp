@@ -14,8 +14,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>组织管理</title>
 	<jsp:include page="/resources/inc/head.jsp" flush="true"/>
+	<style type="text/css">
+		::-webkit-scrollbar{width:5px;height: 5px}
+		::-webkit-scrollbar-track{background-color:#bee1eb;}
+		::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.2);}
+		/* ::-webkit-scrollbar-thumb<a href="https://www.baidu.com/s?wd=%3Ahover&tn=44039180_cpr&fenlei=mv6quAkxTZn0IZRqIHckPjm4nH00T1YLm16suWTkmW9-uWfYm1cv0ZwV5Hcvrjm3rH6sPfKWUMw85HfYnjn4nH6sgvPsT6KdThsqpZwYTjCEQLGCpyw9Uz4Bmy-bIi4WUvYETgN-TLwGUv3EP1RkPjRYP1TvPHf3rjRsnW0Y" target="_blank" class="baidu-highlight">:hover</a> {background-color:#9c3} */
+		::-webkit-scrollbar-thumb:active {background-color:rgba(0,0,0,.2)}
+		</style>
 </head>
 <body>
+
 
 <div style="height: 100%">
 	<div id="treepage" class="unfolded">
@@ -27,12 +35,31 @@
 		<div id="openClose" class="close" style="height: 100%;" onclick="shrinkage()">&nbsp;</div>
 	</div>
 	<div id="main" class="treepage-main">
-		<div id="toolbar">
-			<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
-			<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
-			<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
+		<div style="overflow-x: auto;">
+			<div id="tabPage" style="height: 40px">
+				<ul id="myTab" class="nav nav-tabs">
+					<li id="firstLi" class="active"><a href="#listtable" data-toggle="tab">基本信息</a></li>
+					<!-- <li><a href="#ios" data-toggle="tab">iOS</a></li>
+					<li><a href="#ios" data-toggle="tab">iOS</a></li> -->
+				</ul>
+			</div>
 		</div>
-		<table id="table"></table>
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="listtable">
+				<div id="toolbar">
+					<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
+				</div>
+				<table id="table"></table>
+				
+			</div>
+			
+			<!-- <div class="tab-pane fade" id="ios">
+				<p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
+					TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+			</div> -->
+		</div>
 	</div>
 
 </div>
@@ -73,8 +100,16 @@
 			console.log(treeNode.id+";"+treeNode.pId);
 		}
 		function onClick(event, treeId, treeNode, clickFlag) {
+			//点击组织切换时，将内容定位到基本信息位置
+			$("#myTabContent").children().removeClass("active");
+			$("#myTab").children().removeClass("active");
+			$("#firstLi").addClass("active");
+			$("#listtable").addClass("in active");
+			
 			getOrganizationList(treeNode);
 			//$table.bootstrapTable('refresh');
+			//动态加载tab页
+			//loadTabPage(treeNode);
 		}
 
 		$(document).ready(function() {
@@ -116,7 +151,9 @@ $(function() {
 		],
 		//数据加载成功后执行，加载树结构
 		onLoadSuccess: function(data){
-			//alert(1);
+			//console.log(data)
+			//动态加载tab页
+			loadTabPage();
 		},
 	});
 });
@@ -127,7 +164,7 @@ function getOrganizationList(treeNode){
 	if(treeNode == null || treeNode == "undefined"){
 		 $.ajax({
 		        type: 'get',
-		        url: '${basePath}/manage/organization/list',
+		        url: '${basePath}/manage/organization/listAll',
 		        data: {},
 		        success: function(data) {
 		        	zNodes = data.rows;
@@ -141,13 +178,37 @@ function getOrganizationList(treeNode){
 		        }
 		    });
 	}else{
-		//获取某组织以及下一级组织列表，并刷新table
-		$table.bootstrapTable(  
-	              "refresh",  
-	              {  
-	                  url:'${basePath}/manage/organization/list?id='+treeNode.id
-	              }  
-	      );  
+	    //获取某组织以及下一级组织列表，并更新基本信息
+		$.ajax({
+			type: 'get',
+			url: '${basePath}/manage/organization/list?id='+treeNode.id,
+			success: function(data) {
+				$("#listtable").children().remove();
+		        for(var i in data.rows[0]) {//获取对象属性
+		            /* if(data.rows[0].hasOwnProperty(i)) {  // 建议加上判断,如果没有扩展对象属性可以不加
+		                count++;
+		            } */
+		            if (data.rows[0].hasOwnProperty(i) && typeof data.rows[0][i] != "function") {
+		            	$("#listtable").append('<label>'+i+':</label><span>'+data.rows[0][i]+'</span><br />');
+	    	         }
+		        }
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$.confirm({
+					theme: 'dark',
+					animation: 'rotateX',
+					closeAnimation: 'rotateX',
+					title: false,
+					content: textStatus,
+					buttons: {
+						confirm: {
+							text: '确认',
+							btnClass: 'waves-effect waves-button waves-light'
+						}
+					}
+				});
+			}
+		});
 	}
 }
 // 格式化操作按钮
@@ -157,6 +218,15 @@ function actionFormatter(value, row, index) {
 		'<a class="delete" href="javascript:;" onclick="deleteAction('+row.organizationId+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
     ].join('');
 }
+//点击tab页加载组织列表
+/* function refreshBootstrapTable(){alert(1)
+	$table.bootstrapTable(  
+            "refresh",  
+            {  
+                url:'${basePath}/manage/organization/list'
+            }  
+    );  
+} */
 // 新增
 var createDialog;
 function createAction() {
@@ -340,6 +410,144 @@ function onClickForCheck(event, treeId, treeNode, clickFlag){
 	$("#pName").val(treeNode.name);
 	$("#pidLable").addClass('active');
 }
+//获取相关子集（加载tab页）
+function loadTabPage(/* treeNode */){
+	$(".forRemove").remove();
+	$.ajax({
+		type: 'get',
+		url: '${basePath}/manage/organization/getSysTableinfo?type=1',
+		success: function(data) {
+	        if(data.rows != null && data.rows.length != 0){
+	        	var len = data.rows.length;
+	        	var tabId = "tab";
+	        	for(var i = 0; i < len; i++){
+	        		$("#myTab").append('<li class="forRemove"><a href="#'+(tabId + i)+'" data-toggle="tab" onclick="createTable(\'table'+i+'\',\''+data.rows[i].enTableName+'\')">'+data.rows[i].cnTableName+'</a></li>');
+	        		$("#myTabContent").append('<div class="tab-pane fade forRemove" id="'+(tabId + i)+'">'+
+	        				'<table id="table'+i+'">这是第'+i+'个页面</table></div>');
+	        	} 
+	        }
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			$.confirm({
+				theme: 'dark',
+				animation: 'rotateX',
+				closeAnimation: 'rotateX',
+				title: false,
+				content: textStatus,
+				buttons: {
+					confirm: {
+						text: '确认',
+						btnClass: 'waves-effect waves-button waves-light'
+					}
+				}
+			});
+		}
+	});
+}
+//动态生成table表格列
+function createTable(tableId,tableName){
+	//如果内容已经加载，则直接返回
+	if(document.getElementById(tableId).rows[0]) { 
+		return;
+	}else{
+		var option = {
+				//url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
+				height: getHeight(),
+				striped: true,
+				search: true,
+				showRefresh: true,
+				showColumns: true,
+				minimumCountColumns: 2,
+				clickToSelect: true,
+				detailView: true,
+				detailFormatter: 'detailFormatter',
+				pagination: true,
+				paginationLoop: false,
+				sidePagination: 'server',
+				silentSort: false,
+				smartDisplay: false,
+				escape: true,
+				searchOnEnterKey: true,
+				//idField: 'organizationId',
+				maintainSelected: true,
+				//toolbar: '#toolbar',
+				columns: [],//getTableColumns(tableId,tableName),
+				//数据加载成功后执行，加载树结构
+				onLoadSuccess: function(data){
+					
+				}
+			}
+		getTableColumns(tableId,tableName,option)
+	}
+}
+//动态获取表的列信息
+function getTableColumns(tableId,tableName,option){
+	//获取列信息
+	$.ajax({
+		type: 'get',
+		url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
+		success: function(data) {
+			console.log(data)
+			var cloumns = [];
+	        if(data.rows != null && data.rows.length != 0){
+	        	var obj = {};
+	        	for(var i = 0; i < data.rows.length; i++){
+	        		obj = {field: data.rows[i].enColName, title: data.rows[i].cnColName};
+	        		cloumns[i] = obj;
+	        	}
+	        }
+	        option.columns = cloumns;
+	        //加载表格
+	        $("#"+tableId).bootstrapTable(option);
+	      //获取子集 详细数据信息
+			getDataInfo(tableId,tableName);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			$.confirm({
+				theme: 'dark',
+				animation: 'rotateX',
+				closeAnimation: 'rotateX',
+				title: false,
+				content: textStatus,
+				buttons: {
+					confirm: {
+						text: '确认',
+						btnClass: 'waves-effect waves-button waves-light'
+					}
+				}
+			});
+		}
+	});
+}
+
+//获取子集详细信息
+function getDataInfo(tableId,tableName){
+	$.ajax({
+		type: 'get',
+		url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName,	
+		success: function(data) {
+			console.log(data);
+			//刷新表格，加载数据
+			$("#"+tableId).bootstrapTable('load',data);  
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			$.confirm({
+				theme: 'dark',
+				animation: 'rotateX',
+				closeAnimation: 'rotateX',
+				title: false,
+				content: textStatus,
+				buttons: {
+					confirm: {
+						text: '确认',
+						btnClass: 'waves-effect waves-button waves-light'
+					}
+				}
+			});
+		}
+	});
+}
+
 </script>
 </body>
 </html>

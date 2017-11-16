@@ -167,6 +167,76 @@ public class UpmsOrganizationExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andDeptIdIsNull() {
+            addCriterion("dept_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdIsNotNull() {
+            addCriterion("dept_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdEqualTo(String value) {
+            addCriterion("dept_id =", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdNotEqualTo(String value) {
+            addCriterion("dept_id <>", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdGreaterThan(String value) {
+            addCriterion("dept_id >", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdGreaterThanOrEqualTo(String value) {
+            addCriterion("dept_id >=", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdLessThan(String value) {
+            addCriterion("dept_id <", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdLessThanOrEqualTo(String value) {
+            addCriterion("dept_id <=", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdLike(String value) {
+            addCriterion("dept_id like", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdNotLike(String value) {
+            addCriterion("dept_id not like", value, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdIn(List<String> values) {
+            addCriterion("dept_id in", values, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdNotIn(List<String> values) {
+            addCriterion("dept_id not in", values, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdBetween(String value1, String value2) {
+            addCriterion("dept_id between", value1, value2, "deptId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeptIdNotBetween(String value1, String value2) {
+            addCriterion("dept_id not between", value1, value2, "deptId");
+            return (Criteria) this;
+        }
+
         public Criteria andPidIsNull() {
             addCriterion("pid is null");
             return (Criteria) this;

@@ -11,6 +11,13 @@ public class UpmsOrganization implements Serializable {
     private Integer organizationId;
 
     /**
+     * 业务主键
+     *
+     * @mbg.generated
+     */
+    private String deptId;
+
+    /**
      * 所属上级
      *
      * @mbg.generated
@@ -46,6 +53,14 @@ public class UpmsOrganization implements Serializable {
 
     public void setOrganizationId(Integer organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 
     public Integer getPid() {
@@ -87,6 +102,7 @@ public class UpmsOrganization implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", organizationId=").append(organizationId);
+        sb.append(", deptId=").append(deptId);
         sb.append(", pid=").append(pid);
         sb.append(", name=").append(name);
         sb.append(", description=").append(description);
@@ -108,6 +124,7 @@ public class UpmsOrganization implements Serializable {
         }
         UpmsOrganization other = (UpmsOrganization) that;
         return (this.getOrganizationId() == null ? other.getOrganizationId() == null : this.getOrganizationId().equals(other.getOrganizationId()))
+            && (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
             && (this.getPid() == null ? other.getPid() == null : this.getPid().equals(other.getPid()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
@@ -119,6 +136,7 @@ public class UpmsOrganization implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getOrganizationId() == null) ? 0 : getOrganizationId().hashCode());
+        result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
         result = prime * result + ((getPid() == null) ? 0 : getPid().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
