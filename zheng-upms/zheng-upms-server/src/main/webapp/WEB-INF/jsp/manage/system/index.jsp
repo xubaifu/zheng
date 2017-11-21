@@ -157,7 +157,7 @@ function deleteAction() {
 						}
 						$.ajax({
 							type: 'get',
-							url: '${basePath}/manage/system/delete/' + ids.join("-"),
+							url: '${basePath}/manage/system/delete/' + ids.join(","),
 							success: function(result) {
 								if (result.code != 1) {
 									if (result.data instanceof Array) {

@@ -71,7 +71,9 @@ public class MybatisGeneratorUtil {
 		//该语句只能提供表名前缀，不能提供整个表名，适合批量生成代码
 		//String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "_%';";
 		//该语句不仅能提供表名前缀，还能提供整个表名，适合批量生成代码和生成单个表代码
-		String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "%';";
+		//String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "%';";
+		//该语句仅能提供整个表名，适合生成单个表代码
+		String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '" + database + "' AND table_name LIKE '" + table_prefix + "';";
 
 		System.out.println("========== 开始生成generatorConfig.xml文件 ==========");
 		List<Map<String, Object>> tables = new ArrayList<>();

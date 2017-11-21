@@ -8,7 +8,7 @@ public class UpmsUser implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer userId;
+    private String userId;
 
     /**
      * 帐号
@@ -82,11 +82,11 @@ public class UpmsUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

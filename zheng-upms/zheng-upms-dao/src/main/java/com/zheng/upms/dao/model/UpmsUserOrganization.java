@@ -15,14 +15,14 @@ public class UpmsUserOrganization implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer userId;
+    private String userId;
 
     /**
      * 组织编号
      *
      * @mbg.generated
      */
-    private Integer organizationId;
+    private String organizationId;
 
     private static final long serialVersionUID = 1L;
 
@@ -34,19 +34,19 @@ public class UpmsUserOrganization implements Serializable {
         this.userOrganizationId = userOrganizationId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Integer getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(Integer organizationId) {
+    public void setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
     }
 

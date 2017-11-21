@@ -98,7 +98,7 @@ function deleteAction() {
 						}
 						$.ajax({
 							type: 'get',
-							url: '${basePath}/manage/log/delete/' + ids.join("-"),
+							url: '${basePath}/manage/log/delete/' + ids.join(","),
 							success: function(result) {
 								if (result.code != 1) {
 									if (result.data instanceof Array) {

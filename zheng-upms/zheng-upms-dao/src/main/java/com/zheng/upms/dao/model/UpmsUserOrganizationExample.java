@@ -177,52 +177,62 @@ public class UpmsUserOrganizationExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andUserIdEqualTo(Integer value) {
+        public Criteria andUserIdEqualTo(String value) {
             addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotEqualTo(Integer value) {
+        public Criteria andUserIdNotEqualTo(String value) {
             addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThan(Integer value) {
+        public Criteria andUserIdGreaterThan(String value) {
             addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andUserIdGreaterThanOrEqualTo(String value) {
             addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThan(Integer value) {
+        public Criteria andUserIdLessThan(String value) {
             addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+        public Criteria andUserIdLessThanOrEqualTo(String value) {
             addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIn(List<Integer> values) {
+        public Criteria andUserIdLike(String value) {
+            addCriterion("user_id like", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotLike(String value) {
+            addCriterion("user_id not like", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIn(List<String> values) {
             addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotIn(List<Integer> values) {
+        public Criteria andUserIdNotIn(List<String> values) {
             addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+        public Criteria andUserIdBetween(String value1, String value2) {
             addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andUserIdNotBetween(String value1, String value2) {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
@@ -237,52 +247,62 @@ public class UpmsUserOrganizationExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdEqualTo(Integer value) {
+        public Criteria andOrganizationIdEqualTo(String value) {
             addCriterion("organization_id =", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdNotEqualTo(Integer value) {
+        public Criteria andOrganizationIdNotEqualTo(String value) {
             addCriterion("organization_id <>", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdGreaterThan(Integer value) {
+        public Criteria andOrganizationIdGreaterThan(String value) {
             addCriterion("organization_id >", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andOrganizationIdGreaterThanOrEqualTo(String value) {
             addCriterion("organization_id >=", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdLessThan(Integer value) {
+        public Criteria andOrganizationIdLessThan(String value) {
             addCriterion("organization_id <", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdLessThanOrEqualTo(Integer value) {
+        public Criteria andOrganizationIdLessThanOrEqualTo(String value) {
             addCriterion("organization_id <=", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdIn(List<Integer> values) {
+        public Criteria andOrganizationIdLike(String value) {
+            addCriterion("organization_id like", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotLike(String value) {
+            addCriterion("organization_id not like", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdIn(List<String> values) {
             addCriterion("organization_id in", values, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdNotIn(List<Integer> values) {
+        public Criteria andOrganizationIdNotIn(List<String> values) {
             addCriterion("organization_id not in", values, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdBetween(Integer value1, Integer value2) {
+        public Criteria andOrganizationIdBetween(String value1, String value2) {
             addCriterion("organization_id between", value1, value2, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andOrganizationIdNotBetween(String value1, String value2) {
             addCriterion("organization_id not between", value1, value2, "organizationId");
             return (Criteria) this;
         }

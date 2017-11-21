@@ -68,7 +68,7 @@ public class UpmsUserController extends BaseController {
     @ApiOperation(value = "用户组织")
     @RequiresPermissions("upms:user:organization")
     @RequestMapping(value = "/organization/{id}", method = RequestMethod.GET)
-    public String organization(@PathVariable("id") int id, ModelMap modelMap) {
+    public String organization(@PathVariable("id") String id, ModelMap modelMap) {
         // 所有组织
         List<UpmsOrganization> upmsOrganizations = upmsOrganizationService.selectByExample(new UpmsOrganizationExample());
         // 用户拥有组织
@@ -85,7 +85,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions("upms:user:organization")
     @RequestMapping(value = "/organization/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Object organization(@PathVariable("id") int id, HttpServletRequest request) {
+    public Object organization(@PathVariable("id") String id, HttpServletRequest request) {
         String[] organizationIds = request.getParameterValues("organizationId");
         upmsUserOrganizationService.organization(organizationIds, id);
         return new UpmsResult(UpmsResultConstant.SUCCESS, "");
@@ -94,7 +94,7 @@ public class UpmsUserController extends BaseController {
     @ApiOperation(value = "用户角色")
     @RequiresPermissions("upms:user:role")
     @RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
-    public String role(@PathVariable("id") int id, ModelMap modelMap) {
+    public String role(@PathVariable("id") String id, ModelMap modelMap) {
         // 所有角色
         List<UpmsRole> upmsRoles = upmsRoleService.selectByExample(new UpmsRoleExample());
         // 用户拥有角色
@@ -111,7 +111,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions("upms:user:role")
     @RequestMapping(value = "/role/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Object role(@PathVariable("id") int id, HttpServletRequest request) {
+    public Object role(@PathVariable("id") String id, HttpServletRequest request) {
         String[] roleIds = request.getParameterValues("roleId");
         upmsUserRoleService.role(roleIds, id);
         return new UpmsResult(UpmsResultConstant.SUCCESS, "");
@@ -120,8 +120,8 @@ public class UpmsUserController extends BaseController {
     @ApiOperation(value = "用户权限")
     @RequiresPermissions("upms:user:permission")
     @RequestMapping(value = "/permission/{id}", method = RequestMethod.GET)
-    public String permission(@PathVariable("id") int id, ModelMap modelMap) {
-        UpmsUser user = upmsUserService.selectByPrimaryKey(id);
+    public String permission(@PathVariable("id") String id, ModelMap modelMap) {
+        UpmsUser user = upmsUserService.selectByPrimaryKeyString(id);
         modelMap.put("user", user);
         return "/manage/user/permission.jsp";
     }
@@ -130,7 +130,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions("upms:user:permission")
     @RequestMapping(value = "/permission/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Object permission(@PathVariable("id") int id, HttpServletRequest request) {
+    public Object permission(@PathVariable("id") String id, HttpServletRequest request) {
         JSONArray datas = JSONArray.parseArray(request.getParameter("datas"));
         upmsUserPermissionService.permission(datas, id);
         return new UpmsResult(UpmsResultConstant.SUCCESS, datas.size());
@@ -186,6 +186,7 @@ public class UpmsUserController extends BaseController {
             return new UpmsResult(UpmsResultConstant.INVALID_LENGTH, result.getErrors());
         }
         long time = System.currentTimeMillis();
+        upmsUser.setUserId(UUID.randomUUID().toString());
         String salt = UUID.randomUUID().toString().replaceAll("-", "");
         upmsUser.setSalt(salt);
         upmsUser.setPassword(MD5Util.MD5(upmsUser.getPassword() + upmsUser.getSalt()));
@@ -210,8 +211,8 @@ public class UpmsUserController extends BaseController {
     @ApiOperation(value = "修改用户")
     @RequiresPermissions("upms:user:update")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public String update(@PathVariable("id") int id, ModelMap modelMap) {
-        UpmsUser user = upmsUserService.selectByPrimaryKey(id);
+    public String update(@PathVariable("id") String id, ModelMap modelMap) {
+        UpmsUser user = upmsUserService.selectByPrimaryKeyString(id);
         modelMap.put("user", user);
         return "/manage/user/update.jsp";
     }
@@ -220,7 +221,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions("upms:user:update")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Object update(@PathVariable("id") int id, UpmsUser upmsUser) {
+    public Object update(@PathVariable("id") String id, UpmsUser upmsUser) {
         ComplexResult result = FluentValidator.checkAll()
                 .on(upmsUser.getUsername(), new LengthValidator(1, 20, "帐号"))
                 .on(upmsUser.getRealname(), new NotNullValidator("姓名"))

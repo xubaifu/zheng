@@ -94,7 +94,7 @@ public class UpmsOrganizationController extends BaseController {
         }
         if (StringUtils.isNotBlank(id)) {
         	//upmsOrganizationExample.or().andPidEqualTo(Integer.valueOf(id));
-        	upmsOrganizationExample.or().andOrganizationIdEqualTo(Integer.valueOf(id));
+        	upmsOrganizationExample.or().andOrganizationIdEqualTo(id);
         }
         List<UpmsOrganization> rows = upmsOrganizationService.selectByExampleForOffsetPage(upmsOrganizationExample, offset, limit);
         long total = upmsOrganizationService.countByExample(upmsOrganizationExample);
@@ -139,7 +139,9 @@ public class UpmsOrganizationController extends BaseController {
             return new UpmsResult(UpmsResultConstant.INVALID_LENGTH, result.getErrors());
         }
         long time = System.currentTimeMillis();
+        String organizationId = UUID.randomUUID().toString();
         String deptId = UUID.randomUUID().toString();
+        upmsOrganization.setOrganizationId(organizationId);
         upmsOrganization.setCtime(time);
         upmsOrganization.setDeptId(deptId);
         TDeptUuid tDeptUuid = new TDeptUuid();
@@ -164,8 +166,8 @@ public class UpmsOrganizationController extends BaseController {
     @ApiOperation(value = "修改组织")
     @RequiresPermissions("upms:organization:update")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public String update(@PathVariable("id") int id, ModelMap modelMap) {
-        UpmsOrganization organization = upmsOrganizationService.selectByPrimaryKey(id);
+    public String update(@PathVariable("id") String id, ModelMap modelMap) {
+        UpmsOrganization organization = upmsOrganizationService.selectByPrimaryKeyString(id);
         modelMap.put("organization", organization);
         return "/manage/organization/update.jsp";
     }
@@ -174,7 +176,7 @@ public class UpmsOrganizationController extends BaseController {
     @RequiresPermissions("upms:organization:update")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Object update(@PathVariable("id") int id, UpmsOrganization upmsOrganization) {
+    public Object update(@PathVariable("id") String id, UpmsOrganization upmsOrganization) {
         ComplexResult result = FluentValidator.checkAll()
                 .on(upmsOrganization.getName(), new LengthValidator(1, 20, "名称"))
                 .doValidate()
@@ -277,5 +279,4 @@ public class UpmsOrganizationController extends BaseController {
     	result.put("total", len);
     	return result;
     }
-
 }

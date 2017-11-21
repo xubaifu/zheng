@@ -16,7 +16,7 @@ public class UpmsUserRoleServiceMock extends BaseServiceMock<UpmsUserRoleMapper,
     private static Logger _log = LoggerFactory.getLogger(UpmsUserRoleServiceMock.class);
 
     @Override
-    public int role(String[] roleIds, int id) {
+    public int role(String[] roleIds, String id) {
         _log.info("UpmsUserRoleServiceMock => role");
         return 0;
     }

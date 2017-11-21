@@ -17,6 +17,6 @@ public interface UpmsUserPermissionService extends BaseService<UpmsUserPermissio
      * @param id 用户id
      * @return
      */
-    int permission(JSONArray datas, int id);
+    int permission(JSONArray datas, String id);
 
 }

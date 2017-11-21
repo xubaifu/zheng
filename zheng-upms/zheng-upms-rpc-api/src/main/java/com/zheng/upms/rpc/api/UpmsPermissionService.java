@@ -13,6 +13,6 @@ public interface UpmsPermissionService extends BaseService<UpmsPermission, UpmsP
 
     JSONArray getTreeByRoleId(Integer roleId);
 
-    JSONArray getTreeByUserId(Integer usereId, Byte type);
+    JSONArray getTreeByUserId(String usereId, Byte type);
 
 }

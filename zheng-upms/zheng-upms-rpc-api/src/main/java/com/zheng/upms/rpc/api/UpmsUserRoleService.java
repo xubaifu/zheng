@@ -16,6 +16,6 @@ public interface UpmsUserRoleService extends BaseService<UpmsUserRole, UpmsUserR
      * @param id 用户id
      * @return
      */
-    int role(String[] roleIds, int id);
+    int role(String[] roleIds, String id);
 
 }

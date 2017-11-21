@@ -214,8 +214,8 @@ function getOrganizationList(treeNode){
 // 格式化操作按钮
 function actionFormatter(value, row, index) {
     return [
-		'<a class="update" href="javascript:;" onclick="updateAction('+row.organizationId+')" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>　',
-		'<a class="delete" href="javascript:;" onclick="deleteAction('+row.organizationId+')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
+		'<a class="update" href="javascript:;" onclick="updateAction(\''+row.organizationId+'\')" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>　',
+		'<a class="delete" href="javascript:;" onclick="deleteAction(\''+row.organizationId+'\')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
     ].join('');
 }
 //点击tab页加载组织列表
@@ -312,7 +312,7 @@ function deleteAction(organizationId) {//根据是否传入organizationId，判�
 					action: function () {
 						$.ajax({
 							type: 'get',
-							url: '${basePath}/manage/organization/delete/' + ids.join("-"),
+							url: '${basePath}/manage/organization/delete/' + ids.join(","),
 							success: function(result) {
 								if (result.code != 1) {
 									if (result.data instanceof Array) {

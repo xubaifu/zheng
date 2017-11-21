@@ -15,7 +15,7 @@ public class UpmsUserRole implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer userId;
+    private String userId;
 
     /**
      * 角色编号
@@ -34,11 +34,11 @@ public class UpmsUserRole implements Serializable {
         this.userRoleId = userRoleId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

@@ -15,7 +15,7 @@ public class UpmsUserPermission implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer userId;
+    private String userId;
 
     /**
      * 权限编号
@@ -41,11 +41,11 @@ public class UpmsUserPermission implements Serializable {
         this.userPermissionId = userPermissionId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

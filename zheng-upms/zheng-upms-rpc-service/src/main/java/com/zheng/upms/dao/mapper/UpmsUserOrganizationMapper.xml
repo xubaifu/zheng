@@ -3,8 +3,8 @@
 <mapper namespace="com.zheng.upms.dao.mapper.UpmsUserOrganizationMapper">
   <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.UpmsUserOrganization">
     <id column="user_organization_id" jdbcType="INTEGER" property="userOrganizationId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="organization_id" jdbcType="VARCHAR" property="organizationId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -100,7 +100,7 @@
   <insert id="insert" parameterType="com.zheng.upms.dao.model.UpmsUserOrganization">
     insert into upms_user_organization (user_organization_id, user_id, organization_id
       )
-    values (#{userOrganizationId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}
+    values (#{userOrganizationId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{organizationId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.UpmsUserOrganization">
@@ -121,10 +121,10 @@
         #{userOrganizationId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="organizationId != null">
-        #{organizationId,jdbcType=INTEGER},
+        #{organizationId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -141,10 +141,10 @@
         user_organization_id = #{record.userOrganizationId,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.organizationId != null">
-        organization_id = #{record.organizationId,jdbcType=INTEGER},
+        organization_id = #{record.organizationId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -154,8 +154,8 @@
   <update id="updateByExample" parameterType="map">
     update upms_user_organization
     set user_organization_id = #{record.userOrganizationId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      organization_id = #{record.organizationId,jdbcType=INTEGER}
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      organization_id = #{record.organizationId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -164,18 +164,18 @@
     update upms_user_organization
     <set>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="organizationId != null">
-        organization_id = #{organizationId,jdbcType=INTEGER},
+        organization_id = #{organizationId,jdbcType=VARCHAR},
       </if>
     </set>
     where user_organization_id = #{userOrganizationId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zheng.upms.dao.model.UpmsUserOrganization">
     update upms_user_organization
-    set user_id = #{userId,jdbcType=INTEGER},
-      organization_id = #{organizationId,jdbcType=INTEGER}
+    set user_id = #{userId,jdbcType=VARCHAR},
+      organization_id = #{organizationId,jdbcType=VARCHAR}
     where user_organization_id = #{userOrganizationId,jdbcType=INTEGER}
   </update>
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />

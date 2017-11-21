@@ -50,7 +50,7 @@ public class UpmsApiServiceImpl implements UpmsApiService {
      * @return
      */
     @Override
-    public List<UpmsPermission> selectUpmsPermissionByUpmsUserId(Integer upmsUserId) {
+    public List<UpmsPermission> selectUpmsPermissionByUpmsUserId(String upmsUserId) {
         // 用户不存在或锁定状态
         UpmsUser upmsUser = upmsUserMapper.selectByPrimaryKey(upmsUserId);
         if (null == upmsUser || 1 == upmsUser.getLocked()) {
@@ -68,7 +68,7 @@ public class UpmsApiServiceImpl implements UpmsApiService {
      */
     @Override
     @Cacheable(value = "zheng-upms-rpc-service-ehcache", key = "'selectUpmsPermissionByUpmsUserId_' + #upmsUserId")
-    public List<UpmsPermission> selectUpmsPermissionByUpmsUserIdByCache(Integer upmsUserId) {
+    public List<UpmsPermission> selectUpmsPermissionByUpmsUserIdByCache(String upmsUserId) {
         return selectUpmsPermissionByUpmsUserId(upmsUserId);
     }
 
@@ -78,7 +78,7 @@ public class UpmsApiServiceImpl implements UpmsApiService {
      * @return
      */
     @Override
-    public List<UpmsRole> selectUpmsRoleByUpmsUserId(Integer upmsUserId) {
+    public List<UpmsRole> selectUpmsRoleByUpmsUserId(String upmsUserId) {
         // 用户不存在或锁定状态
         UpmsUser upmsUser = upmsUserMapper.selectByPrimaryKey(upmsUserId);
         if (null == upmsUser || 1 == upmsUser.getLocked()) {
@@ -96,7 +96,7 @@ public class UpmsApiServiceImpl implements UpmsApiService {
      */
     @Override
     @Cacheable(value = "zheng-upms-rpc-service-ehcache", key = "'selectUpmsRoleByUpmsUserId_' + #upmsUserId")
-    public List<UpmsRole> selectUpmsRoleByUpmsUserIdByCache(Integer upmsUserId) {
+    public List<UpmsRole> selectUpmsRoleByUpmsUserIdByCache(String upmsUserId) {
         return selectUpmsRoleByUpmsUserId(upmsUserId);
     }
 
@@ -120,7 +120,7 @@ public class UpmsApiServiceImpl implements UpmsApiService {
      * @return
      */
     @Override
-    public List<UpmsUserPermission> selectUpmsUserPermissionByUpmsUserId(Integer upmsUserId) {
+    public List<UpmsUserPermission> selectUpmsUserPermissionByUpmsUserId(String upmsUserId) {
         UpmsUserPermissionExample upmsUserPermissionExample = new UpmsUserPermissionExample();
         upmsUserPermissionExample.createCriteria()
                 .andUserIdEqualTo(upmsUserId);

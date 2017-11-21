@@ -117,52 +117,62 @@ public class UpmsOrganizationExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdEqualTo(Integer value) {
+        public Criteria andOrganizationIdEqualTo(String value) {
             addCriterion("organization_id =", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdNotEqualTo(Integer value) {
+        public Criteria andOrganizationIdNotEqualTo(String value) {
             addCriterion("organization_id <>", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdGreaterThan(Integer value) {
+        public Criteria andOrganizationIdGreaterThan(String value) {
             addCriterion("organization_id >", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andOrganizationIdGreaterThanOrEqualTo(String value) {
             addCriterion("organization_id >=", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdLessThan(Integer value) {
+        public Criteria andOrganizationIdLessThan(String value) {
             addCriterion("organization_id <", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdLessThanOrEqualTo(Integer value) {
+        public Criteria andOrganizationIdLessThanOrEqualTo(String value) {
             addCriterion("organization_id <=", value, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdIn(List<Integer> values) {
+        public Criteria andOrganizationIdLike(String value) {
+            addCriterion("organization_id like", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdNotLike(String value) {
+            addCriterion("organization_id not like", value, "organizationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationIdIn(List<String> values) {
             addCriterion("organization_id in", values, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdNotIn(List<Integer> values) {
+        public Criteria andOrganizationIdNotIn(List<String> values) {
             addCriterion("organization_id not in", values, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdBetween(Integer value1, Integer value2) {
+        public Criteria andOrganizationIdBetween(String value1, String value2) {
             addCriterion("organization_id between", value1, value2, "organizationId");
             return (Criteria) this;
         }
 
-        public Criteria andOrganizationIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andOrganizationIdNotBetween(String value1, String value2) {
             addCriterion("organization_id not between", value1, value2, "organizationId");
             return (Criteria) this;
         }
@@ -247,52 +257,62 @@ public class UpmsOrganizationExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andPidEqualTo(Integer value) {
+        public Criteria andPidEqualTo(String value) {
             addCriterion("pid =", value, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotEqualTo(Integer value) {
+        public Criteria andPidNotEqualTo(String value) {
             addCriterion("pid <>", value, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThan(Integer value) {
+        public Criteria andPidGreaterThan(String value) {
             addCriterion("pid >", value, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPidGreaterThanOrEqualTo(String value) {
             addCriterion("pid >=", value, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThan(Integer value) {
+        public Criteria andPidLessThan(String value) {
             addCriterion("pid <", value, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThanOrEqualTo(Integer value) {
+        public Criteria andPidLessThanOrEqualTo(String value) {
             addCriterion("pid <=", value, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidIn(List<Integer> values) {
+        public Criteria andPidLike(String value) {
+            addCriterion("pid like", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidNotLike(String value) {
+            addCriterion("pid not like", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidIn(List<String> values) {
             addCriterion("pid in", values, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotIn(List<Integer> values) {
+        public Criteria andPidNotIn(List<String> values) {
             addCriterion("pid not in", values, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidBetween(Integer value1, Integer value2) {
+        public Criteria andPidBetween(String value1, String value2) {
             addCriterion("pid between", value1, value2, "pid");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotBetween(Integer value1, Integer value2) {
+        public Criteria andPidNotBetween(String value1, String value2) {
             addCriterion("pid not between", value1, value2, "pid");
             return (Criteria) this;
         }

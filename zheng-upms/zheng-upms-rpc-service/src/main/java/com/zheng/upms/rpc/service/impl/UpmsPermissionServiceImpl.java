@@ -137,7 +137,7 @@ public class UpmsPermissionServiceImpl extends BaseServiceImpl<UpmsPermissionMap
     }
 
     @Override
-    public JSONArray getTreeByUserId(Integer usereId, Byte type) {
+    public JSONArray getTreeByUserId(String usereId, Byte type) {
         // 角色权限
         UpmsUserPermissionExample upmsUserPermissionExample = new UpmsUserPermissionExample();
         upmsUserPermissionExample.createCriteria()

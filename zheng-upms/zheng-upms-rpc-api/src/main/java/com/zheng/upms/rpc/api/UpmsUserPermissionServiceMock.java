@@ -17,7 +17,7 @@ public class UpmsUserPermissionServiceMock extends BaseServiceMock<UpmsUserPermi
     private static Logger _log = LoggerFactory.getLogger(UpmsUserPermissionServiceMock.class);
 
     @Override
-    public int permission(JSONArray datas, int id) {
+    public int permission(JSONArray datas, String id) {
         _log.info("UpmsUserPermissionServiceMock => permission");
         return 0;
     }

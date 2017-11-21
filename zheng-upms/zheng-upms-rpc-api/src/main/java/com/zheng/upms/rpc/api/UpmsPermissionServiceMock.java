@@ -23,7 +23,7 @@ public class UpmsPermissionServiceMock extends BaseServiceMock<UpmsPermissionMap
     }
 
     @Override
-    public JSONArray getTreeByUserId(Integer usereId, Byte type) {
+    public JSONArray getTreeByUserId(String usereId, Byte type) {
         _log.info("UpmsPermissionServiceMock => getTreeByUserId");
         return null;
     }

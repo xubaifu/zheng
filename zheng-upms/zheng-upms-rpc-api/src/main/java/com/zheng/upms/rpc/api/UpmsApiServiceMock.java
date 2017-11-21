@@ -15,25 +15,25 @@ public class UpmsApiServiceMock implements UpmsApiService {
     private static Logger _log = LoggerFactory.getLogger(UpmsApiServiceMock.class);
 
     @Override
-    public List<UpmsPermission> selectUpmsPermissionByUpmsUserId(Integer upmsUserId) {
+    public List<UpmsPermission> selectUpmsPermissionByUpmsUserId(String upmsUserId) {
         _log.info("UpmsApiServiceMock => selectUpmsPermissionByUpmsUserId");
         return null;
     }
 
     @Override
-    public List<UpmsPermission> selectUpmsPermissionByUpmsUserIdByCache(Integer upmsUserId) {
+    public List<UpmsPermission> selectUpmsPermissionByUpmsUserIdByCache(String upmsUserId) {
         _log.info("UpmsApiServiceMock => selectUpmsPermissionByUpmsUserIdByCache");
         return null;
     }
 
     @Override
-    public List<UpmsRole> selectUpmsRoleByUpmsUserId(Integer upmsUserId) {
+    public List<UpmsRole> selectUpmsRoleByUpmsUserId(String upmsUserId) {
         _log.info("UpmsApiServiceMock => selectUpmsRoleByUpmsUserId");
         return null;
     }
 
     @Override
-    public List<UpmsRole> selectUpmsRoleByUpmsUserIdByCache(Integer upmsUserId) {
+    public List<UpmsRole> selectUpmsRoleByUpmsUserIdByCache(String upmsUserId) {
         _log.info("UpmsApiServiceMock => selectUpmsRoleByUpmsUserIdByCache");
         return null;
     }
@@ -45,7 +45,7 @@ public class UpmsApiServiceMock implements UpmsApiService {
     }
 
     @Override
-    public List<UpmsUserPermission> selectUpmsUserPermissionByUpmsUserId(Integer upmsUserId) {
+    public List<UpmsUserPermission> selectUpmsUserPermissionByUpmsUserId(String upmsUserId) {
         _log.info("UpmsApiServiceMock => selectUpmsUserPermissionByUpmsUserId");
         return null;
     }

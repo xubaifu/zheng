@@ -3,7 +3,7 @@
 <mapper namespace="com.zheng.upms.dao.mapper.TDeptUuidMapper">
   <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.TDeptUuid">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
     <result column="b_id" jdbcType="VARCHAR" property="bId" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -100,7 +100,7 @@
   <insert id="insert" parameterType="com.zheng.upms.dao.model.TDeptUuid">
     insert into t_dept_uuid (id, dept_id, b_id
       )
-    values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{bId,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=VARCHAR}, #{bId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.TDeptUuid">
@@ -121,7 +121,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="deptId != null">
-        #{deptId,jdbcType=INTEGER},
+        #{deptId,jdbcType=VARCHAR},
       </if>
       <if test="bId != null">
         #{bId,jdbcType=VARCHAR},
@@ -141,7 +141,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.deptId != null">
-        dept_id = #{record.deptId,jdbcType=INTEGER},
+        dept_id = #{record.deptId,jdbcType=VARCHAR},
       </if>
       <if test="record.bId != null">
         b_id = #{record.bId,jdbcType=VARCHAR},
@@ -154,7 +154,7 @@
   <update id="updateByExample" parameterType="map">
     update t_dept_uuid
     set id = #{record.id,jdbcType=INTEGER},
-      dept_id = #{record.deptId,jdbcType=INTEGER},
+      dept_id = #{record.deptId,jdbcType=VARCHAR},
       b_id = #{record.bId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -164,7 +164,7 @@
     update t_dept_uuid
     <set>
       <if test="deptId != null">
-        dept_id = #{deptId,jdbcType=INTEGER},
+        dept_id = #{deptId,jdbcType=VARCHAR},
       </if>
       <if test="bId != null">
         b_id = #{bId,jdbcType=VARCHAR},
@@ -174,7 +174,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zheng.upms.dao.model.TDeptUuid">
     update t_dept_uuid
-    set dept_id = #{deptId,jdbcType=INTEGER},
+    set dept_id = #{deptId,jdbcType=VARCHAR},
       b_id = #{bId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -29,7 +29,7 @@ public class UpmsUserOrganizationServiceImpl extends BaseServiceImpl<UpmsUserOrg
     UpmsUserOrganizationMapper upmsUserOrganizationMapper;
 
     @Override
-    public int organization(String[] organizationIds, int id) {
+    public int organization(String[] organizationIds, String id) {
         int result = 0;
         // 删除旧记录
         UpmsUserOrganizationExample upmsUserOrganizationExample = new UpmsUserOrganizationExample();
@@ -44,7 +44,8 @@ public class UpmsUserOrganizationServiceImpl extends BaseServiceImpl<UpmsUserOrg
                 }
                 UpmsUserOrganization upmsUserOrganization = new UpmsUserOrganization();
                 upmsUserOrganization.setUserId(id);
-                upmsUserOrganization.setOrganizationId(NumberUtils.toInt(organizationId));
+                //upmsUserOrganization.setOrganizationId(NumberUtils.toInt(organizationId));
+                upmsUserOrganization.setOrganizationId(organizationId);
                 result = upmsUserOrganizationMapper.insertSelective(upmsUserOrganization);
             }
         }

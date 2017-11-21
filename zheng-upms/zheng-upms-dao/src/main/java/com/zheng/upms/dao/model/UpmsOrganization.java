@@ -8,7 +8,7 @@ public class UpmsOrganization implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer organizationId;
+    private String organizationId;
 
     /**
      * 业务主键
@@ -22,7 +22,7 @@ public class UpmsOrganization implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer pid;
+    private String pid;
 
     /**
      * 组织名称
@@ -47,11 +47,11 @@ public class UpmsOrganization implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(Integer organizationId) {
+    public void setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
     }
 
@@ -63,11 +63,11 @@ public class UpmsOrganization implements Serializable {
         this.deptId = deptId;
     }
 
-    public Integer getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 

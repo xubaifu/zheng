@@ -3,7 +3,7 @@
 <mapper namespace="com.zheng.upms.dao.mapper.UpmsUserPermissionMapper">
   <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.UpmsUserPermission">
     <id column="user_permission_id" jdbcType="INTEGER" property="userPermissionId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="permission_id" jdbcType="INTEGER" property="permissionId" />
     <result column="type" jdbcType="TINYINT" property="type" />
   </resultMap>
@@ -101,7 +101,7 @@
   <insert id="insert" parameterType="com.zheng.upms.dao.model.UpmsUserPermission">
     insert into upms_user_permission (user_permission_id, user_id, permission_id, 
       type)
-    values (#{userPermissionId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER}, 
+    values (#{userPermissionId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{permissionId,jdbcType=INTEGER}, 
       #{type,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.UpmsUserPermission">
@@ -125,7 +125,7 @@
         #{userPermissionId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="permissionId != null">
         #{permissionId,jdbcType=INTEGER},
@@ -148,7 +148,7 @@
         user_permission_id = #{record.userPermissionId,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.permissionId != null">
         permission_id = #{record.permissionId,jdbcType=INTEGER},
@@ -164,7 +164,7 @@
   <update id="updateByExample" parameterType="map">
     update upms_user_permission
     set user_permission_id = #{record.userPermissionId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
       permission_id = #{record.permissionId,jdbcType=INTEGER},
       type = #{record.type,jdbcType=TINYINT}
     <if test="_parameter != null">
@@ -175,7 +175,7 @@
     update upms_user_permission
     <set>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="permissionId != null">
         permission_id = #{permissionId,jdbcType=INTEGER},
@@ -188,7 +188,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zheng.upms.dao.model.UpmsUserPermission">
     update upms_user_permission
-    set user_id = #{userId,jdbcType=INTEGER},
+    set user_id = #{userId,jdbcType=VARCHAR},
       permission_id = #{permissionId,jdbcType=INTEGER},
       type = #{type,jdbcType=TINYINT}
     where user_permission_id = #{userPermissionId,jdbcType=INTEGER}

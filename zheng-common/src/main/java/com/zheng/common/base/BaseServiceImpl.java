@@ -73,6 +73,24 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 		DynamicDataSource.clearDataSource();
 		return 0;
 	}
+	
+	@Override
+	public int deleteByPrimaryKeyString(String id) {
+		try {
+			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
+			Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey", id.getClass());
+			Object result = deleteByPrimaryKey.invoke(mapper, id);
+			return Integer.parseInt(String.valueOf(result));
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		DynamicDataSource.clearDataSource();
+		return 0;
+	}
 
 	@Override
 	public int insert(Record record) {
@@ -279,6 +297,24 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 		DynamicDataSource.clearDataSource();
 		return null;
 	}
+	
+	@Override
+	public Record selectByPrimaryKeyString(String id) {
+		try {
+			DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+			Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("selectByPrimaryKey", id.getClass());
+			Object result = selectByPrimaryKey.invoke(mapper, id);
+			return (Record) result;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		DynamicDataSource.clearDataSource();
+		return null;
+	}
 
 	@Override
 	public int updateByExampleSelective(@Param("record") Record record, @Param("example") Example example) {
@@ -395,16 +431,23 @@ public abstract class BaseServiceImpl<Mapper, Record, Example> implements BaseSe
 				return 0;
 			}
 			DynamicDataSource.setDataSource(DataSourceEnum.MASTER.getName());
-			String[] idArray = ids.split("-");
+			String[] idArray = ids.split(",");
 			int count = 0;
 			for (String idStr : idArray) {
 				if (StringUtils.isBlank(idStr)) {
 					continue;
 				}
-				Integer id = Integer.parseInt(idStr);
-				Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey", id.getClass());
-				Object result = deleteByPrimaryKey.invoke(mapper, id);
-				count += Integer.parseInt(String.valueOf(result));
+				if(idStr.matches(".*[a-zA-z].*")){//判断idStr是否含有字符，传入的值有时候是带有英文字符的
+					Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey", idStr.getClass());
+					Object result = deleteByPrimaryKey.invoke(mapper, idStr);
+					count += Integer.parseInt(String.valueOf(result));
+				}else{
+					Integer id = Integer.parseInt(idStr);
+					Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey", id.getClass());
+					Object result = deleteByPrimaryKey.invoke(mapper, id);
+					count += Integer.parseInt(String.valueOf(result));
+				}
+				
 			}
 			return count;
 		} catch (IllegalAccessException e) {

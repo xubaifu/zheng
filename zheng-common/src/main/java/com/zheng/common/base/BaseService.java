@@ -15,6 +15,8 @@ public interface BaseService<Record, Example> {
 	int deleteByExample(Example example);
 
 	int deleteByPrimaryKey(Integer id);
+	
+	int deleteByPrimaryKeyString(String id);
 
 	int insert(Record record);
 
@@ -37,6 +39,8 @@ public interface BaseService<Record, Example> {
 	Record selectFirstByExampleWithBLOBs(Example example);
 
 	Record selectByPrimaryKey(Integer id);
+	
+	Record selectByPrimaryKeyString(String id);
 
 	int updateByExampleSelective(@Param("record") Record record, @Param("example") Example example);
 

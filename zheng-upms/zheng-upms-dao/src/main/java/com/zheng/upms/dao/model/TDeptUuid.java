@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class TDeptUuid implements Serializable {
     private Integer id;
 
-    private Integer deptId;
+    private String deptId;
 
     private String bId;
 
@@ -19,11 +19,11 @@ public class TDeptUuid implements Serializable {
         this.id = id;
     }
 
-    public Integer getDeptId() {
+    public String getDeptId() {
         return deptId;
     }
 
-    public void setDeptId(Integer deptId) {
+    public void setDeptId(String deptId) {
         this.deptId = deptId;
     }
 

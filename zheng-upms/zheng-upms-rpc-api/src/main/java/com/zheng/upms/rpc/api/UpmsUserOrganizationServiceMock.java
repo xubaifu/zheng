@@ -16,7 +16,7 @@ public class UpmsUserOrganizationServiceMock extends BaseServiceMock<UpmsUserOrg
     private static Logger _log = LoggerFactory.getLogger(UpmsUserOrganizationServiceMock.class);
 
     @Override
-    public int organization(String[] organizationIds, int id) {
+    public int organization(String[] organizationIds, String id) {
         _log.info("UpmsUserOrganizationServiceMock => organization");
         return 0;
     }
