@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zheng.upms.rpc.mapper.TableInfoAPIMapper">
+  <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.SysTemplateTable">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="sub_id" jdbcType="VARCHAR" property="subId" />
+    <result column="property" jdbcType="VARCHAR" property="property" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="bak" jdbcType="VARCHAR" property="bak" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="updatetime" jdbcType="VARCHAR" property="updatetime" />
+    <result column="available" jdbcType="VARCHAR" property="available" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="updatername" jdbcType="VARCHAR" property="updatername" />
+  </resultMap>
+  
+  <select id="getDataInfo" resultMap="BaseResultMap">
+	select sub_id AS subId ,group_concat(t.value) as value
+	,group_concat(t.property) as property from ${tableName} t where
+	t.sub_id in
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+	GROUP BY t.sub_id 
+  </select>
+  
+  <insert id="insertTDeptUuid" parameterType="com.zheng.upms.dao.model.TDeptUuid">
+    <!-- insert into t_dept_uuid (id, dept_id, sub_id
+      )
+    values ( select max(id)+1, #{deptId,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR}
+      ) -->
+      INSERT INTO t_dept_uuid (id,dept_id, sub_id)
+		SELECT  max(id)+1, #{deptId,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR} from t_dept_uuid
+  </insert>
+  
+  <insert id="insertSysTemplateTable" parameterType="com.zheng.upms.dao.model.SysTemplateTable">
+    insert into ${tablename} (id, sub_id, property, 
+      value, bak, createtime, 
+      updatetime, available, creator, 
+      updatername)
+    values (#{id,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{bak,jdbcType=VARCHAR}, DATE_FORMAT(NOW(),'%Y-%c-%d %H:%i %S'), 
+      #{updatetime,jdbcType=VARCHAR}, '0', #{creator,jdbcType=VARCHAR}, 
+      #{updatername,jdbcType=VARCHAR})
+      
+  </insert>
+  
+  <update id="createTable" parameterType="java.lang.String">
+    create table IF NOT EXISTS ${tableName}
+		(
+		   id                   varchar(64) not null,
+		   sub_id              varchar(64),
+		   property             varchar(100),
+		   value                varchar(500),
+		   bak                  varchar(1000),
+		   createtime           varchar(64),
+		   updatetime           varchar(64),
+		   available            varchar(2),
+		   creator              varchar(32),
+		   updatername          varchar(32),
+		   primary key (id)
+		) 
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

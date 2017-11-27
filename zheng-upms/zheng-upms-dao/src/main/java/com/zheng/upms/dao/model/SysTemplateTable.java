@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class SysTemplateTable implements Serializable {
     private String id;
 
-    private String bId;
+    private String subId;
 
     private String property;
 
@@ -23,6 +23,8 @@ public class SysTemplateTable implements Serializable {
 
     private String updatername;
 
+    private String tablename;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -33,12 +35,12 @@ public class SysTemplateTable implements Serializable {
         this.id = id;
     }
 
-    public String getbId() {
-        return bId;
+    public String getSubId() {
+        return subId;
     }
 
-    public void setbId(String bId) {
-        this.bId = bId;
+    public void setSubId(String subId) {
+        this.subId = subId;
     }
 
     public String getProperty() {
@@ -105,6 +107,14 @@ public class SysTemplateTable implements Serializable {
         this.updatername = updatername;
     }
 
+    public String getTablename() {
+        return tablename;
+    }
+
+    public void setTablename(String tablename) {
+        this.tablename = tablename;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -112,7 +122,7 @@ public class SysTemplateTable implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", bId=").append(bId);
+        sb.append(", subId=").append(subId);
         sb.append(", property=").append(property);
         sb.append(", value=").append(value);
         sb.append(", bak=").append(bak);
@@ -121,6 +131,7 @@ public class SysTemplateTable implements Serializable {
         sb.append(", available=").append(available);
         sb.append(", creator=").append(creator);
         sb.append(", updatername=").append(updatername);
+        sb.append(", tablename=").append(tablename);
         sb.append("]");
         return sb.toString();
     }
@@ -138,7 +149,7 @@ public class SysTemplateTable implements Serializable {
         }
         SysTemplateTable other = (SysTemplateTable) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getbId() == null ? other.getbId() == null : this.getbId().equals(other.getbId()))
+            && (this.getSubId() == null ? other.getSubId() == null : this.getSubId().equals(other.getSubId()))
             && (this.getProperty() == null ? other.getProperty() == null : this.getProperty().equals(other.getProperty()))
             && (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
             && (this.getBak() == null ? other.getBak() == null : this.getBak().equals(other.getBak()))
@@ -146,7 +157,8 @@ public class SysTemplateTable implements Serializable {
             && (this.getUpdatetime() == null ? other.getUpdatetime() == null : this.getUpdatetime().equals(other.getUpdatetime()))
             && (this.getAvailable() == null ? other.getAvailable() == null : this.getAvailable().equals(other.getAvailable()))
             && (this.getCreator() == null ? other.getCreator() == null : this.getCreator().equals(other.getCreator()))
-            && (this.getUpdatername() == null ? other.getUpdatername() == null : this.getUpdatername().equals(other.getUpdatername()));
+            && (this.getUpdatername() == null ? other.getUpdatername() == null : this.getUpdatername().equals(other.getUpdatername()))
+            && (this.getTablename() == null ? other.getTablename() == null : this.getTablename().equals(other.getTablename()));
     }
 
     @Override
@@ -154,7 +166,7 @@ public class SysTemplateTable implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getbId() == null) ? 0 : getbId().hashCode());
+        result = prime * result + ((getSubId() == null) ? 0 : getSubId().hashCode());
         result = prime * result + ((getProperty() == null) ? 0 : getProperty().hashCode());
         result = prime * result + ((getValue() == null) ? 0 : getValue().hashCode());
         result = prime * result + ((getBak() == null) ? 0 : getBak().hashCode());
@@ -163,6 +175,7 @@ public class SysTemplateTable implements Serializable {
         result = prime * result + ((getAvailable() == null) ? 0 : getAvailable().hashCode());
         result = prime * result + ((getCreator() == null) ? 0 : getCreator().hashCode());
         result = prime * result + ((getUpdatername() == null) ? 0 : getUpdatername().hashCode());
+        result = prime * result + ((getTablename() == null) ? 0 : getTablename().hashCode());
         return result;
     }
 }

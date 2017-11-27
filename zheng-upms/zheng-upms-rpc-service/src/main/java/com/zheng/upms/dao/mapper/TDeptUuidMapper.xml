@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.TDeptUuid">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
-    <result column="b_id" jdbcType="VARCHAR" property="bId" />
+    <result column="sub_id" jdbcType="VARCHAR" property="subId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, dept_id, b_id
+    id, dept_id, sub_id
   </sql>
   <select id="selectByExample" parameterType="com.zheng.upms.dao.model.TDeptUuidExample" resultMap="BaseResultMap">
     select
@@ -98,9 +98,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zheng.upms.dao.model.TDeptUuid">
-    insert into t_dept_uuid (id, dept_id, b_id
+    insert into t_dept_uuid (id, dept_id, sub_id
       )
-    values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=VARCHAR}, #{bId,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.TDeptUuid">
@@ -112,8 +112,8 @@
       <if test="deptId != null">
         dept_id,
       </if>
-      <if test="bId != null">
-        b_id,
+      <if test="subId != null">
+        sub_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -123,8 +123,8 @@
       <if test="deptId != null">
         #{deptId,jdbcType=VARCHAR},
       </if>
-      <if test="bId != null">
-        #{bId,jdbcType=VARCHAR},
+      <if test="subId != null">
+        #{subId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -143,8 +143,8 @@
       <if test="record.deptId != null">
         dept_id = #{record.deptId,jdbcType=VARCHAR},
       </if>
-      <if test="record.bId != null">
-        b_id = #{record.bId,jdbcType=VARCHAR},
+      <if test="record.subId != null">
+        sub_id = #{record.subId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -155,7 +155,7 @@
     update t_dept_uuid
     set id = #{record.id,jdbcType=INTEGER},
       dept_id = #{record.deptId,jdbcType=VARCHAR},
-      b_id = #{record.bId,jdbcType=VARCHAR}
+      sub_id = #{record.subId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -166,8 +166,8 @@
       <if test="deptId != null">
         dept_id = #{deptId,jdbcType=VARCHAR},
       </if>
-      <if test="bId != null">
-        b_id = #{bId,jdbcType=VARCHAR},
+      <if test="subId != null">
+        sub_id = #{subId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -175,7 +175,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zheng.upms.dao.model.TDeptUuid">
     update t_dept_uuid
     set dept_id = #{deptId,jdbcType=VARCHAR},
-      b_id = #{bId,jdbcType=VARCHAR}
+      sub_id = #{subId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />

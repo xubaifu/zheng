@@ -19,6 +19,4 @@ public interface SysTemplateTableMapper {
     int updateByExampleSelective(@Param("record") SysTemplateTable record, @Param("example") SysTemplateTableExample example);
 
     int updateByExample(@Param("record") SysTemplateTable record, @Param("example") SysTemplateTableExample example);
-    
-    List<SysTemplateTable> getDataInfo(@Param("tableName")String tableName ,@Param("list") List<String> list);
 }

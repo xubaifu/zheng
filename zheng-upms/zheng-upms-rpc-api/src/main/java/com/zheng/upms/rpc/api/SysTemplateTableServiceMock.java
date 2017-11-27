@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.zheng.common.base.BaseServiceMock;
 import com.zheng.upms.dao.mapper.SysTemplateTableMapper;
+import com.zheng.upms.dao.model.SysColumnInfo;
+import com.zheng.upms.dao.model.SysTableinfo;
 import com.zheng.upms.dao.model.SysTemplateTable;
 import com.zheng.upms.dao.model.SysTemplateTableExample;
 
@@ -17,6 +19,24 @@ public class SysTemplateTableServiceMock extends BaseServiceMock<SysTemplateTabl
 	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int insertSubsetData(String tableName, String organizationId, String data) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int createSubsetTable(SysTableinfo sysTableinfo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertSubsetTableData(SysColumnInfo sysColumnInfo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

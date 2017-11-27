@@ -7,7 +7,7 @@ public class TDeptUuid implements Serializable {
 
     private String deptId;
 
-    private String bId;
+    private String subId;
 
     private static final long serialVersionUID = 1L;
 
@@ -27,12 +27,12 @@ public class TDeptUuid implements Serializable {
         this.deptId = deptId;
     }
 
-    public String getbId() {
-        return bId;
+    public String getSubId() {
+        return subId;
     }
 
-    public void setbId(String bId) {
-        this.bId = bId;
+    public void setSubId(String subId) {
+        this.subId = subId;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TDeptUuid implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", deptId=").append(deptId);
-        sb.append(", bId=").append(bId);
+        sb.append(", subId=").append(subId);
         sb.append("]");
         return sb.toString();
     }
@@ -62,7 +62,7 @@ public class TDeptUuid implements Serializable {
         TDeptUuid other = (TDeptUuid) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
-            && (this.getbId() == null ? other.getbId() == null : this.getbId().equals(other.getbId()));
+            && (this.getSubId() == null ? other.getSubId() == null : this.getSubId().equals(other.getSubId()));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class TDeptUuid implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
-        result = prime * result + ((getbId() == null) ? 0 : getbId().hashCode());
+        result = prime * result + ((getSubId() == null) ? 0 : getSubId().hashCode());
         return result;
     }
 }

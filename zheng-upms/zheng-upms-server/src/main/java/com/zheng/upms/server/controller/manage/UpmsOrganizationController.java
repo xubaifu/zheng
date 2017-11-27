@@ -24,6 +24,7 @@ import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.zheng.common.base.BaseController;
 import com.zheng.common.validator.LengthValidator;
+import com.zheng.upms.common.constant.ToolUtil;
 import com.zheng.upms.common.constant.UpmsResult;
 import com.zheng.upms.common.constant.UpmsResultConstant;
 import com.zheng.upms.dao.model.SysColumnInfo;
@@ -144,7 +145,7 @@ public class UpmsOrganizationController extends BaseController {
         upmsOrganization.setOrganizationId(organizationId);
         upmsOrganization.setCtime(time);
         upmsOrganization.setDeptId(deptId);
-        TDeptUuid tDeptUuid = new TDeptUuid();
+        //TDeptUuid tDeptUuid = new TDeptUuid();
         //向部门信息主键存储表中存入业务主键信息
         /*tDeptUuid.setId(UUID.randomUUID().toString());
         tDeptUuid.setDeptId(deptId);
@@ -211,7 +212,7 @@ public class UpmsOrganizationController extends BaseController {
 //    	sysTableinfoExample.or().andTypeEqualTo(type);
 //    	sysTableinfoExample.or().andAvailableEqualTo("0");
     	criteria.andTypeEqualTo(type);
-    	criteria.andAvailableEqualTo("0");
+    	criteria.andAvailableEqualTo(ToolUtil.AVAILABLE);
     	List<SysTableinfo> rows = sysTableinfoService.selectByExample(sysTableinfoExample);
     	result.put("rows", rows);
         return result;
@@ -231,7 +232,7 @@ public class UpmsOrganizationController extends BaseController {
     	SysColumnInfoExample.Criteria criteria=sysColumnInfoExample.createCriteria();  
     	criteria.andTypeEqualTo(type);
     	criteria.andTableNameEqualTo(tableName);
-    	criteria.andAvailableEqualTo("0");
+    	criteria.andAvailableEqualTo(ToolUtil.AVAILABLE);
     	
     	List<SysColumnInfo> rows = sysColumnInfoService.selectByExample(sysColumnInfoExample);
     	result.put("rows", rows);
@@ -245,17 +246,26 @@ public class UpmsOrganizationController extends BaseController {
     @ResponseBody
     public Object getDataInfo(
     		@RequestParam(required = false, value = "type") String type,
-    		@RequestParam(required = false, value = "tableName") String tableName
+    		@RequestParam(required = false, value = "tableName") String tableName,
+    		@RequestParam(required = false, value = "organizationId") String organizationId
     		){
     	Map<String, Object> result = new HashMap<>();
-    	//获取相关表对应列
+    	//获取部门信息主键存储表中的同类数据，以便在子集表中获取具体数据
     	TDeptUuidExample tDeptUuidExample = new TDeptUuidExample();
+    	//此次需要添加条件
+    	TDeptUuidExample.Criteria criteria=tDeptUuidExample.createCriteria();  
+    	criteria.andDeptIdEqualTo(organizationId);
     	List<TDeptUuid> rows = tDeptUuidService.selectByExample(tDeptUuidExample);
     	
     	int len = rows.size();
+    	
+    	if(len == 0){
+    		return null;
+    	}
     	List<String> list = new ArrayList<String>();
     	for(int i = 0; i < len; i++){
-    		list.add(i, rows.get(i).getbId());
+    		//list.add(i, rows.get(i).getbId());
+    		list.add(i, rows.get(i).getSubId());
     	}
     	//获取具体的数据信息
     	List<SysTemplateTable> resultList = sysTemplateTableService.getDataInfo(tableName, list);
@@ -263,9 +273,10 @@ public class UpmsOrganizationController extends BaseController {
     	Object[] resultArr = null;
     	//将获取的数据处理成map形式
     	if(len != 0){
-        	String[] properties = resultList.get(0).getProperty().split(",");
+        	//String[] properties = resultList.get(0).getProperty().split(",");
         	resultArr = new Object[len];
         	for(int i = 0; i < len; i++){
+        		String[] properties = resultList.get(i).getProperty().split(",");
         		Map<String, Object> mapResult = new HashMap<String, Object>();
         		String[] values = resultList.get(i).getValue().split(",");
         		for(int j = 0; j < properties.length; j++){
@@ -278,5 +289,58 @@ public class UpmsOrganizationController extends BaseController {
     	result.put("rows", resultArr);
     	result.put("total", len);
     	return result;
+    }
+    
+    @ApiOperation(value = "添加子集(表单数据)")
+    @RequiresPermissions("upms:organization:createSubset")
+    @RequestMapping(value = "/createSubsetForm", method = RequestMethod.GET)
+    public String createSubsetForm() {
+        return "/manage/organization/subsetForm.jsp";
+    }
+    
+    @ApiOperation(value = "添加子集数据")
+    @RequiresPermissions("upms:organization:createSubset")
+    @ResponseBody
+    @RequestMapping(value = "/insertSubsetData/{tableName}/{organizationId}", method = RequestMethod.POST)
+    public Object insertSubsetData(@PathVariable("tableName") String tableName, @PathVariable("organizationId") String organizationId, @RequestParam("data") String data) {
+    	int count = sysTemplateTableService.insertSubsetData(tableName, organizationId, data);
+        return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+    }
+    
+    @ApiOperation(value = "添加子集(创建子集表)")
+    @RequiresPermissions("upms:organization:createSubset")
+    @RequestMapping(value = "/createSubsetTable", method = RequestMethod.GET)
+    public String createSubsetTable() {
+        return "/manage/organization/subset.jsp";
+    }
+    
+
+    @ApiOperation(value = "创建子集")
+    @RequiresPermissions("upms:organization:createSubset")
+    @ResponseBody
+    @RequestMapping(value = "/insertSubsetTableData", method = RequestMethod.POST)
+    public Object insertSubsetTableData(SysTableinfo sysTableinfo) {
+    	int count = sysTemplateTableService.createSubsetTable(sysTableinfo);
+        return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+    }
+    
+    @ApiOperation(value = "新增子集属性")
+    @RequiresPermissions("upms:organization:createSubset")
+    @RequestMapping(value = "/createSubsetColumn", method = RequestMethod.GET)
+    public String createSubsetColumn() {
+        return "/manage/organization/subsetColumn.jsp";
+    }
+    
+    @ApiOperation(value = "新增子集属性")
+    @RequiresPermissions("upms:organization:createSubset")
+    @ResponseBody
+    @RequestMapping(value = "/insertSubsetColumnData", method = RequestMethod.POST)
+    public Object insertSubsetColumnData(SysColumnInfo sysColumnInfo) {
+    	sysColumnInfo.setId(UUID.randomUUID().toString());
+    	sysColumnInfo.setAvailable(ToolUtil.AVAILABLE);
+    	sysColumnInfo.setType(ToolUtil.ORGANIZATION_SUBSET_TYPE);
+    	sysColumnInfo.setCreatetime(ToolUtil.getCurrentTime());
+    	int count = sysColumnInfoService.insert(sysColumnInfo);
+        return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
 }

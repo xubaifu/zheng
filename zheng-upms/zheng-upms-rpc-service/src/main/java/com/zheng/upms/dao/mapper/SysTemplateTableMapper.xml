@@ -3,7 +3,7 @@
 <mapper namespace="com.zheng.upms.dao.mapper.SysTemplateTableMapper">
   <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.SysTemplateTable">
     <result column="id" jdbcType="VARCHAR" property="id" />
-    <result column="b_id" jdbcType="VARCHAR" property="bId" />
+    <result column="sub_id" jdbcType="VARCHAR" property="subId" />
     <result column="property" jdbcType="VARCHAR" property="property" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="bak" jdbcType="VARCHAR" property="bak" />
@@ -12,6 +12,7 @@
     <result column="available" jdbcType="VARCHAR" property="available" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="updatername" jdbcType="VARCHAR" property="updatername" />
+    <result column="tablename" jdbcType="VARCHAR" property="tablename" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, b_id, property, value, bak, createtime, updatetime, available, creator, updatername
+    id, sub_id, property, value, bak, createtime, updatetime, available, creator, updatername, 
+    tablename
   </sql>
   <select id="selectByExample" parameterType="com.zheng.upms.dao.model.SysTemplateTableExample" resultMap="BaseResultMap">
     select
@@ -95,14 +97,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zheng.upms.dao.model.SysTemplateTable">
-    insert into sys_template_table (id, b_id, property, 
+    insert into sys_template_table (id, sub_id, property, 
       value, bak, createtime, 
       updatetime, available, creator, 
-      updatername)
-    values (#{id,jdbcType=VARCHAR}, #{bId,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR}, 
+      updatername, tablename)
+    values (#{id,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR}, 
       #{value,jdbcType=VARCHAR}, #{bak,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
       #{updatetime,jdbcType=VARCHAR}, #{available,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
-      #{updatername,jdbcType=VARCHAR})
+      #{updatername,jdbcType=VARCHAR}, #{tablename,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.SysTemplateTable">
     insert into sys_template_table
@@ -110,8 +112,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="bId != null">
-        b_id,
+      <if test="subId != null">
+        sub_id,
       </if>
       <if test="property != null">
         property,
@@ -137,13 +139,16 @@
       <if test="updatername != null">
         updatername,
       </if>
+      <if test="tablename != null">
+        tablename,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="bId != null">
-        #{bId,jdbcType=VARCHAR},
+      <if test="subId != null">
+        #{subId,jdbcType=VARCHAR},
       </if>
       <if test="property != null">
         #{property,jdbcType=VARCHAR},
@@ -169,6 +174,9 @@
       <if test="updatername != null">
         #{updatername,jdbcType=VARCHAR},
       </if>
+      <if test="tablename != null">
+        #{tablename,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.zheng.upms.dao.model.SysTemplateTableExample" resultType="java.lang.Long">
@@ -183,8 +191,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.bId != null">
-        b_id = #{record.bId,jdbcType=VARCHAR},
+      <if test="record.subId != null">
+        sub_id = #{record.subId,jdbcType=VARCHAR},
       </if>
       <if test="record.property != null">
         property = #{record.property,jdbcType=VARCHAR},
@@ -210,6 +218,9 @@
       <if test="record.updatername != null">
         updatername = #{record.updatername,jdbcType=VARCHAR},
       </if>
+      <if test="record.tablename != null">
+        tablename = #{record.tablename,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -218,7 +229,7 @@
   <update id="updateByExample" parameterType="map">
     update sys_template_table
     set id = #{record.id,jdbcType=VARCHAR},
-      b_id = #{record.bId,jdbcType=VARCHAR},
+      sub_id = #{record.subId,jdbcType=VARCHAR},
       property = #{record.property,jdbcType=VARCHAR},
       value = #{record.value,jdbcType=VARCHAR},
       bak = #{record.bak,jdbcType=VARCHAR},
@@ -226,23 +237,11 @@
       updatetime = #{record.updatetime,jdbcType=VARCHAR},
       available = #{record.available,jdbcType=VARCHAR},
       creator = #{record.creator,jdbcType=VARCHAR},
-      updatername = #{record.updatername,jdbcType=VARCHAR}
+      updatername = #{record.updatername,jdbcType=VARCHAR},
+      tablename = #{record.tablename,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  
-  
-  <select id="getDataInfo" resultMap="BaseResultMap">
-	select dept_id AS deptId ,group_concat(t.value) as value
-	,group_concat(t.property) as property from ${tableName} t where
-	t.dept_id in
-		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-	GROUP BY t.dept_id 
-    
-  </select>
-  
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 </mapper>

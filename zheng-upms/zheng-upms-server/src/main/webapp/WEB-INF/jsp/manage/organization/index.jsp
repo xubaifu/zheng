@@ -50,6 +50,7 @@
 					<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
 					<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
 					<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:organization:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetTable()"><i class="zmdi zmdi-close"></i> 新增子集</a></shiro:hasPermission>
 				</div>
 				<table id="table"></table>
 				
@@ -64,60 +65,47 @@
 
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
-	<script>
-		var setting = {
-			data : {
-				key : {
-					title : "title"
-				},
-				simpleData : {
-					enable : true
-				}
+<script>
+	var setting = {
+		data : {
+			key : {
+				title : "title"
 			},
-			callback : {
-				//beforeClick : beforeClick,
-				onClick : onClick
+			simpleData : {
+				enable : true
 			}
-		};
-		var zNodes =[
-			 /* { id:1, pId:0, name:"普通的父节点", title:"我很普通，随便点我吧"},
-			{ id:11, pId:1, name:"叶子节点 - 1", title:"我很普通，随便点我吧"},
-			{ id:12, pId:1, name:"叶子节点 - 2", title:"我很普通，随便点我吧"},
-			{ id:13, pId:1, name:"叶子节点 - 3", title:"我很普通，随便点我吧"},
-			{ id:2, pId:0, name:"NB的父节点", title:"点我可以，但是不能点我的子节点，有本事点一个你试试看？"},
-			{ id:21, pId:2, name:"叶子节点2 - 1", title:"你哪个单位的？敢随便点我？小心点儿.."},
-			{ id:22, pId:2, name:"叶子节点2 - 2", title:"我有老爸罩着呢，点击我的小心点儿.."},
-			{ id:23, pId:2, name:"叶子节点2 - 3", title:"好歹我也是个领导，别普通群众就来点击我.."},
-			{ id:3, pId:0, name:"郁闷的父节点", title:"别点我，我好害怕...我的子节点随便点吧..."},
-			{ id:31, pId:3, name:"叶子节点3 - 1", title:"唉，随便点我吧"},
-			{ id:32, pId:3, name:"叶子节点3 - 2", title:"唉，随便点我吧"},
-			{ id:33, pId:3, name:"叶子节点3 - 3", title:"唉，随便点我吧"}  */
-		];
-		var log, className = "dark";
-		function beforeClick(treeId, treeNode, clickFlag) {
-			console.log("treeId=" + treeId + ";treeNode=" + treeNode
-					+ ";clickFlag=" + clickFlag);
-			console.log(treeNode.id+";"+treeNode.pId);
+		},
+		callback : {
+			//beforeClick : beforeClick,
+			onClick : onClick
 		}
-		function onClick(event, treeId, treeNode, clickFlag) {
-			//点击组织切换时，将内容定位到基本信息位置
-			$("#myTabContent").children().removeClass("active");
-			$("#myTab").children().removeClass("active");
-			$("#firstLi").addClass("active");
-			$("#listtable").addClass("in active");
-			
-			getOrganizationList(treeNode);
-			//$table.bootstrapTable('refresh');
-			//动态加载tab页
-			//loadTabPage(treeNode);
-		}
+	};
+	var zNodes =[];
+	var log, className = "dark";
+	function beforeClick(treeId, treeNode, clickFlag) {
+		/* console.log("treeId=" + treeId + ";treeNode=" + treeNode
+				+ ";clickFlag=" + clickFlag);
+		console.log(treeNode.id+";"+treeNode.pId); */
+	}
+	function onClick(event, treeId, treeNode, clickFlag) {
+		//点击组织切换时，将内容定位到基本信息位置
+		$("#myTabContent").children().removeClass("active");
+		$("#myTab").children().removeClass("active");
+		$("#firstLi").addClass("active");
+		$("#listtable").addClass("in active");
+		
+		getOrganizationList(treeNode);
+		//$table.bootstrapTable('refresh');
+	}
 
-		$(document).ready(function() {
-			//$.fn.zTree.init($("#tree"), setting, zNodes);
-			getOrganizationList();
-		});
-	</script>
-	<script>
+	$(document).ready(function() {
+		//$.fn.zTree.init($("#tree"), setting, zNodes);
+		getOrganizationList();
+		//动态加载tab页(子集)
+		loadTabPage();
+	});
+</script>
+<script>
 var $table = $('#table');
 $(function() {
 	// bootstrap table初始化
@@ -151,15 +139,14 @@ $(function() {
 		],
 		//数据加载成功后执行，加载树结构
 		onLoadSuccess: function(data){
-			//console.log(data)
-			//动态加载tab页
-			loadTabPage();
+			
 		},
 	});
 });
 //获取组织列表
 function getOrganizationList(treeNode){
-	console.log(treeNode);
+	
+	//console.log(treeNode);
 	//获取所有组织列表
 	if(treeNode == null || treeNode == "undefined"){
 		 $.ajax({
@@ -178,16 +165,14 @@ function getOrganizationList(treeNode){
 		        }
 		    });
 	}else{
-	    //获取某组织以及下一级组织列表，并更新基本信息
+	    //获取某组织基本信息
 		$.ajax({
 			type: 'get',
 			url: '${basePath}/manage/organization/list?id='+treeNode.id,
 			success: function(data) {
 				$("#listtable").children().remove();
+				$("#listtable").append('<input id="organizationId" value="'+treeNode.id+'" />');
 		        for(var i in data.rows[0]) {//获取对象属性
-		            /* if(data.rows[0].hasOwnProperty(i)) {  // 建议加上判断,如果没有扩展对象属性可以不加
-		                count++;
-		            } */
 		            if (data.rows[0].hasOwnProperty(i) && typeof data.rows[0][i] != "function") {
 		            	$("#listtable").append('<label>'+i+':</label><span>'+data.rows[0][i]+'</span><br />');
 	    	         }
@@ -417,13 +402,21 @@ function loadTabPage(/* treeNode */){
 		type: 'get',
 		url: '${basePath}/manage/organization/getSysTableinfo?type=1',
 		success: function(data) {
+			
 	        if(data.rows != null && data.rows.length != 0){
 	        	var len = data.rows.length;
 	        	var tabId = "tab";
 	        	for(var i = 0; i < len; i++){
+	        		//console.log(data.rows[i].enTableName)
 	        		$("#myTab").append('<li class="forRemove"><a href="#'+(tabId + i)+'" data-toggle="tab" onclick="createTable(\'table'+i+'\',\''+data.rows[i].enTableName+'\')">'+data.rows[i].cnTableName+'</a></li>');
 	        		$("#myTabContent").append('<div class="tab-pane fade forRemove" id="'+(tabId + i)+'">'+
-	        				'<table id="table'+i+'">这是第'+i+'个页面</table></div>');
+	        				'<div class="fixed-table-toolbar"><div class="bs-bars pull-left"><div id="toolbar'+i+'">'+
+								'<shiro:hasPermission name="upms:organization:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetForm(\'table'+i+'\',\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-plus"></i> 新增</a></shiro:hasPermission>'+
+								'<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="alert(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-edit"></i> 编辑</a></shiro:hasPermission>'+
+								'<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="alert(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 删除</a></shiro:hasPermission>'+
+								'<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="creatrSubSetColumn(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 新增子集属性</a></shiro:hasPermission>'+
+							'</div></div></div>'+
+	        				'<table id="table'+i+'"></table></div>');
 	        	} 
 	        }
 		},
@@ -446,39 +439,34 @@ function loadTabPage(/* treeNode */){
 }
 //动态生成table表格列
 function createTable(tableId,tableName){
-	//如果内容已经加载，则直接返回
-	if(document.getElementById(tableId).rows[0]) { 
-		return;
-	}else{
-		var option = {
-				//url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
-				height: getHeight(),
-				striped: true,
-				search: true,
-				showRefresh: true,
-				showColumns: true,
-				minimumCountColumns: 2,
-				clickToSelect: true,
-				detailView: true,
-				detailFormatter: 'detailFormatter',
-				pagination: true,
-				paginationLoop: false,
-				sidePagination: 'server',
-				silentSort: false,
-				smartDisplay: false,
-				escape: true,
-				searchOnEnterKey: true,
-				//idField: 'organizationId',
-				maintainSelected: true,
-				//toolbar: '#toolbar',
-				columns: [],//getTableColumns(tableId,tableName),
-				//数据加载成功后执行，加载树结构
-				onLoadSuccess: function(data){
-					
-				}
+	var option = {
+			//url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
+			height: getHeight(),
+			striped: true,
+			//search: true,
+			//showRefresh: true,
+			showColumns: true,
+			minimumCountColumns: 2,
+			clickToSelect: true,
+			detailView: true,
+			detailFormatter: 'detailFormatter',
+			pagination: true,
+			paginationLoop: false,
+			sidePagination: 'server',
+			silentSort: false,
+			smartDisplay: false,
+			escape: true,
+			searchOnEnterKey: true,
+			//idField: 'organizationId',
+			maintainSelected: true,
+			//toolbar: '#toolbar',
+			columns: [],//getTableColumns(tableId,tableName),
+			//数据加载成功后执行，加载树结构
+			onLoadSuccess: function(data){
+				
 			}
-		getTableColumns(tableId,tableName,option)
-	}
+		}
+	getTableColumns(tableId,tableName,option)
 }
 //动态获取表的列信息
 function getTableColumns(tableId,tableName,option){
@@ -487,14 +475,16 @@ function getTableColumns(tableId,tableName,option){
 		type: 'get',
 		url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
 		success: function(data) {
-			console.log(data)
+			//console.log(data)
 			var cloumns = [];
+			cloumns[0] = {field: 'ck', checkbox: true};
 	        if(data.rows != null && data.rows.length != 0){
 	        	var obj = {};
 	        	for(var i = 0; i < data.rows.length; i++){
 	        		obj = {field: data.rows[i].enColName, title: data.rows[i].cnColName};
-	        		cloumns[i] = obj;
+	        		cloumns[i+1] = obj;
 	        	}
+	        	//console.log(cloumns)
 	        }
 	        option.columns = cloumns;
 	        //加载表格
@@ -522,13 +512,17 @@ function getTableColumns(tableId,tableName,option){
 
 //获取子集详细信息
 function getDataInfo(tableId,tableName){
+	var organizationId = $("#organizationId").val();
 	$.ajax({
 		type: 'get',
-		url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName,	
+		url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName+'&organizationId='+organizationId,	
 		success: function(data) {
-			console.log(data);
 			//刷新表格，加载数据
-			$("#"+tableId).bootstrapTable('load',data);  
+			if(data.rows == null || data.rows.length == 0){
+				$("#"+tableId).bootstrapTable('load',{"total":0,"rows":[]});
+			}else{
+				$("#"+tableId).bootstrapTable('load',data); 
+			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
 			$.confirm({
@@ -544,6 +538,63 @@ function getDataInfo(tableId,tableName){
 					}
 				}
 			});
+		}
+	});
+}
+var subsetDialog;
+//添加子集数据
+function createSubsetForm(tableId, tableName){
+	var organizationId = $("#organizationId").val();
+	if(organizationId == "undefined" || organizationId == "" || organizationId == null){
+		$.confirm({
+			title: false,
+			content: '请选择部门！',
+			autoClose: 'cancel|3000',
+			backgroundDismiss: true,
+			buttons: {
+				cancel: {
+					text: '取消',
+					btnClass: 'waves-effect waves-button'
+				}
+			}
+		});
+	}else{
+		subsetDialog = $.dialog({
+			animationSpeed: 300,
+			title: '新增子集数据',
+			content: 'url:${basePath}/manage/organization/createSubsetForm',
+			onContentReady: function () {
+				initMaterialInput();
+				//获取子集的列信息并创建相应的form
+				createSubsetClumns(tableId, tableName, organizationId);
+			}
+		});
+	}
+}
+//新增子集
+var subsetTableDialog;
+function createSubsetTable(){
+	subsetTableDialog = $.dialog({
+		animationSpeed: 300,
+		title: '新增子集',
+		content: 'url:${basePath}/manage/organization/createSubsetTable',
+		onContentReady: function () {
+			initMaterialInput();
+		}
+	});
+}
+//新增子集属性
+var subsetColumnDialog;
+function creatrSubSetColumn(tableName){
+	subsetTableDialog = $.dialog({
+		animationSpeed: 300,
+		title: '新增子集属性',
+		content: 'url:${basePath}/manage/organization/createSubsetColumn',
+		onContentReady: function () {
+			initMaterialInput();
+			$('select').select2();
+			$('#attribute').select2().val("0").trigger('change');
+			$("#tableName").val(tableName);
 		}
 	});
 }

@@ -237,73 +237,73 @@ public class TDeptUuidExample implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andBIdIsNull() {
-            addCriterion("b_id is null");
+        public Criteria andSubIdIsNull() {
+            addCriterion("sub_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andBIdIsNotNull() {
-            addCriterion("b_id is not null");
+        public Criteria andSubIdIsNotNull() {
+            addCriterion("sub_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBIdEqualTo(String value) {
-            addCriterion("b_id =", value, "bId");
+        public Criteria andSubIdEqualTo(String value) {
+            addCriterion("sub_id =", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdNotEqualTo(String value) {
-            addCriterion("b_id <>", value, "bId");
+        public Criteria andSubIdNotEqualTo(String value) {
+            addCriterion("sub_id <>", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdGreaterThan(String value) {
-            addCriterion("b_id >", value, "bId");
+        public Criteria andSubIdGreaterThan(String value) {
+            addCriterion("sub_id >", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdGreaterThanOrEqualTo(String value) {
-            addCriterion("b_id >=", value, "bId");
+        public Criteria andSubIdGreaterThanOrEqualTo(String value) {
+            addCriterion("sub_id >=", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdLessThan(String value) {
-            addCriterion("b_id <", value, "bId");
+        public Criteria andSubIdLessThan(String value) {
+            addCriterion("sub_id <", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdLessThanOrEqualTo(String value) {
-            addCriterion("b_id <=", value, "bId");
+        public Criteria andSubIdLessThanOrEqualTo(String value) {
+            addCriterion("sub_id <=", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdLike(String value) {
-            addCriterion("b_id like", value, "bId");
+        public Criteria andSubIdLike(String value) {
+            addCriterion("sub_id like", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdNotLike(String value) {
-            addCriterion("b_id not like", value, "bId");
+        public Criteria andSubIdNotLike(String value) {
+            addCriterion("sub_id not like", value, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdIn(List<String> values) {
-            addCriterion("b_id in", values, "bId");
+        public Criteria andSubIdIn(List<String> values) {
+            addCriterion("sub_id in", values, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdNotIn(List<String> values) {
-            addCriterion("b_id not in", values, "bId");
+        public Criteria andSubIdNotIn(List<String> values) {
+            addCriterion("sub_id not in", values, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdBetween(String value1, String value2) {
-            addCriterion("b_id between", value1, value2, "bId");
+        public Criteria andSubIdBetween(String value1, String value2) {
+            addCriterion("sub_id between", value1, value2, "subId");
             return (Criteria) this;
         }
 
-        public Criteria andBIdNotBetween(String value1, String value2) {
-            addCriterion("b_id not between", value1, value2, "bId");
+        public Criteria andSubIdNotBetween(String value1, String value2) {
+            addCriterion("sub_id not between", value1, value2, "subId");
             return (Criteria) this;
         }
     }
