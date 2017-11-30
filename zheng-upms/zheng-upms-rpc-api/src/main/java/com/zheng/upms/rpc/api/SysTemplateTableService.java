@@ -2,6 +2,8 @@ package com.zheng.upms.rpc.api;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.zheng.common.base.BaseService;
 import com.zheng.upms.dao.model.SysColumnInfo;
 import com.zheng.upms.dao.model.SysTableinfo;
@@ -42,4 +44,19 @@ public interface SysTemplateTableService extends BaseService<SysTemplateTable, S
 	 * @return
 	 */
 	int insertSubsetTableData(SysColumnInfo sysColumnInfo);
+	/**
+	 * 删除子集数据
+	 * @param tableName
+	 * @param subId
+	 * @return
+	 */
+	int deleteSubsetData(String tableName, String subId);
+	/**
+	 * 修改子集数据
+	 * @param tableName
+	 * @param subId
+	 * @param data
+	 * @return
+	 */
+	int updateSubsetData(String tableName, String subId, String data);
 }

@@ -105,13 +105,37 @@ public class UpmsOrganizationController extends BaseController {
         return result;
     }
     
+    @ApiOperation(value = "根据ID获取组织信息")
+    @RequiresPermissions("upms:organization:read")
+    @RequestMapping(value = "/getOrganizationById", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getOrganizationById(@RequestParam(required = false, value = "id") String id) {
+    	UpmsOrganizationExample upmsOrganizationExample = new UpmsOrganizationExample();
+    	UpmsOrganizationExample.Criteria criteria=upmsOrganizationExample.createCriteria();
+    	criteria.andOrganizationIdEqualTo(id);
+        List<UpmsOrganization> rows = upmsOrganizationService.selectByExample(upmsOrganizationExample);
+        UpmsOrganization organizationPar = new UpmsOrganization();
+        if(rows != null && rows.size() != 0){
+        	String pid = rows.get(0).getPid();
+        	if(pid != null && pid.length() != 0){
+        		organizationPar = upmsOrganizationService.selectByPrimaryKeyString(rows.get(0).getPid());
+        	}else{
+        		organizationPar.setName("");
+        		organizationPar.setOrganizationId("");
+        	}
+        }
+        Map<String, Object> result = new HashMap<>();
+        result.put("rows", rows);
+        result.put("organizationPar", organizationPar);
+        return result;
+    }
+    
     @ApiOperation(value = "所有组织列表")
     @RequiresPermissions("upms:organization:read")
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     @ResponseBody
     public Object listAll() {
         UpmsOrganizationExample upmsOrganizationExample = new UpmsOrganizationExample();
- 
         List<UpmsOrganization> rows = upmsOrganizationService.selectByExample(upmsOrganizationExample);
         //long total = upmsOrganizationService.countByExample(upmsOrganizationExample);
         Map<String, Object> result = new HashMap<>();
@@ -169,7 +193,12 @@ public class UpmsOrganizationController extends BaseController {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable("id") String id, ModelMap modelMap) {
         UpmsOrganization organization = upmsOrganizationService.selectByPrimaryKeyString(id);
+        UpmsOrganization organizationPar = new UpmsOrganization();
+        if(organization.getPid() != null && organization.getPid().length() != 0){
+        	organizationPar = upmsOrganizationService.selectByPrimaryKeyString(organization.getPid());
+        }
         modelMap.put("organization", organization);
+        modelMap.put("organizationPar", organizationPar);
         return "/manage/organization/update.jsp";
     }
 
@@ -211,7 +240,8 @@ public class UpmsOrganizationController extends BaseController {
     	//获取相关表
 //    	sysTableinfoExample.or().andTypeEqualTo(type);
 //    	sysTableinfoExample.or().andAvailableEqualTo("0");
-    	criteria.andTypeEqualTo(type);
+    	//criteria.andTypeEqualTo(type);
+    	criteria.andTypeEqualTo(ToolUtil.ORGANIZATION_SUBSET_TYPE);
     	criteria.andAvailableEqualTo(ToolUtil.AVAILABLE);
     	List<SysTableinfo> rows = sysTableinfoService.selectByExample(sysTableinfoExample);
     	result.put("rows", rows);
@@ -230,7 +260,8 @@ public class UpmsOrganizationController extends BaseController {
     	//获取相关表对应列
     	SysColumnInfoExample sysColumnInfoExample = new SysColumnInfoExample();
     	SysColumnInfoExample.Criteria criteria=sysColumnInfoExample.createCriteria();  
-    	criteria.andTypeEqualTo(type);
+    	//criteria.andTypeEqualTo(type);
+    	criteria.andTypeEqualTo(ToolUtil.ORGANIZATION_SUBSET_TYPE);
     	criteria.andTableNameEqualTo(tableName);
     	criteria.andAvailableEqualTo(ToolUtil.AVAILABLE);
     	
@@ -245,27 +276,35 @@ public class UpmsOrganizationController extends BaseController {
     @RequestMapping(value = "/getDataInfo", method = RequestMethod.GET)
     @ResponseBody
     public Object getDataInfo(
-    		@RequestParam(required = false, value = "type") String type,
+    		//@RequestParam(required = false, value = "type") String type,
     		@RequestParam(required = false, value = "tableName") String tableName,
-    		@RequestParam(required = false, value = "organizationId") String organizationId
+    		@RequestParam(required = false, value = "organizationId") String organizationId,
+    		@RequestParam(required = false, value = "subId") String subId
     		){
     	Map<String, Object> result = new HashMap<>();
-    	//获取部门信息主键存储表中的同类数据，以便在子集表中获取具体数据
-    	TDeptUuidExample tDeptUuidExample = new TDeptUuidExample();
-    	//此次需要添加条件
-    	TDeptUuidExample.Criteria criteria=tDeptUuidExample.createCriteria();  
-    	criteria.andDeptIdEqualTo(organizationId);
-    	List<TDeptUuid> rows = tDeptUuidService.selectByExample(tDeptUuidExample);
-    	
-    	int len = rows.size();
-    	
-    	if(len == 0){
-    		return null;
-    	}
+    	int len = 0;
+    	List<TDeptUuid> rows = new ArrayList<TDeptUuid>();
     	List<String> list = new ArrayList<String>();
-    	for(int i = 0; i < len; i++){
-    		//list.add(i, rows.get(i).getbId());
-    		list.add(i, rows.get(i).getSubId());
+    	
+    	//判断业务主键subId是否存在，若存在，则直接使用，若不存在，则查询获取
+    	if(subId == null || "".equals(subId)){
+    		//获取部门信息主键存储表中的同类数据，以便在子集表中获取具体数据
+        	TDeptUuidExample tDeptUuidExample = new TDeptUuidExample();
+        	//此次需要添加条件
+        	TDeptUuidExample.Criteria criteria=tDeptUuidExample.createCriteria();  
+        	criteria.andDeptIdEqualTo(organizationId);
+        	rows = tDeptUuidService.selectByExample(tDeptUuidExample);
+        	if(rows == null || rows.size() == 0){
+        		return null;
+        	}
+        	len = rows.size();
+        	for(int i = 0; i < len; i++){
+        		//list.add(i, rows.get(i).getbId());
+        		list.add(i, rows.get(i).getSubId());
+        	}
+    	}else{
+    		len = 1;
+    		list.add(0, subId);
     	}
     	//获取具体的数据信息
     	List<SysTemplateTable> resultList = sysTemplateTableService.getDataInfo(tableName, list);
@@ -281,6 +320,7 @@ public class UpmsOrganizationController extends BaseController {
         		String[] values = resultList.get(i).getValue().split(",");
         		for(int j = 0; j < properties.length; j++){
         			mapResult.put(properties[j], values[j]);
+        			mapResult.put("subId", resultList.get(i).getSubId());
         		}
         		resultArr[i] = mapResult;
         	}
@@ -343,4 +383,25 @@ public class UpmsOrganizationController extends BaseController {
     	int count = sysColumnInfoService.insert(sysColumnInfo);
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
+    
+    
+    @ApiOperation(value = "修改子集数据")
+    @RequiresPermissions("upms:organization:createSubset")
+    @ResponseBody
+    @RequestMapping(value = "/updateSubsetData/{tableName}/{subId}", method = RequestMethod.POST)
+    public Object updateSubsetData(@PathVariable("tableName") String tableName, @PathVariable("subId") String subId, @RequestParam("data") String data) {
+    	int count = sysTemplateTableService.updateSubsetData(tableName, subId, data);
+        
+    	return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+    }
+    @ApiOperation(value = "删除子集数据")
+    @RequiresPermissions("upms:organization:createSubset")
+    @ResponseBody
+    @RequestMapping(value = "/deletebsetData/{tableName}/{subId}", method = RequestMethod.GET)
+    public Object deletebsetData(@PathVariable("tableName") String tableName, @PathVariable("subId") String ids) {
+    	int count = sysTemplateTableService.deleteSubsetData(tableName, ids);
+    	
+        return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+    }
+    
 }

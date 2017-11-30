@@ -45,6 +45,13 @@
       
   </insert>
   
+  <update id="updateSysTemplateTable" parameterType="com.zheng.upms.dao.model.SysTemplateTable">
+    UPDATE ${tablename} set   
+      value=#{value,jdbcType=VARCHAR},   
+      updatetime=DATE_FORMAT(NOW(),'%Y-%c-%d %H:%i %S')
+    WHERE property=#{property,jdbcType=VARCHAR} AND sub_id=#{subId,jdbcType=VARCHAR}
+  </update>
+  
   <update id="createTable" parameterType="java.lang.String">
     create table IF NOT EXISTS ${tableName}
 		(
@@ -61,5 +68,11 @@
 		   primary key (id)
 		) 
   </update>
+  <delete id="deleteBySubId" parameterType="java.lang.String">
+    delete from ${tableName}
+    where sub_id = #{subId, jdbcType=VARCHAR}
+  </delete>
+  
+  
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 </mapper>

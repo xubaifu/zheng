@@ -39,4 +39,16 @@ public class SysTemplateTableServiceMock extends BaseServiceMock<SysTemplateTabl
 		return 0;
 	}
 
+	@Override
+	public int deleteSubsetData(String tableName, String subId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateSubsetData(String tableName, String subId, String data) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

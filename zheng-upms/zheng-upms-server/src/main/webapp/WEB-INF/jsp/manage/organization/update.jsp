@@ -18,7 +18,7 @@
 		</div>
 		<div class="form-group">
 			<label id="pidLable" for="pid">上级组织</label>
-			<input id="pName" type="text" class="form-control" name="pName" maxlength="64" value="${organization.pid}" onclick="loadOrganization()">
+			<input id="pName" type="text" class="form-control" name="pName" maxlength="64" value="${organizationPar.name}" onclick="loadOrganization()">
 			<input id="pid" type="text" class="form-control" name="pid" maxlength="64" value="${organization.pid}" style="display: none;">
 		</div>
 		<div id="orgtree" style="border:1px solid #d2d1d1;display: none;">
@@ -82,7 +82,10 @@ function createSubmit() {
 			} else {
 				updateDialog.close();
 				$table.bootstrapTable('refresh');
+				//刷新树结构
 				getOrganizationList();
+				//刷新基本信息
+				getOrganizationList("",'${organization.organizationId}');
 			}
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

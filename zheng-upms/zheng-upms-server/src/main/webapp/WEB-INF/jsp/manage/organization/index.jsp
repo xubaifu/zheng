@@ -93,8 +93,7 @@
 		$("#myTab").children().removeClass("active");
 		$("#firstLi").addClass("active");
 		$("#listtable").addClass("in active");
-		
-		getOrganizationList(treeNode);
+		getOrganizationList(treeNode,treeNode.id);
 		//$table.bootstrapTable('refresh');
 	}
 
@@ -144,9 +143,7 @@ $(function() {
 	});
 });
 //获取组织列表
-function getOrganizationList(treeNode){
-	
-	//console.log(treeNode);
+function getOrganizationList(treeNode,id){
 	//获取所有组织列表
 	if(treeNode == null || treeNode == "undefined"){
 		 $.ajax({
@@ -168,15 +165,37 @@ function getOrganizationList(treeNode){
 	    //获取某组织基本信息
 		$.ajax({
 			type: 'get',
-			url: '${basePath}/manage/organization/list?id='+treeNode.id,
+			url: '${basePath}/manage/organization/getOrganizationById?id='+id,
 			success: function(data) {
 				$("#listtable").children().remove();
-				$("#listtable").append('<input id="organizationId" value="'+treeNode.id+'" />');
-		        for(var i in data.rows[0]) {//获取对象属性
+				$("#listtable").append('<input style="display:none" id="organizationId" value="'+id+'" />');
+		        /* for(var i in data.rows[0]) {//获取对象属性
 		            if (data.rows[0].hasOwnProperty(i) && typeof data.rows[0][i] != "function") {
 		            	$("#listtable").append('<label>'+i+':</label><span>'+data.rows[0][i]+'</span><br />');
 	    	         }
-		        }
+		        } */
+		        $("#listtable").append(
+		        		'<div id="toolbar">'+
+		        			'<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction(\''+data.rows[0].organizationId+'\')"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>'+
+		        		'</div>'
+		        		);
+		        $("#listtable").append('<div class="form-group">'+
+											'<label for="name">名称 :&nbsp;&nbsp;&nbsp; <span>'+data.rows[0].name+'</span></label>'+
+											'<span class="form-control"></span>'+
+										'</div>'+
+										'<div class="form-group">'+
+											'<label for="description">描述:&nbsp;&nbsp;&nbsp; <span>'+data.rows[0].description+'</span></label>'+
+											'<span class="form-control"></span>'+
+										'</div>'+
+										'<div class="form-group">'+
+											'<label for="description">上级组织:&nbsp;&nbsp;&nbsp; <span>'+data.organizationPar.name+'</span></label>'+
+											'<span class="form-control"></span>'+
+										'</div>'+
+											'<div class="form-group">'+
+											'<label for="description">创建时间:&nbsp;&nbsp;&nbsp; <span>'+new Date(data.organizationPar.ctime).toLocaleString()+'</span></label>'+
+											'<span class="form-control"></span>'+
+										'</div>'
+									);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				$.confirm({
@@ -412,8 +431,8 @@ function loadTabPage(/* treeNode */){
 	        		$("#myTabContent").append('<div class="tab-pane fade forRemove" id="'+(tabId + i)+'">'+
 	        				'<div class="fixed-table-toolbar"><div class="bs-bars pull-left"><div id="toolbar'+i+'">'+
 								'<shiro:hasPermission name="upms:organization:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetForm(\'table'+i+'\',\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-plus"></i> 新增</a></shiro:hasPermission>'+
-								'<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="alert(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-edit"></i> 编辑</a></shiro:hasPermission>'+
-								'<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="alert(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 删除</a></shiro:hasPermission>'+
+								'<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateSubsetData(\''+data.rows[i].enTableName+'\',\'table'+i+'\')"><i class="zmdi zmdi-edit"></i> 编辑</a></shiro:hasPermission>'+
+								'<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deletebsetData(\'table'+i+'\',\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 删除</a></shiro:hasPermission>'+
 								'<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="creatrSubSetColumn(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 新增子集属性</a></shiro:hasPermission>'+
 							'</div></div></div>'+
 	        				'<table id="table'+i+'"></table></div>');
@@ -475,20 +494,23 @@ function getTableColumns(tableId,tableName,option){
 		type: 'get',
 		url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
 		success: function(data) {
-			//console.log(data)
+			console.log(data)
 			var cloumns = [];
 			cloumns[0] = {field: 'ck', checkbox: true};
+			cloumns[1] = {field: 'subId', title:"业务主键"};
 	        if(data.rows != null && data.rows.length != 0){
 	        	var obj = {};
 	        	for(var i = 0; i < data.rows.length; i++){
 	        		obj = {field: data.rows[i].enColName, title: data.rows[i].cnColName};
-	        		cloumns[i+1] = obj;
+	        		cloumns[i+2] = obj;
 	        	}
 	        	//console.log(cloumns)
 	        }
 	        option.columns = cloumns;
 	        //加载表格
 	        $("#"+tableId).bootstrapTable(option);
+	        //隐藏列
+	        //$("#"+tableId).bootstrapTable('hideColumn', 'subId');
 	      //获取子集 详细数据信息
 			getDataInfo(tableId,tableName);
 		},
@@ -515,8 +537,10 @@ function getDataInfo(tableId,tableName){
 	var organizationId = $("#organizationId").val();
 	$.ajax({
 		type: 'get',
-		url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName+'&organizationId='+organizationId,	
+		//url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName+'&organizationId='+organizationId,	
+		url: '${basePath}/manage/organization/getDataInfo?tableName='+tableName+'&organizationId='+organizationId,	
 		success: function(data) {
+			console.log(data)
 			//刷新表格，加载数据
 			if(data.rows == null || data.rows.length == 0){
 				$("#"+tableId).bootstrapTable('load',{"total":0,"rows":[]});
@@ -598,7 +622,142 @@ function creatrSubSetColumn(tableName){
 		}
 	});
 }
-
+//编辑子集数据
+function updateSubsetData(tableName,tableId){
+	var organizationId = $("#organizationId").val();
+	var rows = $("#"+tableId).bootstrapTable('getSelections');//选中的某行数据
+	if (rows.length != 1) {
+		$.confirm({
+			title: false,
+			content: '请选择一条记录！',
+			autoClose: 'cancel|3000',
+			backgroundDismiss: true,
+			buttons: {
+				cancel: {
+					text: '取消',
+					btnClass: 'waves-effect waves-button'
+				}
+			}
+		});
+	} else {
+		/* console.log(rows);
+		console.log(rows[0].subId);
+		for(var i in rows[0]) {//获取对象属性
+	        if (rows[0].hasOwnProperty(i) && typeof rows[0][i] != "function") {
+	        	console.log("属性："+i);
+	        	console.log("属性值"+rows[0][i]);
+	         }
+	    } */
+		subsetDialog = $.dialog({
+			animationSpeed: 300,
+			title: '新增子集数据',
+			content: 'url:${basePath}/manage/organization/createSubsetForm',
+			onContentReady: function () {
+				initMaterialInput();
+				//获取子集的列信息并创建相应的form
+				createSubsetClumns(tableId, tableName, organizationId, rows);
+			}
+		});
+	}
+	/* 
+	$.ajax({
+		type: 'get',
+		url: '${basePath}/manage/organization/getDataInfo?tableName='+tableName+'&organizationId='+organizationId+'&subId='+rows[0].subId,	
+		success: function(data) {
+			console.log(data)
+			//刷新表格，加载数据
+			if(data.rows == null || data.rows.length == 0){
+				$("#"+tableId).bootstrapTable('load',{"total":0,"rows":[]});
+			}else{
+				$("#"+tableId).bootstrapTable('load',data); 
+			}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			$.confirm({
+				theme: 'dark',
+				animation: 'rotateX',
+				closeAnimation: 'rotateX',
+				title: false,
+				content: textStatus,
+				buttons: {
+					confirm: {
+						text: '确认',
+						btnClass: 'waves-effect waves-button waves-light'
+					}
+				}
+			});
+		}
+	}); */
+}
+//删除子集数据
+function deletebsetData(tableId, tableName){
+	
+	var rows = $("#"+tableId).bootstrapTable('getSelections');//选中的某行数据
+	
+	if (rows.length == 0) {
+		$.confirm({
+			title: false,
+			content: '请至少选择一条记录！',
+			autoClose: 'cancel|3000',
+			backgroundDismiss: true,
+			buttons: {
+				cancel: {
+					text: '取消',
+					btnClass: 'waves-effect waves-button'
+				}
+			}
+		});
+	} else {
+		var ids = new Array();
+		for (var i in rows) {
+			ids.push(rows[i].subId);
+		}
+		
+		deleteDialog = $.confirm({
+			type: 'red',
+			animationSpeed: 300,
+			title: false,
+			content: '确认删除该数据吗？',
+			buttons: {
+				confirm: {
+					text: '确认',
+					btnClass: 'waves-effect waves-button',
+					action: function () {
+						$.ajax({
+							type: 'get',
+							url: '${basePath}/manage/organization/deletebsetData/'+tableName+'/'+ids.join(","),
+							//url: '${basePath}/manage/organization/delete/' + ids.join(","),
+							success: function(result) {
+								//刷新表格
+					        	createTable(tableId,tableName);
+					        	subsetDialog.close();
+							},
+							error: function(XMLHttpRequest, textStatus, errorThrown) {
+								$.confirm({
+									theme: 'dark',
+									animation: 'rotateX',
+									closeAnimation: 'rotateX',
+									title: false,
+									content: textStatus,
+									buttons: {
+										confirm: {
+											text: '确认',
+											btnClass: 'waves-effect waves-button waves-light'
+										}
+									}
+								});
+							}
+						});
+					}
+				},
+				cancel: {
+					text: '取消',
+					btnClass: 'waves-effect waves-button'
+				}
+			}
+		});
+	}
+}
 </script>
 </body>
 </html>

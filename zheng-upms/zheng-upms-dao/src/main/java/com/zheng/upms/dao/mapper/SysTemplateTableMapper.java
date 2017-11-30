@@ -1,9 +1,12 @@
 package com.zheng.upms.dao.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.zheng.upms.dao.model.SysTemplateTable;
 import com.zheng.upms.dao.model.SysTemplateTableExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface SysTemplateTableMapper {
     long countByExample(SysTemplateTableExample example);
@@ -19,4 +22,5 @@ public interface SysTemplateTableMapper {
     int updateByExampleSelective(@Param("record") SysTemplateTable record, @Param("example") SysTemplateTableExample example);
 
     int updateByExample(@Param("record") SysTemplateTable record, @Param("example") SysTemplateTableExample example);
+    
 }

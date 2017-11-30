@@ -18,4 +18,6 @@ public interface TableInfoAPIMapper {
 	int insertTDeptUuid(TDeptUuid tDeptUuid);
 	int insertSysTemplateTable(SysTemplateTable sysTemplateTable/*, String tableName*/);
 	void createTable(@Param("tableName") String tableName);
+	int deleteBySubId(@Param("tableName") String tableName, @Param("subId") String subId);
+	int updateSysTemplateTable(SysTemplateTable sysTemplateTable);
 }
