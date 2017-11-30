@@ -63,7 +63,7 @@ function createSubsetColumn(){
         url: '${basePath}/manage/organization/insertSubsetColumnData',
         data: $('#subsetColumn').serialize(),
         beforeSend: function() {
-            if ($('#cnTableName').val() == '') {
+            if ($('#cnColName').val() == '') {
                 $('#cnColName').focus();
                 return false;
             }
