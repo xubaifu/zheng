@@ -149,6 +149,14 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
     		sysTemplateTable.setValue(value);
     		sysTemplateTable.setTablename(tableName);
     		count = tableInfoAPIMapper.updateSysTemplateTable(sysTemplateTable);
+    		if(count == 0){//新增时如果没有该数据，则添加（因为当子集新增一个属性（列）时，所有的该子集下的数据都没有该属性（列）值，所以编辑数据时该属性（列）下的内容是无法添加的）
+        		/*sysTemplateTable.setSubId(subId);
+        		sysTemplateTable.setProperty(key);
+        		sysTemplateTable.setValue(value);
+        		sysTemplateTable.setTablename(tableName);*/
+    			sysTemplateTable.setId(UUID.randomUUID().toString());
+        		tableInfoAPIMapper.insertSysTemplateTable(sysTemplateTable);
+    		}
     	}
 		return count;
 	}
