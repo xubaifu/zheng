@@ -227,20 +227,10 @@ public class UpmsOrganizationController extends BaseController {
     public Object getSysTableinfo(
     		@RequestParam(required = false, value = "type") String type
     		) {
-        /*UpmsOrganizationExample upmsOrganizationExample = new UpmsOrganizationExample();
-        
-        List<UpmsOrganization> rows = upmsOrganizationService.selectByExample(upmsOrganizationExample);
-        //long total = upmsOrganizationService.countByExample(upmsOrganizationExample);
-        Map<String, Object> result = new HashMap<>();
-        result.put("rows", rows);*/
-        //result.put("total", total);
     	SysTableinfoExample sysTableinfoExample = new SysTableinfoExample();
     	SysTableinfoExample.Criteria criteria=sysTableinfoExample.createCriteria();  
     	Map<String, Object> result = new HashMap<>();
     	//获取相关表
-//    	sysTableinfoExample.or().andTypeEqualTo(type);
-//    	sysTableinfoExample.or().andAvailableEqualTo("0");
-    	//criteria.andTypeEqualTo(type);
     	criteria.andTypeEqualTo(ToolUtil.ORGANIZATION_SUBSET_TYPE);
     	criteria.andAvailableEqualTo(ToolUtil.AVAILABLE);
     	List<SysTableinfo> rows = sysTableinfoService.selectByExample(sysTableinfoExample);
@@ -276,7 +266,6 @@ public class UpmsOrganizationController extends BaseController {
     @RequestMapping(value = "/getDataInfo", method = RequestMethod.GET)
     @ResponseBody
     public Object getDataInfo(
-    		//@RequestParam(required = false, value = "type") String type,
     		@RequestParam(required = false, value = "tableName") String tableName,
     		@RequestParam(required = false, value = "organizationId") String organizationId,
     		@RequestParam(required = false, value = "subId") String subId
