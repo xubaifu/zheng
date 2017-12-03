@@ -38,22 +38,33 @@
 		<div style="overflow-x: auto;">
 			<div id="tabPage" style="height: 40px">
 				<ul id="myTab" class="nav nav-tabs">
-					<li id="firstLi" class="active"><a href="#listtable" data-toggle="tab">基本信息</a></li>
+					<li id="organizationList" class="active"><a href="#listtableBySelected" data-toggle="tab">部门列表</a></li>
+					<li id="firstLi"><a href="#listtable" data-toggle="tab">基本信息</a></li>
 					<!-- <li><a href="#ios" data-toggle="tab">iOS</a></li>
 					<li><a href="#ios" data-toggle="tab">iOS</a></li> -->
 				</ul>
 			</div>
 		</div>
 		<div id="myTabContent" class="tab-content">
-			<div class="tab-pane fade in active" id="listtable">
+			<!-- 选中部门列表以及子部门列表 -->
+			<div class="tab-pane fade in active" id="listtableBySelected">
 				<div id="toolbar">
 					<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
 					<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
 					<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
 					<shiro:hasPermission name="upms:organization:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetTable()"><i class="zmdi zmdi-close"></i> 新增子集</a></shiro:hasPermission>
 				</div>
+				<table id="tableBySelected"></table>
+			</div>
+			<!-- 选中部门基本信息以及子集信息 -->
+			<div class="tab-pane fade in active" id="listtable">
+				<%-- <div id="toolbar">
+					<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:organization:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetTable()"><i class="zmdi zmdi-close"></i> 新增子集</a></shiro:hasPermission>
+				</div> --%>
 				<table id="table"></table>
-				
 			</div>
 			
 			<!-- <div class="tab-pane fade" id="ios">
@@ -91,10 +102,18 @@
 		//点击组织切换时，将内容定位到基本信息位置
 		$("#myTabContent").children().removeClass("active");
 		$("#myTab").children().removeClass("active");
-		$("#firstLi").addClass("active");
-		$("#listtable").addClass("in active");
+		$("#organizationList").addClass("active");
+		$("#listtableBySelected").addClass("in active");
+		//获取部门基本信息以及子集信息
 		getOrganizationList(treeNode,treeNode.id);
-		//$table.bootstrapTable('refresh');
+		
+		//获取部门及子部门信息
+		$table.bootstrapTable(
+	            "refresh",  
+	            {  
+	                url:'${basePath}/manage/organization/list?id='+treeNode.id
+	            }  
+	    );
 	}
 
 	$(document).ready(function() {
@@ -105,7 +124,7 @@
 	});
 </script>
 <script>
-var $table = $('#table');
+var $table = $('#tableBySelected');
 $(function() {
 	// bootstrap table初始化
 	$table.bootstrapTable({
