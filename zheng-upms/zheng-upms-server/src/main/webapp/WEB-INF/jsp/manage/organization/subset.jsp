@@ -46,8 +46,12 @@ function createSubsetTable(){
             }
         },
         success: function(result) {
-			alert("success");
-			console.log(result);
+			/* alert("success");
+			console.log(result); */
+			subsetTableDialog.close();
+			//getOrganizationList();
+			loadTabPage();
+			
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
 			$.confirm({
