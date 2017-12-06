@@ -50,9 +50,15 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
     private TDeptUuidMapper tDeptUuidMapper;
 
 	@Override
-	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list) {
-		return tableInfoAPIMapper.getDataInfo(tableName, list);
+	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list, String search) {
+		return tableInfoAPIMapper.getDataInfo(tableName, list, search);
 	}
+	
+	@Override
+	public int getDataInfoCountNolike(String tableName, List<String> list, String search) {
+		return tableInfoAPIMapper.getDataInfoCountNolike(tableName, list, search);
+	}
+
 
 	@Override
 	public int insertSubsetData(String tableName, String organizationId, String data) {

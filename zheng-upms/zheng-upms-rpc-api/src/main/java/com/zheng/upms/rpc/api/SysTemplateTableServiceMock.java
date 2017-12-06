@@ -16,7 +16,7 @@ import com.zheng.upms.dao.model.SysTemplateTableExample;
 public class SysTemplateTableServiceMock extends BaseServiceMock<SysTemplateTableMapper, SysTemplateTable, SysTemplateTableExample> implements SysTemplateTableService {
 
 	@Override
-	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list) {
+	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list, String search) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,6 +47,12 @@ public class SysTemplateTableServiceMock extends BaseServiceMock<SysTemplateTabl
 
 	@Override
 	public int updateSubsetData(String tableName, String subId, String data) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getDataInfoCountNolike(String tableName, List<String> list, String search) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

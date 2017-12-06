@@ -14,7 +14,15 @@ public interface TableInfoAPIMapper {
 	 * @param list
 	 * @return
 	 */
-	List<SysTemplateTable> getDataInfo(@Param("tableName") String tableName ,@Param("list") List<String> list);
+	List<SysTemplateTable> getDataInfo(@Param("tableName") String tableName ,@Param("list") List<String> list,@Param("search") String search);
+	/**
+	 * 查询条件筛选掉的数据数量
+	 * @param tableName
+	 * @param list
+	 * @param search
+	 * @return
+	 */
+	int getDataInfoCountNolike(@Param("tableName") String tableName ,@Param("list") List<String> list,@Param("search") String search);
 	int insertTDeptUuid(TDeptUuid tDeptUuid);
 	int insertSysTemplateTable(SysTemplateTable sysTemplateTable/*, String tableName*/);
 	void createTable(@Param("tableName") String tableName);

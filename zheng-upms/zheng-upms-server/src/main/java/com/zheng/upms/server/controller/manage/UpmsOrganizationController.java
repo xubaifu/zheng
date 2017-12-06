@@ -266,6 +266,9 @@ public class UpmsOrganizationController extends BaseController {
     @RequestMapping(value = "/getDataInfo", method = RequestMethod.GET)
     @ResponseBody
     public Object getDataInfo(
+    		@RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
+            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
+            @RequestParam(required = false, defaultValue = "", value = "search") String search,
     		@RequestParam(required = false, value = "tableName") String tableName,
     		@RequestParam(required = false, value = "organizationId") String organizationId,
     		@RequestParam(required = false, value = "subId") String subId
@@ -273,9 +276,13 @@ public class UpmsOrganizationController extends BaseController {
     	Map<String, Object> result = new HashMap<>();
     	int len = 0;
     	List<TDeptUuid> rows = new ArrayList<TDeptUuid>();
+    	List<TDeptUuid> rowsAll = new ArrayList<TDeptUuid>();
+    	
     	List<String> list = new ArrayList<String>();
+    	List<String> listAll = new ArrayList<String>();
     	
     	//判断业务主键subId是否存在，若存在，则直接使用，若不存在，则查询获取
+    	int count = 1;
     	if(subId == null || "".equals(subId)){
     		//获取部门信息主键存储表中的同类数据，以便在子集表中获取具体数据
         	TDeptUuidExample tDeptUuidExample = new TDeptUuidExample();
@@ -283,10 +290,15 @@ public class UpmsOrganizationController extends BaseController {
         	TDeptUuidExample.Criteria criteria=tDeptUuidExample.createCriteria();  
         	criteria.andDeptIdEqualTo(organizationId);
         	criteria.andEnTableNameEqualTo(tableName);
-        	rows = tDeptUuidService.selectByExample(tDeptUuidExample);
+        	//获取分页数据
+        	rows = tDeptUuidService.selectByExampleForOffsetPage(tDeptUuidExample, offset, limit);
+        	//获取未分页数据，用于统计需要返回的行数
+        	rowsAll = tDeptUuidService.selectByExample(tDeptUuidExample);
+        	
         	if(rows == null || rows.size() == 0){
         		return null;
         	}
+        	count = rowsAll.size();
         	len = rows.size();
         	for(int i = 0; i < len; i++){
         		//list.add(i, rows.get(i).getbId());
@@ -297,7 +309,14 @@ public class UpmsOrganizationController extends BaseController {
     		list.add(0, subId);
     	}
     	//获取具体的数据信息
-    	List<SysTemplateTable> resultList = sysTemplateTableService.getDataInfo(tableName, list);
+    	List<SysTemplateTable> resultList = sysTemplateTableService.getDataInfo(tableName, list, search);
+    	//统计根据条件查询筛选掉的数据量
+    	int lenAll = rowsAll.size();
+    	for(int i = 0; i < lenAll; i++){
+    		listAll.add(i, rowsAll.get(i).getSubId());
+    	}
+    	int countNoLike = sysTemplateTableService.getDataInfoCountNolike(tableName, listAll, search);
+    	
     	len = resultList.size();
     	Object[] resultArr = null;
     	//将获取的数据处理成map形式
@@ -316,8 +335,8 @@ public class UpmsOrganizationController extends BaseController {
         	}
         	
     	}
-    	result.put("rows", resultArr);
-    	result.put("total", len);
+    	result.put("rows", resultArr==null?(new Object[0]):resultArr);
+    	result.put("total", count - countNoLike);//条件查询后，带有条件的总行数=总行数-条件过滤掉的行数
     	return result;
     }
     

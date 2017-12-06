@@ -160,7 +160,7 @@
 			        url: '${basePath}/manage/organization/listAll',
 			        data: {},
 			        success: function(data) {
-			        	console.log(data)
+			        	//console.log(data)
 			        	zNodes = data.rows;
 						for(var i = 0; i < data.rows.length; i++){
 							zNodes[i].id = data.rows[i].organizationId;
@@ -470,12 +470,13 @@
 	}
 	//动态生成table表格列
 	function createTable(tableId,tableName){
+		//var organizationId = $("#organizationId").val();
 		var option = {
-				//url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
+				url: '${basePath}/manage/organization/getDataInfo?tableName='+tableName+'&organizationId='+$("#organizationId").val(),//该链接分页使用
 				height: getHeight(),
 				striped: true,
-				//search: true,
-				//showRefresh: true,
+				search: true,
+				showRefresh: true,
 				showColumns: true,
 				minimumCountColumns: 2,
 				clickToSelect: true,
@@ -492,9 +493,8 @@
 				maintainSelected: true,
 				//toolbar: '#toolbar',
 				columns: [],//getTableColumns(tableId,tableName),
-				//数据加载成功后执行，加载树结构
+				//数据加载成功后执行
 				onLoadSuccess: function(data){
-					
 				}
 			}
 		getTableColumns(tableId,tableName,option)
@@ -506,7 +506,7 @@
 			type: 'get',
 			url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
 			success: function(data) {
-				console.log(data)
+				//console.log(data)
 				var cloumns = [];
 				cloumns[0] = {field: 'ck', checkbox: true};
 				cloumns[1] = {field: 'subId', title:"业务主键"};
@@ -552,7 +552,7 @@
 			//url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName+'&organizationId='+organizationId,	
 			url: '${basePath}/manage/organization/getDataInfo?tableName='+tableName+'&organizationId='+organizationId,	
 			success: function(data) {
-				console.log(data)
+				//console.log(data)
 				//刷新表格，加载数据
 				if(data.rows == null || data.rows.length == 0){
 					$("#"+tableId).bootstrapTable('load',{"total":0,"rows":[]});

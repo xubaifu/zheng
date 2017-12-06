@@ -21,7 +21,15 @@ public interface SysTemplateTableService extends BaseService<SysTemplateTable, S
 	 * @param list
 	 * @return
 	 */
-	List<SysTemplateTable> getDataInfo( String tableName , List<String> list);
+	List<SysTemplateTable> getDataInfo( String tableName , List<String> list, String search);
+	/**
+	 * 查询条件筛选掉的数据数量
+	 * @param tableName
+	 * @param list
+	 * @param search
+	 * @return
+	 */
+	int getDataInfoCountNolike( String tableName , List<String> list, String search);
 	
 	/**
 	 * 向子集表添加数据
