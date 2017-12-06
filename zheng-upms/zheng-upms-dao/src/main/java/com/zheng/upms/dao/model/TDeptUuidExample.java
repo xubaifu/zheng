@@ -306,6 +306,76 @@ public class TDeptUuidExample implements Serializable {
             addCriterion("sub_id not between", value1, value2, "subId");
             return (Criteria) this;
         }
+
+        public Criteria andEnTableNameIsNull() {
+            addCriterion("en_table_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameIsNotNull() {
+            addCriterion("en_table_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameEqualTo(String value) {
+            addCriterion("en_table_name =", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameNotEqualTo(String value) {
+            addCriterion("en_table_name <>", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameGreaterThan(String value) {
+            addCriterion("en_table_name >", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameGreaterThanOrEqualTo(String value) {
+            addCriterion("en_table_name >=", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameLessThan(String value) {
+            addCriterion("en_table_name <", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameLessThanOrEqualTo(String value) {
+            addCriterion("en_table_name <=", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameLike(String value) {
+            addCriterion("en_table_name like", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameNotLike(String value) {
+            addCriterion("en_table_name not like", value, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameIn(List<String> values) {
+            addCriterion("en_table_name in", values, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameNotIn(List<String> values) {
+            addCriterion("en_table_name not in", values, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameBetween(String value1, String value2) {
+            addCriterion("en_table_name between", value1, value2, "enTableName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnTableNameNotBetween(String value1, String value2) {
+            addCriterion("en_table_name not between", value1, value2, "enTableName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

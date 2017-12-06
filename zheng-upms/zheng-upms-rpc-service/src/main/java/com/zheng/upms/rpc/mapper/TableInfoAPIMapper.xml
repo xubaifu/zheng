@@ -29,8 +29,8 @@
       )
     values ( select max(id)+1, #{deptId,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR}
       ) -->
-      INSERT INTO t_dept_uuid (id,dept_id, sub_id)
-		SELECT  max(id)+1, #{deptId,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR} from t_dept_uuid
+      INSERT INTO t_dept_uuid (id,dept_id, sub_id,en_table_name)
+		SELECT  max(id)+1, #{deptId,jdbcType=VARCHAR}, #{subId,jdbcType=VARCHAR}, #{enTableName,jdbcType=VARCHAR} from t_dept_uuid
   </insert>
   
   <insert id="insertSysTemplateTable" parameterType="com.zheng.upms.dao.model.SysTemplateTable">

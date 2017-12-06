@@ -61,6 +61,7 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
     	TDeptUuid tDeptUuid = new TDeptUuid();
     	tDeptUuid.setDeptId(organizationId);
     	tDeptUuid.setSubId(subId);
+    	tDeptUuid.setEnTableName(tableName);
     	int count = tableInfoAPIMapper.insertTDeptUuid(tDeptUuid);
     	SysTemplateTable sysTemplateTable = new SysTemplateTable();
     	

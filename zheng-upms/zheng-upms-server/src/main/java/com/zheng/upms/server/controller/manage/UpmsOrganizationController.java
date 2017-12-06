@@ -282,6 +282,7 @@ public class UpmsOrganizationController extends BaseController {
         	//此次需要添加条件
         	TDeptUuidExample.Criteria criteria=tDeptUuidExample.createCriteria();  
         	criteria.andDeptIdEqualTo(organizationId);
+        	criteria.andEnTableNameEqualTo(tableName);
         	rows = tDeptUuidService.selectByExample(tDeptUuidExample);
         	if(rows == null || rows.size() == 0){
         		return null;

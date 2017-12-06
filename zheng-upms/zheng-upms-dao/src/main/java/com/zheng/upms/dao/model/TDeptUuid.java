@@ -9,6 +9,13 @@ public class TDeptUuid implements Serializable {
 
     private String subId;
 
+    /**
+     * 系统表名
+     *
+     * @mbg.generated
+     */
+    private String enTableName;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -35,6 +42,14 @@ public class TDeptUuid implements Serializable {
         this.subId = subId;
     }
 
+    public String getEnTableName() {
+        return enTableName;
+    }
+
+    public void setEnTableName(String enTableName) {
+        this.enTableName = enTableName;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -44,6 +59,7 @@ public class TDeptUuid implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", deptId=").append(deptId);
         sb.append(", subId=").append(subId);
+        sb.append(", enTableName=").append(enTableName);
         sb.append("]");
         return sb.toString();
     }
@@ -62,7 +78,8 @@ public class TDeptUuid implements Serializable {
         TDeptUuid other = (TDeptUuid) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
-            && (this.getSubId() == null ? other.getSubId() == null : this.getSubId().equals(other.getSubId()));
+            && (this.getSubId() == null ? other.getSubId() == null : this.getSubId().equals(other.getSubId()))
+            && (this.getEnTableName() == null ? other.getEnTableName() == null : this.getEnTableName().equals(other.getEnTableName()));
     }
 
     @Override
@@ -72,6 +89,7 @@ public class TDeptUuid implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
         result = prime * result + ((getSubId() == null) ? 0 : getSubId().hashCode());
+        result = prime * result + ((getEnTableName() == null) ? 0 : getEnTableName().hashCode());
         return result;
     }
 }
