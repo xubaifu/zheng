@@ -36,10 +36,12 @@ import com.zheng.upms.dao.model.TDeptUuid;
 import com.zheng.upms.dao.model.TDeptUuidExample;
 import com.zheng.upms.dao.model.UpmsOrganization;
 import com.zheng.upms.dao.model.UpmsOrganizationExample;
+import com.zheng.upms.dao.model.UpmsOrganizationHis;
 import com.zheng.upms.rpc.api.SysColumnInfoService;
 import com.zheng.upms.rpc.api.SysTableinfoService;
 import com.zheng.upms.rpc.api.SysTemplateTableService;
 import com.zheng.upms.rpc.api.TDeptUuidService;
+import com.zheng.upms.rpc.api.UpmsOrganizationHisService;
 import com.zheng.upms.rpc.api.UpmsOrganizationService;
 
 import io.swagger.annotations.Api;
@@ -66,6 +68,8 @@ public class UpmsOrganizationController extends BaseController {
     private SysTableinfoService sysTableinfoService;
     @Autowired
     private SysTemplateTableService sysTemplateTableService;
+    @Autowired
+    private UpmsOrganizationHisService upmsOrganizationHisService;
 
     @ApiOperation(value = "组织首页")
     @RequiresPermissions("upms:organization:read")
@@ -214,6 +218,21 @@ public class UpmsOrganizationController extends BaseController {
         if (!result.isSuccess()) {
             return new UpmsResult(UpmsResultConstant.INVALID_LENGTH, result.getErrors());
         }
+        long time = System.currentTimeMillis();
+        //保存历史数据
+        UpmsOrganization organization = upmsOrganizationService.selectByPrimaryKeyString(id);
+        UpmsOrganizationHis upmsOrganizationHis = new UpmsOrganizationHis();
+        upmsOrganizationHis.setId(UUID.randomUUID().toString());
+        upmsOrganizationHis.setCtime(time);
+        upmsOrganizationHis.setDeptId(organization.getDeptId());
+        upmsOrganizationHis.setDescription(organization.getDescription());
+        upmsOrganizationHis.setName(organization.getName());
+        upmsOrganizationHis.setOrganizationCode(organization.getOrganizationCode());
+        upmsOrganizationHis.setOrganizationId(organization.getOrganizationId());
+        upmsOrganizationHis.setPid(organization.getPid());
+        upmsOrganizationHisService.insert(upmsOrganizationHis);
+        //修改
+        upmsOrganization.setCtime(time);
         upmsOrganization.setOrganizationId(id);
         int count = upmsOrganizationService.updateByPrimaryKeySelective(upmsOrganization);
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);

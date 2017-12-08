@@ -71,5 +71,9 @@
     <!-- 子集模板表相关接口服务（子集相关表会使用这个服务） -->
     <bean id="sysTemplateTableService" class="com.zheng.upms.rpc.service.impl.SysTemplateTableServiceImpl"/>
     <dubbo:service interface="com.zheng.upms.rpc.api.SysTemplateTableService" ref="sysTemplateTableService" timeout="10000"/>
+    
+    <!-- 组织历史 -->
+    <bean id="upmsOrganizationHisService" class="com.zheng.upms.rpc.service.impl.UpmsOrganizationHisServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.UpmsOrganizationHisService" ref="upmsOrganizationHisService" timeout="10000"/>
 
 </beans>

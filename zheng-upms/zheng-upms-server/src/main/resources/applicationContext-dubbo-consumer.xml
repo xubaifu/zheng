@@ -44,5 +44,7 @@
     <dubbo:reference id="sysColumnInfoService" interface="com.zheng.upms.rpc.api.SysColumnInfoService" mock="true"/>
     <!-- 子集模板表相关接口服务（子集相关表会使用这个服务） -->
     <dubbo:reference id="sysTemplateTableService" interface="com.zheng.upms.rpc.api.SysTemplateTableService" mock="true"/>
+    <!-- 组织历史数据 -->
+    <dubbo:reference id="upmsOrganizationHisService" interface="com.zheng.upms.rpc.api.UpmsOrganizationHisService" mock="true"/>
 
 </beans>
