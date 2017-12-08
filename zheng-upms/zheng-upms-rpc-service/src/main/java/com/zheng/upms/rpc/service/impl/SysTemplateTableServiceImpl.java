@@ -1,7 +1,10 @@
 package com.zheng.upms.rpc.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zheng.common.annotation.BaseService;
 import com.zheng.common.base.BaseServiceImpl;
+import com.zheng.common.db.DataSourceEnum;
+import com.zheng.common.db.DynamicDataSource;
 import com.zheng.upms.common.constant.ToolUtil;
 import com.zheng.upms.dao.mapper.SysTableinfoMapper;
 import com.zheng.upms.dao.mapper.SysTemplateTableMapper;
@@ -52,6 +57,20 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 	@Override
 	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list, String search) {
 		return tableInfoAPIMapper.getDataInfo(tableName, list, search);
+	}
+	
+	@Override
+	public List<SysTemplateTable> getDataInfoPage(Map<String, Object> params) {
+		DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
+		List<SysTemplateTable> result = tableInfoAPIMapper.getDataInfoPage(params);
+		DynamicDataSource.clearDataSource();
+		return result;
+	}
+	
+	@Override
+	public int getDataInfoPageCount(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return tableInfoAPIMapper.getDataInfoPageCount(params);
 	}
 	
 	@Override

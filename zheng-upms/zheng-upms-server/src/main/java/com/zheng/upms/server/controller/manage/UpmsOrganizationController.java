@@ -260,8 +260,17 @@ public class UpmsOrganizationController extends BaseController {
     	return result;
     }
     
-    
-    @ApiOperation(value = "获取子集相关数据信息")
+    /**
+     * 获取子集相关数据信息(业务逻辑分页实现)
+     * @param offset
+     * @param limit
+     * @param search
+     * @param tableName
+     * @param organizationId
+     * @param subId
+     * @return
+     */
+    @ApiOperation(value = "获取子集相关数据信息(业务逻辑分页实现)")
     @RequiresPermissions("upms:organization:read")
     @RequestMapping(value = "/getDataInfo", method = RequestMethod.GET)
     @ResponseBody
@@ -337,6 +346,66 @@ public class UpmsOrganizationController extends BaseController {
     	}
     	result.put("rows", resultArr==null?(new Object[0]):resultArr);
     	result.put("total", count - countNoLike);//条件查询后，带有条件的总行数=总行数-条件过滤掉的行数
+    	return result;
+    }
+    
+    
+    
+    /**
+     * 获取子集相关数据信息(数据库数据库分页实现)
+     * @param offset
+     * @param limit
+     * @param search
+     * @param tableName
+     * @param organizationId
+     * @param subId
+     * @return
+     */
+    @ApiOperation(value = "获取子集相关数据信息(数据库数据库分页实现)")
+    @RequiresPermissions("upms:organization:read")
+    @RequestMapping(value = "/getDataInfoPage", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getDataInfoPage(
+    		@RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
+            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
+            @RequestParam(required = false, defaultValue = "", value = "search") String search,
+    		@RequestParam(required = false, value = "tableName") String tableName,
+    		@RequestParam(required = false, value = "organizationId") String organizationId,
+    		@RequestParam(required = false, value = "subId") String subId
+    		){
+    	Map<String, Object> result = new HashMap<>();
+    	Map<String, Object> params = new HashMap<>();
+    	//添加查询条件
+    	params.put("subId", subId);
+    	params.put("organizationId", organizationId);
+    	params.put("tableName", tableName);
+    	params.put("search", search);
+    	params.put("limit", limit);
+    	params.put("offset", offset);
+    	params.put("available", ToolUtil.AVAILABLE);
+    	//获取行数
+    	int count = sysTemplateTableService.getDataInfoPageCount(params);
+    	//获取具体的数据信息
+    	List<SysTemplateTable> resultList = sysTemplateTableService.getDataInfoPage(params);
+    	int len = resultList.size();
+    	Object[] resultArr = null;
+    	//将获取的数据处理成map形式
+    	if(len != 0){
+        	resultArr = new Object[len];
+        	for(int i = 0; i < len; i++){
+        		String[] properties = resultList.get(i).getProperty().split(",");
+        		Map<String, Object> mapResult = new HashMap<String, Object>();
+        		String[] values = resultList.get(i).getValue().split(",");
+        		for(int j = 0; j < values.length; j++){
+        			mapResult.put(properties[j], values[j]);
+        			mapResult.put("subId", resultList.get(i).getSubId());
+        		}
+        		resultArr[i] = mapResult;
+        	}
+        	
+    	}
+    	result.put("rows", resultArr==null?(new Object[0]):resultArr);
+    	result.put("total", count);//条件查询后，带有条件的总行数=总行数-条件过滤掉的行数
     	return result;
     }
     

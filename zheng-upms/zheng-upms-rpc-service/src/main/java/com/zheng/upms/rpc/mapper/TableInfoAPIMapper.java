@@ -1,6 +1,7 @@
 package com.zheng.upms.rpc.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,6 +16,14 @@ public interface TableInfoAPIMapper {
 	 * @return
 	 */
 	List<SysTemplateTable> getDataInfo(@Param("tableName") String tableName ,@Param("list") List<String> list,@Param("search") String search);
+	/**
+	 * 根据条件获取数据
+	 * @param tableName
+	 * @param list
+	 * @return
+	 */
+	List<SysTemplateTable> getDataInfoPage(Map<String, Object> params);
+	int getDataInfoPageCount(Map<String, Object> params);
 	/**
 	 * 查询条件筛选掉的数据数量
 	 * @param tableName

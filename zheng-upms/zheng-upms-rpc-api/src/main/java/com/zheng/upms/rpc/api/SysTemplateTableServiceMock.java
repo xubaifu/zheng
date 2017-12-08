@@ -1,6 +1,7 @@
 package com.zheng.upms.rpc.api;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zheng.common.base.BaseServiceMock;
 import com.zheng.upms.dao.mapper.SysTemplateTableMapper;
@@ -53,6 +54,18 @@ public class SysTemplateTableServiceMock extends BaseServiceMock<SysTemplateTabl
 
 	@Override
 	public int getDataInfoCountNolike(String tableName, List<String> list, String search) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<SysTemplateTable> getDataInfoPage(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getDataInfoPageCount(Map<String, Object> params) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -1,8 +1,7 @@
 package com.zheng.upms.rpc.api;
 
 import java.util.List;
-
-import org.springframework.web.bind.annotation.PathVariable;
+import java.util.Map;
 
 import com.zheng.common.base.BaseService;
 import com.zheng.upms.dao.model.SysColumnInfo;
@@ -22,6 +21,14 @@ public interface SysTemplateTableService extends BaseService<SysTemplateTable, S
 	 * @return
 	 */
 	List<SysTemplateTable> getDataInfo( String tableName , List<String> list, String search);
+	/**
+	 * 根据条件获取数据
+	 * @param tableName
+	 * @param list
+	 * @return
+	 */
+	List<SysTemplateTable> getDataInfoPage(Map<String, Object> params);
+	int getDataInfoPageCount(Map<String, Object> params);
 	/**
 	 * 查询条件筛选掉的数据数量
 	 * @param tableName

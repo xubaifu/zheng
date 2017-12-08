@@ -472,7 +472,7 @@
 	function createTable(tableId,tableName){
 		//var organizationId = $("#organizationId").val();
 		var option = {
-				url: '${basePath}/manage/organization/getDataInfo?tableName='+tableName+'&organizationId='+$("#organizationId").val(),//该链接分页使用
+				url: '${basePath}/manage/organization/getDataInfoPage?tableName='+tableName+'&organizationId='+$("#organizationId").val(),//该链接分页使用
 				height: getHeight(),
 				striped: true,
 				search: true,
@@ -550,7 +550,7 @@
 		$.ajax({
 			type: 'get',
 			//url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName+'&organizationId='+organizationId,	
-			url: '${basePath}/manage/organization/getDataInfo?tableName='+tableName+'&organizationId='+organizationId,	
+			url: '${basePath}/manage/organization/getDataInfoPage?tableName='+tableName+'&organizationId='+organizationId,	
 			success: function(data) {
 				//console.log(data)
 				//刷新表格，加载数据
