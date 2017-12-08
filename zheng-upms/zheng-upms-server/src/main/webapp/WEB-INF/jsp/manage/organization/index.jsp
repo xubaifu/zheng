@@ -140,13 +140,21 @@
 			toolbar: '#toolbar',
 			columns: [
 				{field: 'ck', checkbox: true},
-				{field: 'organizationId', title: '编号', sortable: true, align: 'center'},
-				{field: 'name', title: '组织名称',sortable: true},
-	            {field: 'description', title: '组织描述'},
+				{field: 'organizationId', title: 'ID', visible: false, align: 'center'},
+				{field: 'name', title: '组织名称',align: 'center'},
+				{field: 'organizationCode', title: '组织编号',align: 'center'},
+	            {field: 'description', title: '组织描述', align: 'center'},
 				{field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
 			],
 			//数据加载成功后执行，加载树结构
 			onLoadSuccess: function(data){
+				/* if(data.rows != null || data.rows.length != 0){
+					for(var i = 0; i < data.rows.length; i++){
+						if(data.rows[i].pid == ''){
+							$table.bootstrapTable('hideRow', {index:i});
+						}
+					}
+				}  */
 			},
 		});
 	}
@@ -179,8 +187,14 @@
 				type: 'get',
 				url: '${basePath}/manage/organization/getOrganizationById?id='+id,
 				success: function(data) {
+					if(data.organizationPar == null){
+						console.log(data)
+						data.organizationPar = {name:"根节点"};
+					}
 					$("#listtable").children().remove();
-					$("#listtable").append('<input style="display:none" id="organizationId" value="'+id+'" />');
+					$("#listtable").append('<input style="display:none" id="organizationId" value="'+id+'" />'+
+							'<input style="display:none" id="organizationName" value="'+treeNode.name+'" />'
+					);
 			        /* for(var i in data.rows[0]) {//获取对象属性
 			            if (data.rows[0].hasOwnProperty(i) && typeof data.rows[0][i] != "function") {
 			            	$("#listtable").append('<label>'+i+':</label><span>'+data.rows[0][i]+'</span><br />');
@@ -196,6 +210,10 @@
 												'<span class="form-control"></span>'+
 											'</div>'+
 											'<div class="form-group">'+
+												'<label for="organizationCode">组织编号:&nbsp;&nbsp;&nbsp; <span>'+data.rows[0].organizationCode+'</span></label>'+
+												'<span class="form-control"></span>'+
+											'</div>'+
+											'<div class="form-group">'+
 												'<label for="description">描述:&nbsp;&nbsp;&nbsp; <span>'+data.rows[0].description+'</span></label>'+
 												'<span class="form-control"></span>'+
 											'</div>'+
@@ -204,7 +222,7 @@
 												'<span class="form-control"></span>'+
 											'</div>'+
 												'<div class="form-group">'+
-												'<label for="description">创建时间:&nbsp;&nbsp;&nbsp; <span>'+new Date(data.organizationPar.ctime).toLocaleString()+'</span></label>'+
+												'<label for="description">操作时间:&nbsp;&nbsp;&nbsp; <span>'+new Date(data.rows[0].ctime).toLocaleString()+'</span></label>'+
 												'<span class="form-control"></span>'+
 											'</div>'
 										);
@@ -252,6 +270,13 @@
 			content: 'url:${basePath}/manage/organization/create',
 			onContentReady: function () {
 				initMaterialInput();
+				var parentId = $("#organizationId").val();//默认采用已选择的部门
+				var parentName = $("#organizationName").val();
+				if(parentId != null && parentId != "" && parentId != "undefined"){
+					$('#pid').val(parentId);
+					$('#pName').val(parentName);
+					$('#pName').focus();
+				}
 			}
 		});
 	}
@@ -286,6 +311,10 @@
 				content: url,
 				onContentReady: function () {
 					initMaterialInput();
+					if($('#pid').val() == '0'){//根节点不可选择父机构
+						$('#pName').val("根节点不可选");
+						$('#pName').attr("disabled", "disabled");
+					}
 				}
 			});
 		}
@@ -513,7 +542,7 @@
 		        if(data.rows != null && data.rows.length != 0){
 		        	var obj = {};
 		        	for(var i = 0; i < data.rows.length; i++){
-		        		obj = {field: data.rows[i].enColName, title: data.rows[i].cnColName};
+		        		obj = {field: data.rows[i].enColName, title: data.rows[i].cnColName, align: 'center'};
 		        		cloumns[i+2] = obj;
 		        	}
 		        	//console.log(cloumns)

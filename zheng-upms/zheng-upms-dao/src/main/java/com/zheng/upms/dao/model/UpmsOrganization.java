@@ -45,6 +45,13 @@ public class UpmsOrganization implements Serializable {
      */
     private Long ctime;
 
+    /**
+     * 部门编号
+     *
+     * @mbg.generated
+     */
+    private String organizationCode;
+
     private static final long serialVersionUID = 1L;
 
     public String getOrganizationId() {
@@ -95,6 +102,14 @@ public class UpmsOrganization implements Serializable {
         this.ctime = ctime;
     }
 
+    public String getOrganizationCode() {
+        return organizationCode;
+    }
+
+    public void setOrganizationCode(String organizationCode) {
+        this.organizationCode = organizationCode;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -107,6 +122,7 @@ public class UpmsOrganization implements Serializable {
         sb.append(", name=").append(name);
         sb.append(", description=").append(description);
         sb.append(", ctime=").append(ctime);
+        sb.append(", organizationCode=").append(organizationCode);
         sb.append("]");
         return sb.toString();
     }
@@ -128,7 +144,8 @@ public class UpmsOrganization implements Serializable {
             && (this.getPid() == null ? other.getPid() == null : this.getPid().equals(other.getPid()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
-            && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()));
+            && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()))
+            && (this.getOrganizationCode() == null ? other.getOrganizationCode() == null : this.getOrganizationCode().equals(other.getOrganizationCode()));
     }
 
     @Override
@@ -141,6 +158,7 @@ public class UpmsOrganization implements Serializable {
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getCtime() == null) ? 0 : getCtime().hashCode());
+        result = prime * result + ((getOrganizationCode() == null) ? 0 : getOrganizationCode().hashCode());
         return result;
     }
 }

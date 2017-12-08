@@ -516,6 +516,76 @@ public class UpmsOrganizationExample implements Serializable {
             addCriterion("ctime not between", value1, value2, "ctime");
             return (Criteria) this;
         }
+
+        public Criteria andOrganizationCodeIsNull() {
+            addCriterion("organization_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeIsNotNull() {
+            addCriterion("organization_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeEqualTo(String value) {
+            addCriterion("organization_code =", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeNotEqualTo(String value) {
+            addCriterion("organization_code <>", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeGreaterThan(String value) {
+            addCriterion("organization_code >", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("organization_code >=", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeLessThan(String value) {
+            addCriterion("organization_code <", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeLessThanOrEqualTo(String value) {
+            addCriterion("organization_code <=", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeLike(String value) {
+            addCriterion("organization_code like", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeNotLike(String value) {
+            addCriterion("organization_code not like", value, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeIn(List<String> values) {
+            addCriterion("organization_code in", values, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeNotIn(List<String> values) {
+            addCriterion("organization_code not in", values, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeBetween(String value1, String value2) {
+            addCriterion("organization_code between", value1, value2, "organizationCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganizationCodeNotBetween(String value1, String value2) {
+            addCriterion("organization_code not between", value1, value2, "organizationCode");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

@@ -8,6 +8,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="ctime" jdbcType="BIGINT" property="ctime" />
+    <result column="organization_code" jdbcType="VARCHAR" property="organizationCode" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    organization_id, dept_id, pid, name, description, ctime
+    organization_id, dept_id, pid, name, description, ctime, organization_code
   </sql>
   <select id="selectByExample" parameterType="com.zheng.upms.dao.model.UpmsOrganizationExample" resultMap="BaseResultMap">
     select
@@ -102,11 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.zheng.upms.dao.model.UpmsOrganization">
     insert into upms_organization (organization_id, dept_id, pid, 
-      name, description, ctime
-      )
+      name, description, ctime, 
+      organization_code)
     values (#{organizationId,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ctime,jdbcType=BIGINT}
-      )
+      #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ctime,jdbcType=BIGINT}, 
+      #{organizationCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.UpmsOrganization">
     insert into upms_organization
@@ -129,6 +130,9 @@
       <if test="ctime != null">
         ctime,
       </if>
+      <if test="organizationCode != null">
+        organization_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="organizationId != null">
@@ -148,6 +152,9 @@
       </if>
       <if test="ctime != null">
         #{ctime,jdbcType=BIGINT},
+      </if>
+      <if test="organizationCode != null">
+        #{organizationCode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -178,6 +185,9 @@
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=BIGINT},
       </if>
+      <if test="record.organizationCode != null">
+        organization_code = #{record.organizationCode,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +200,8 @@
       pid = #{record.pid,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      ctime = #{record.ctime,jdbcType=BIGINT}
+      ctime = #{record.ctime,jdbcType=BIGINT},
+      organization_code = #{record.organizationCode,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,6 +224,9 @@
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=BIGINT},
       </if>
+      <if test="organizationCode != null">
+        organization_code = #{organizationCode,jdbcType=VARCHAR},
+      </if>
     </set>
     where organization_id = #{organizationId,jdbcType=VARCHAR}
   </update>
@@ -222,7 +236,8 @@
       pid = #{pid,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      ctime = #{ctime,jdbcType=BIGINT}
+      ctime = #{ctime,jdbcType=BIGINT},
+      organization_code = #{organizationCode,jdbcType=VARCHAR}
     where organization_id = #{organizationId,jdbcType=VARCHAR}
   </update>
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />

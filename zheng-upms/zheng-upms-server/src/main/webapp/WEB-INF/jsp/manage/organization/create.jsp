@@ -13,6 +13,10 @@
 			<input id="name" type="text" class="form-control" name="name" maxlength="20">
 		</div>
 		<div class="form-group">
+			<label for="organizationCode">部门编号</label>
+			<input id="organizationCode" type="text" class="form-control" name="organizationCode" maxlength="64">
+		</div>
+		<div class="form-group">
 			<label for="description">描述</label>
 			<input id="description" type="text" class="form-control" name="description" maxlength="300">
 		</div>
@@ -33,6 +37,12 @@
 <script>
 
 function createSubmit() {
+	/* var parentId = $("#organizationId").val();//默认采用已选择的部门
+	var parentName = $("#organizationName").val();
+	if(parentId != null || parentId != "" || parentId != "undefined"){
+		$('#pid').val(parentId);
+		$('#pName').val(parentName);
+	} */
     $.ajax({
         type: 'post',
         url: '${basePath}/manage/organization/create',
@@ -42,9 +52,14 @@ function createSubmit() {
                 $('#name').focus();
                 return false;
             }
+            if ($('#organizationCode').val() == '') {
+                $('#organizationCode').focus();
+                return false;
+            }
             if ($('#pid').val() == '') {
-            	$('#pid').val("0");
-                //return false;
+            	//$('#pid').val("0");
+            	$('#pName').focus();
+                return false;
             }
         },
         success: function(result) {

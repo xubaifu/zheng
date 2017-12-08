@@ -13,6 +13,10 @@
 			<input id="name" type="text" class="form-control" name="name" maxlength="20" value="${organization.name}">
 		</div>
 		<div class="form-group">
+			<label for="organizationCode">部门编号</label>
+			<input id="organizationCode" type="text" class="form-control" name="organizationCode" maxlength="64" value="${organization.organizationCode}">
+		</div>
+		<div class="form-group">
 			<label for="description">描述</label>
 			<input id="description" type="text" class="form-control" name="description" maxlength="300" value="${organization.description}">
 		</div>
@@ -41,9 +45,13 @@ function createSubmit() {
                 $('#name').focus();
                 return false;
             }
+            if ($('#organizationCode').val() == '') {
+                $('#organizationCode').focus();
+                return false;
+            }
             if ($('#pid').val() == '') {
-            	$('#pid').val("0");
-                //return false;
+            	$('#pName').focus();
+                return false;
             }
         },
         success: function(result) {
