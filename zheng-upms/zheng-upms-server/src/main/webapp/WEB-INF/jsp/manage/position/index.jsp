@@ -499,10 +499,10 @@
 	}
 	//动态生成table表格列
 	function createTable(tableId,tableName){
-		console.log($("#positionId").val());
-		var positionId = $("#positionId").val();
+		/* console.log($("#positionId").val());
+		var positionId = $("#positionId").val(); */
 		var option = {
-				url: '${basePath}/manage/position/getDataInfoPage?tableName='+tableName+'&positionId='+positionId,//该链接分页使用
+				url: '${basePath}/manage/position/getDataInfoPage?tableName='+tableName,//+'&positionId='+positionId,//该链接分页使用
 				height: getHeight(),
 				striped: true,
 				search: true,
@@ -521,6 +521,7 @@
 				searchOnEnterKey: true,
 				//idField: 'positionId',
 				maintainSelected: true,
+				queryParams: queryParams,//请求服务器时所传的参数
 				//toolbar: '#toolbar',
 				columns: [],//getTableColumns(tableId,tableName),
 				//数据加载成功后执行
@@ -529,6 +530,18 @@
 				}
 			}
 		getTableColumns(tableId,tableName,option)
+	}
+	
+	function queryParams(params){
+		var positionId = $("#positionId").val();
+	    return {
+	        limit : params.limit,
+	        offset : params.offset,
+	        order : params.order,
+	        search : params.search,
+	        sort : params.sort,
+	        positionId : positionId
+	    }
 	}
 	//动态获取表的列信息
 	function getTableColumns(tableId,tableName,option){
