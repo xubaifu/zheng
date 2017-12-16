@@ -12,7 +12,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>组织管理</title>
+	<title>岗位管理</title>
 	<jsp:include page="/resources/inc/head.jsp" flush="true"/>
 	<style type="text/css">
 		::-webkit-scrollbar{width:5px;height: 5px}
@@ -38,7 +38,7 @@
 		<div style="overflow-x: auto;">
 			<div id="tabPage" style="height: 40px">
 				<ul id="myTab" class="nav nav-tabs">
-					<li id="organizationList" class="active"><a href="#listtableBySelected" data-toggle="tab">部门列表</a></li>
+					<li id="positionList" class="active"><a href="#listtableBySelected" data-toggle="tab">岗位列表</a></li>
 					<li id="firstLi"><a href="#listtable" data-toggle="tab">基本信息</a></li>
 					<!-- <li><a href="#ios" data-toggle="tab">iOS</a></li>
 					<li><a href="#ios" data-toggle="tab">iOS</a></li> -->
@@ -46,17 +46,17 @@
 			</div>
 		</div>
 		<div id="myTabContent" class="tab-content">
-			<!-- 选中部门列表以及子部门列表 -->
+			<!-- 选中岗位列表以及子岗位列表 -->
 			<div class="tab-pane fade in active" id="listtableBySelected" style="height: 212px; padding-bottom: 40px;">
 				<div id="toolbar">
-					<shiro:hasPermission name="upms:organization:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增组织</a></shiro:hasPermission>
-					<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>
-					<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除组织</a></shiro:hasPermission>
-					<shiro:hasPermission name="upms:organization:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetTable()"><i class="zmdi zmdi-close"></i> 新增子集</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:position:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增岗位</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:position:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑岗位</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:position:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除岗位</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:position:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetTable()"><i class="zmdi zmdi-close"></i> 新增子集</a></shiro:hasPermission>
 				</div>
 				<table id="tableBySelected"></table>
 			</div>
-			<!-- 选中部门基本信息以及子集信息 -->
+			<!-- 选中岗位基本信息以及子集信息 -->
 			<div class="tab-pane fade in active" id="listtable">
 				<table id="table"></table>
 			</div>
@@ -73,7 +73,7 @@
 <script>
 	$(document).ready(function() {
 		//$.fn.zTree.init($("#tree"), setting, zNodes);
-		getOrganizationList();
+		getPositionList();
 		//动态加载tab页(子集)
 		loadTabPage();
 	});
@@ -99,18 +99,18 @@
 		console.log(treeNode.id+";"+treeNode.pId); */
 	}
 	function onClick(event, treeId, treeNode, clickFlag) {
-		//点击组织切换时，将内容定位到基本信息位置
+		//点击岗位切换时，将内容定位到基本信息位置
 		$("#myTabContent").children().removeClass("active");
 		$("#myTab").children().removeClass("active");
-		$("#organizationList").addClass("active");
+		$("#positionList").addClass("active");
 		$("#listtableBySelected").addClass("in active");
-		//获取部门基本信息以及子集信息
-		getOrganizationList(treeNode,treeNode.id);
-		//获取部门及子部门信息
+		//获取岗位基本信息以及子集信息
+		getPositionList(treeNode,treeNode.id);
+		//获取岗位及子岗位信息
 		$('#tableBySelected').bootstrapTable(
 	            "refresh",  
 	            {  
-	                url:'${basePath}/manage/organization/list?id='+treeNode.id
+	                url:'${basePath}/manage/position/list?id='+treeNode.id
 	            }  
 	    );
 	}
@@ -118,7 +118,7 @@
 	function loadBootstrapTable(){
 		// bootstrap table初始化
 		$table.bootstrapTable({
-			url: '${basePath}/manage/organization/list',
+			url: '${basePath}/manage/position/list',
 			height: getHeight(),
 			striped: true,
 			search: true,
@@ -135,15 +135,15 @@
 			smartDisplay: false,
 			escape: true,
 			searchOnEnterKey: true,
-			idField: 'organizationId',
+			idField: 'positionId',
 			maintainSelected: true,
 			toolbar: '#toolbar',
 			columns: [
 				{field: 'ck', checkbox: true},
-				{field: 'organizationId', title: 'ID', visible: false, align: 'center'},
-				{field: 'name', title: '组织名称',align: 'center'},
-				{field: 'organizationCode', title: '组织编号',align: 'center'},
-	            {field: 'description', title: '组织描述', align: 'center'},
+				{field: 'positionId', title: 'ID', visible: false, align: 'center'},
+				{field: 'name', title: '岗位名称',align: 'center'},
+				{field: 'positionCode', title: '岗位编号',align: 'center'},
+	            {field: 'description', title: '岗位描述', align: 'center'},
 				{field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
 			],
 			//数据加载成功后执行，加载树结构
@@ -159,19 +159,19 @@
 		});
 	}
 	
-	//获取组织列表
-	function getOrganizationList(treeNode,id){
-		//获取所有组织列表
+	//获取岗位列表
+	function getPositionList(treeNode,id){
+		//获取所有岗位列表
 		if(treeNode == null || treeNode == "undefined"){
 			 $.ajax({
 			        type: 'get',
-			        url: '${basePath}/manage/organization/listAll',
+			        url: '${basePath}/manage/position/listAll',
 			        data: {},
 			        success: function(data) {
 			        	//console.log(data)
 			        	zNodes = data.rows;
 						for(var i = 0; i < data.rows.length; i++){
-							zNodes[i].id = data.rows[i].organizationId;
+							zNodes[i].id = data.rows[i].positionId;
 							zNodes[i].pId = data.rows[i].pid;
 							zNodes[i].name = data.rows[i].name;
 							zNodes[i].title = data.rows[i].name;
@@ -182,18 +182,18 @@
 			        }
 			    });
 		}else{
-		    //获取某组织基本信息
+		    //获取某岗位基本信息
 			$.ajax({
 				type: 'get',
-				url: '${basePath}/manage/organization/getOrganizationById?id='+id,
+				url: '${basePath}/manage/position/getPositionById?id='+id,
 				success: function(data) {
-					if(data.organizationPar == null){
+					if(data.positionPar == null){
 						console.log(data)
-						data.organizationPar = {name:"根节点"};
+						data.positionPar = {name:"根节点"};
 					}
 					$("#listtable").children().remove();
-					$("#listtable").append('<input style="display:none" id="organizationId" value="'+id+'" />'+
-							'<input style="display:none" id="organizationName" value="'+treeNode.name+'" />'
+					$("#listtable").append('<input style="display:none" id="positionId" value="'+id+'" />'+
+							'<input style="display:none" id="positionName" value="'+treeNode.name+'" />'
 					);
 			        /* for(var i in data.rows[0]) {//获取对象属性
 			            if (data.rows[0].hasOwnProperty(i) && typeof data.rows[0][i] != "function") {
@@ -202,7 +202,7 @@
 			        } */
 			        $("#listtable").append(
 			        		'<div>'+
-			        			'<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction(\''+data.rows[0].organizationId+'\')"><i class="zmdi zmdi-edit"></i> 编辑组织</a></shiro:hasPermission>'+
+			        			'<shiro:hasPermission name="upms:position:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction(\''+data.rows[0].positionId+'\')"><i class="zmdi zmdi-edit"></i> 编辑岗位</a></shiro:hasPermission>'+
 			        		'</div>'
 			        		);
 			        $("#listtable").append('<div class="form-group">'+
@@ -210,7 +210,7 @@
 												'<span class="form-control"></span>'+
 											'</div>'+
 											'<div class="form-group">'+
-												'<label for="organizationCode">组织编号:&nbsp;&nbsp;&nbsp; <span>'+data.rows[0].organizationCode+'</span></label>'+
+												'<label for="positionCode">岗位编号:&nbsp;&nbsp;&nbsp; <span>'+data.rows[0].positionCode+'</span></label>'+
 												'<span class="form-control"></span>'+
 											'</div>'+
 											'<div class="form-group">'+
@@ -218,7 +218,7 @@
 												'<span class="form-control"></span>'+
 											'</div>'+
 											'<div class="form-group">'+
-												'<label for="description">上级组织:&nbsp;&nbsp;&nbsp; <span>'+data.organizationPar.name+'</span></label>'+
+												'<label for="description">上级岗位:&nbsp;&nbsp;&nbsp; <span>'+data.positionPar.name+'</span></label>'+
 												'<span class="form-control"></span>'+
 											'</div>'+
 												'<div class="form-group">'+
@@ -248,16 +248,16 @@
 	// 格式化操作按钮
 	function actionFormatter(value, row, index) {
 	    return [
-			'<a class="update" href="javascript:;" onclick="updateAction(\''+row.organizationId+'\')" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>　',
-			'<a class="delete" href="javascript:;" onclick="deleteAction(\''+row.organizationId+'\')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
+			'<a class="update" href="javascript:;" onclick="updateAction(\''+row.positionId+'\')" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>　',
+			'<a class="delete" href="javascript:;" onclick="deleteAction(\''+row.positionId+'\')" data-toggle="tooltip" title="Remove"><i class="glyphicon glyphicon-remove"></i></a>'
 	    ].join('');
 	}
-	//点击tab页加载组织列表
+	//点击tab页加载岗位列表
 	/* function refreshBootstrapTable(){alert(1)
 		$table.bootstrapTable(  
 	            "refresh",  
 	            {  
-	                url:'${basePath}/manage/organization/list'
+	                url:'${basePath}/manage/position/list'
 	            }  
 	    );  
 	} */
@@ -266,12 +266,12 @@
 	function createAction() {
 		createDialog = $.dialog({
 			animationSpeed: 300,
-			title: '新增组织',
-			content: 'url:${basePath}/manage/organization/create',
+			title: '新增岗位',
+			content: 'url:${basePath}/manage/position/create',
 			onContentReady: function () {
 				initMaterialInput();
-				var parentId = $("#organizationId").val();//默认采用已选择的部门
-				var parentName = $("#organizationName").val();
+				var parentId = $("#positionId").val();//默认采用已选择的岗位
+				var parentName = $("#positionName").val();
 				if(parentId != null && parentId != "" && parentId != "undefined"){
 					$('#pid').val(parentId);
 					$('#pName').val(parentName);
@@ -282,10 +282,10 @@
 	}
 	// 编辑
 	var updateDialog;
-	function updateAction(organizationId) {//根据是否传入organizationId，判断点击的按钮
+	function updateAction(positionId) {//根据是否传入positionId，判断点击的按钮
 		var rows = $table.bootstrapTable('getSelections');//选中的某行数据
 		
-		if ((organizationId == null || organizationId == 'undefined') && rows.length != 1) {
+		if ((positionId == null || positionId == 'undefined') && rows.length != 1) {
 			$.confirm({
 				title: false,
 				content: '请选择一条记录！',
@@ -300,14 +300,14 @@
 			});
 		} else {
 			var url = '';
-			if(organizationId == null || organizationId == 'undefined'){//是否传入organizationId
-				url = 'url:${basePath}/manage/organization/update/' + rows[0].organizationId;
+			if(positionId == null || positionId == 'undefined'){//是否传入positionId
+				url = 'url:${basePath}/manage/position/update/' + rows[0].positionId;
 			}else{
-				url = 'url:${basePath}/manage/organization/update/' + organizationId;
+				url = 'url:${basePath}/manage/position/update/' + positionId;
 			}
 			updateDialog = $.dialog({
 				animationSpeed: 300,
-				title: '编辑组织',
+				title: '编辑岗位',
 				content: url,
 				onContentReady: function () {
 					initMaterialInput();
@@ -321,9 +321,9 @@
 	}
 	// 删除
 	var deleteDialog;
-	function deleteAction(organizationId) {//根据是否传入organizationId，判断点击的按钮
+	function deleteAction(positionId) {//根据是否传入positionId，判断点击的按钮
 		var rows = $table.bootstrapTable('getSelections');
-		if ((organizationId == null || organizationId == 'undefined') && rows.length == 0) {
+		if ((positionId == null || positionId == 'undefined') && rows.length == 0) {
 			$.confirm({
 				title: false,
 				content: '请至少选择一条记录！',
@@ -338,18 +338,18 @@
 			});
 		} else {
 			var ids = new Array();
-			if(organizationId == null || organizationId == 'undefined'){
+			if(positionId == null || positionId == 'undefined'){
 				for (var i in rows) {
-					ids.push(rows[i].organizationId);
+					ids.push(rows[i].positionId);
 				}
 			}else{
-				ids.push(organizationId);
+				ids.push(positionId);
 			}
 			deleteDialog = $.confirm({
 				type: 'red',
 				animationSpeed: 300,
 				title: false,
-				content: '确认删除该组织吗？',
+				content: '确认删除该岗位吗？',
 				buttons: {
 					confirm: {
 						text: '确认',
@@ -357,7 +357,7 @@
 						action: function () {
 							$.ajax({
 								type: 'get',
-								url: '${basePath}/manage/organization/delete/' + ids.join(","),
+								url: '${basePath}/manage/position/delete/' + ids.join(","),
 								success: function(result) {
 									if (result.code != 1) {
 										if (result.data instanceof Array) {
@@ -394,7 +394,7 @@
 									} else {
 										deleteDialog.close();
 										$table.bootstrapTable('refresh');
-										getOrganizationList();
+										getPositionList();
 									}
 								},
 								error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -438,8 +438,8 @@
 				onClick : onClickForCheck
 			}
 		};
-	//加载组织机构
-	function loadOrganization(){
+	//加载岗位机构
+	function loadPosition(){
 		$("#orgtree").show();
 		$.fn.zTree.init($("#treeDemo"), settingForCreate, zNodes);
 		//设置节点选中
@@ -460,7 +460,7 @@
 		$(".forRemove").remove();
 		$.ajax({
 			type: 'get',
-			url: '${basePath}/manage/organization/getSysTableinfo?type=1',
+			url: '${basePath}/manage/position/getSysTableinfo?type=2',
 			success: function(data) {
 				
 		        if(data.rows != null && data.rows.length != 0){
@@ -471,10 +471,10 @@
 		        		$("#myTab").append('<li class="forRemove"><a href="#'+(tabId + i)+'" data-toggle="tab" onclick="createTable(\'table'+i+'\',\''+data.rows[i].enTableName+'\')">'+data.rows[i].cnTableName+'</a></li>');
 		        		$("#myTabContent").append('<div class="tab-pane fade forRemove" id="'+(tabId + i)+'">'+
 		        				'<div class="fixed-table-toolbar"><div class="bs-bars pull-left"><div id="toolbar'+i+'">'+
-									'<shiro:hasPermission name="upms:organization:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetForm(\'table'+i+'\',\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-plus"></i> 新增</a></shiro:hasPermission>'+
-									'<shiro:hasPermission name="upms:organization:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateSubsetData(\''+data.rows[i].enTableName+'\',\'table'+i+'\')"><i class="zmdi zmdi-edit"></i> 编辑</a></shiro:hasPermission>'+
-									'<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deletebsetData(\'table'+i+'\',\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 删除</a></shiro:hasPermission>'+
-									'<shiro:hasPermission name="upms:organization:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="creatrSubSetColumn(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 新增子集属性</a></shiro:hasPermission>'+
+									'<shiro:hasPermission name="upms:position:createSubset"><a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetForm(\'table'+i+'\',\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-plus"></i> 新增</a></shiro:hasPermission>'+
+									'<shiro:hasPermission name="upms:position:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateSubsetData(\''+data.rows[i].enTableName+'\',\'table'+i+'\')"><i class="zmdi zmdi-edit"></i> 编辑</a></shiro:hasPermission>'+
+									'<shiro:hasPermission name="upms:position:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deletebsetData(\'table'+i+'\',\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 删除</a></shiro:hasPermission>'+
+									'<shiro:hasPermission name="upms:position:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="creatrSubSetColumn(\''+data.rows[i].enTableName+'\')"><i class="zmdi zmdi-close"></i> 新增子集属性</a></shiro:hasPermission>'+
 								'</div></div></div>'+
 		        				'<table id="table'+i+'"></table></div>');
 		        	} 
@@ -499,10 +499,10 @@
 	}
 	//动态生成table表格列
 	function createTable(tableId,tableName){
-		console.log($("#organizationId").val());
-		var organizationId = $("#organizationId").val();
+		console.log($("#positionId").val());
+		var positionId = $("#positionId").val();
 		var option = {
-				url: '${basePath}/manage/organization/getDataInfoPage?tableName='+tableName+'&organizationId='+organizationId,//该链接分页使用
+				url: '${basePath}/manage/position/getDataInfoPage?tableName='+tableName+'&positionId='+positionId,//该链接分页使用
 				height: getHeight(),
 				striped: true,
 				search: true,
@@ -519,12 +519,13 @@
 				smartDisplay: false,
 				escape: true,
 				searchOnEnterKey: true,
-				//idField: 'organizationId',
+				//idField: 'positionId',
 				maintainSelected: true,
 				//toolbar: '#toolbar',
 				columns: [],//getTableColumns(tableId,tableName),
 				//数据加载成功后执行
 				onLoadSuccess: function(data){
+					console.log("id="+$("#positionId").val());
 				}
 			}
 		getTableColumns(tableId,tableName,option)
@@ -534,7 +535,7 @@
 		//获取列信息
 		$.ajax({
 			type: 'get',
-			url: '${basePath}/manage/organization/getSysColumnInfo?type=1&tableName='+tableName,
+			url: '${basePath}/manage/position/getSysColumnInfo?type=2&tableName='+tableName,
 			success: function(data) {
 				//console.log(data)
 				var cloumns = [];
@@ -576,11 +577,11 @@
 	
 	//获取子集详细信息
 	function getDataInfo(tableId,tableName){
-		var organizationId = $("#organizationId").val();
+		var positionId = $("#positionId").val();
 		$.ajax({
 			type: 'get',
-			//url: '${basePath}/manage/organization/getDataInfo?type=1&tableName='+tableName+'&organizationId='+organizationId,	
-			url: '${basePath}/manage/organization/getDataInfoPage?tableName='+tableName+'&organizationId='+organizationId,	
+			//url: '${basePath}/manage/position/getDataInfo?type=1&tableName='+tableName+'&positionId='+positionId,	
+			url: '${basePath}/manage/position/getDataInfoPage?tableName='+tableName+'&positionId='+positionId,	
 			success: function(data) {
 				//console.log(data)
 				//刷新表格，加载数据
@@ -610,11 +611,11 @@
 	var subsetDialog;
 	//添加子集数据
 	function createSubsetForm(tableId, tableName){
-		var organizationId = $("#organizationId").val();
-		if(organizationId == "undefined" || organizationId == "" || organizationId == null){
+		var positionId = $("#positionId").val();
+		if(positionId == "undefined" || positionId == "" || positionId == null){
 			$.confirm({
 				title: false,
-				content: '请选择部门！',
+				content: '请选择岗位！',
 				autoClose: 'cancel|3000',
 				backgroundDismiss: true,
 				buttons: {
@@ -628,11 +629,11 @@
 			subsetDialog = $.dialog({
 				animationSpeed: 300,
 				title: '新增子集数据',
-				content: 'url:${basePath}/manage/organization/createSubsetForm',
+				content: 'url:${basePath}/manage/position/createSubsetForm',
 				onContentReady: function () {
 					initMaterialInput();
 					//获取子集的列信息并创建相应的form
-					createSubsetClumns(tableId, tableName, organizationId);
+					createSubsetClumns(tableId, tableName, positionId);
 				}
 			});
 		}
@@ -643,7 +644,7 @@
 		subsetTableDialog = $.dialog({
 			animationSpeed: 300,
 			title: '新增子集',
-			content: 'url:${basePath}/manage/organization/createSubsetTable',
+			content: 'url:${basePath}/manage/position/createSubsetTable',
 			onContentReady: function () {
 				initMaterialInput();
 			}
@@ -655,7 +656,7 @@
 		subsetTableDialog = $.dialog({
 			animationSpeed: 300,
 			title: '新增子集属性',
-			content: 'url:${basePath}/manage/organization/createSubsetColumn',
+			content: 'url:${basePath}/manage/position/createSubsetColumn',
 			onContentReady: function () {
 				initMaterialInput();
 				$('select').select2();
@@ -666,7 +667,7 @@
 	}
 	//编辑子集数据
 	function updateSubsetData(tableName,tableId){
-		var organizationId = $("#organizationId").val();
+		var positionId = $("#positionId").val();
 		var rows = $("#"+tableId).bootstrapTable('getSelections');//选中的某行数据
 		if (rows.length != 1) {
 			$.confirm({
@@ -693,18 +694,18 @@
 			subsetDialog = $.dialog({
 				animationSpeed: 300,
 				title: '新增子集数据',
-				content: 'url:${basePath}/manage/organization/createSubsetForm',
+				content: 'url:${basePath}/manage/position/createSubsetForm',
 				onContentReady: function () {
 					initMaterialInput();
 					//获取子集的列信息并创建相应的form
-					createSubsetClumns(tableId, tableName, organizationId, rows);
+					createSubsetClumns(tableId, tableName, positionId, rows);
 				}
 			});
 		}
 		/* 
 		$.ajax({
 			type: 'get',
-			url: '${basePath}/manage/organization/getDataInfo?tableName='+tableName+'&organizationId='+organizationId+'&subId='+rows[0].subId,	
+			url: '${basePath}/manage/position/getDataInfo?tableName='+tableName+'&positionId='+positionId+'&subId='+rows[0].subId,	
 			success: function(data) {
 				console.log(data)
 				//刷新表格，加载数据
@@ -767,8 +768,8 @@
 						action: function () {
 							$.ajax({
 								type: 'get',
-								url: '${basePath}/manage/organization/deletebsetData/'+tableName+'/'+ids.join(","),
-								//url: '${basePath}/manage/organization/delete/' + ids.join(","),
+								url: '${basePath}/manage/position/deletebsetData/'+tableName+'/'+ids.join(","),
+								//url: '${basePath}/manage/position/delete/' + ids.join(","),
 								success: function(result) {
 									//刷新表格
 						        	createTable(tableId,tableName);

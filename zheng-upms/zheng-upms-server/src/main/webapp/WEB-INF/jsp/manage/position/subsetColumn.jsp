@@ -60,7 +60,7 @@
 function createSubsetColumn(){
 	$.ajax({
         type: 'post',
-        url: '${basePath}/manage/organization/insertSubsetColumnData',
+        url: '${basePath}/manage/position/insertSubsetColumnData',
         data: $('#subsetColumn').serialize(),
         beforeSend: function() {
             if ($('#cnColName').val() == '') {

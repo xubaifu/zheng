@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : baifu
+Source Server         : zheng
 Source Server Version : 50717
 Source Host           : localhost:3306
 Source Database       : zhengbak
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-12-08 17:34:15
+Date: 2017-12-16 13:34:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -543,18 +543,23 @@ CREATE TABLE `sys_column_info` (
 -- Records of sys_column_info
 -- ----------------------------
 INSERT INTO `sys_column_info` VALUES ('07bdedc0-695e-4310-8c09-576ffc170507', '标题', 'title', 'varchar', '200', '1', '公告标题', '2017-12-04 16:17:52', null, '0', 't_fnfl9f2o2s5');
+INSERT INTO `sys_column_info` VALUES ('1387efca-655a-4434-b3f0-888a2ad83b74', '工作内容', 'content', 'varchar', '200', '2', '工作内容', '2017-12-13 18:50:46', null, '0', 't_position_duty_test');
 INSERT INTO `sys_column_info` VALUES ('2227cd47-e94d-42e1-a6c5-a15f37363abc', '备注', 'bak', 'varchar', '100', '1', '描述', '2017-12-03 18:42:44', null, '0', '20171127CS1');
 INSERT INTO `sys_column_info` VALUES ('33aa25ef-9bd4-4e2d-8438-b818dda1e6d2', '姓名', 'name', 'varchar', '20', '1', '姓名', '2017-11-29 14:38:37', null, '0', 'T_FNFL9F2O2S4');
 INSERT INTO `sys_column_info` VALUES ('37431c10-919e-40e8-9184-729578621435', '备注', 'bak', 'varchar', '200', '1', '备注', '2017-11-30 19:36:49', null, '0', 'T_FNFL9F2O2S3');
 INSERT INTO `sys_column_info` VALUES ('3e315d7e-92ed-48f6-96e0-46e895098657', '电话', 'phone', 'varchar', '20', '1', '电话', '2017-11-29 14:32:49', null, '0', 'T_FNFL9F2O2S3');
+INSERT INTO `sys_column_info` VALUES ('4c2d8227-acf9-496c-8325-914b82084ded', '职责名称', 'name', 'varchar', '100', '2', '职责名称', '2017-12-13 18:48:18', null, '0', 't_position_duty_test');
 INSERT INTO `sys_column_info` VALUES ('4eb56a34-0467-4a8d-a4b3-815643354cb8', '联系电话', 'phone', 'varchar', '20', '1', '电话', '2017-11-29 14:36:08', null, '0', 'T_FNFL9F2O2S4');
 INSERT INTO `sys_column_info` VALUES ('5b1b4b58-c56d-454d-893f-c7f6e5aaf1f5', '通讯地址', 'address', 'varchar', '200', '1', '通讯地址', '2017-11-29 14:31:58', null, '0', 'T_FNFL9F2O2S3');
 INSERT INTO `sys_column_info` VALUES ('6c1f6b47-49a8-4522-8609-d9fffcc04bd4', '传真', 'fax', 'varchar', '20', '1', '传真', '2017-11-29 14:33:44', null, '0', 'T_FNFL9F2O2S3');
+INSERT INTO `sys_column_info` VALUES ('6c78a471-efef-4f4d-a38c-5810e04158e9', '测试1', 'test', 'varchar', '20', '2', '测试', '2017-12-14 16:54:03', null, '0', 't_position_duty_test');
 INSERT INTO `sys_column_info` VALUES ('a3d0edfa-4933-4dd0-986d-be02ff22757b', '邮箱', 'email', 'varchar', '100', '1', '邮箱', '2017-11-30 19:57:02', null, '0', 'T_FNFL9F2O2S3');
 INSERT INTO `sys_column_info` VALUES ('af98751e-6330-49e6-83f0-0746692e4d56', '公告内容', 'content', 'varchar', '2000', '1', '公告内容', '2017-12-04 16:18:26', null, '0', 't_fnfl9f2o2s5');
 INSERT INTO `sys_column_info` VALUES ('b05c8c4e-efd7-47ec-8b52-136f1882b384', '工作时间', 'time', 'varchar', '200', '1', '工作时间', '2017-11-29 14:40:45', null, '0', '20171127CS1');
 INSERT INTO `sys_column_info` VALUES ('b574d79e-cb2d-452b-9f5c-e476e0b49e4f', '工作性质', 'type', 'varchar', '100', '1', '工作性质', '2017-11-29 14:40:03', null, '0', '20171127CS1');
 INSERT INTO `sys_column_info` VALUES ('c868a565-9ef3-40eb-9b39-f7d6a25ac18c', '办公室', 'office', 'varchar', '200', '1', 'office', '2017-11-29 14:36:45', null, '0', 'T_FNFL9F2O2S4');
+INSERT INTO `sys_column_info` VALUES ('d99a8653-29c5-4ef6-a5f2-57376bb75e7b', '岗位级别', 'level', 'varchar', '20', '2', '岗位级别', '2017-12-16 13:29:18', null, '0', 't_position_level');
+INSERT INTO `sys_column_info` VALUES ('ef0fd9dc-6825-485e-9050-b7385b45fba7', '级别说明', 'level_mark', 'varchar', '200', '2', '级别说明', '2017-12-16 13:30:02', null, '0', 't_position_level');
 
 -- ----------------------------
 -- Table structure for sys_dept_position
@@ -595,6 +600,8 @@ CREATE TABLE `sys_tableinfo` (
 INSERT INTO `sys_tableinfo` VALUES ('1', '部门通讯信息', 'T_FNFL9F2O2S3', '1', '部门通讯信息', null, null, '0', null, '');
 INSERT INTO `sys_tableinfo` VALUES ('2', '部门领导信息', 'T_FNFL9F2O2S4', '1', '部门领导信息', '', '', '0', '', '');
 INSERT INTO `sys_tableinfo` VALUES ('567007c5-f149-42ae-a493-57b6133f579a', '部门职能信息', '20171127CS1', '1', '部门职能信息', '2017-11-27 14:19:56', null, '0', null, null);
+INSERT INTO `sys_tableinfo` VALUES ('63621240-95fc-4404-8a6c-7d9d4cdf7b6b', '岗位职责信息', 't_position_duty_test', '2', '岗位职责信息', '2017-12-13 18:34:33', null, '0', null, null);
+INSERT INTO `sys_tableinfo` VALUES ('6a20f289-7a92-49bb-9602-be8333ecd871', '岗位级别信息', 't_position_level', '2', '岗位级别信息', '2017-12-16 13:28:48', null, '0', null, null);
 INSERT INTO `sys_tableinfo` VALUES ('f477ee8c-7afa-4e14-9e0b-32b0eee83e35', '部门公告信息', 't_fnfl9f2o2s5', '1', '部门公告信息', '2017-12-04 16:16:42', null, '0', null, null);
 
 -- ----------------------------
@@ -706,7 +713,6 @@ INSERT INTO `t_dept_uuid` VALUES ('50', '15a', '8e244f94-a46c-49bd-a878-8bef04d6
 INSERT INTO `t_dept_uuid` VALUES ('51', '15a', '20a973f1-7976-4c24-bbe3-c6b81e6de27d', 'T_FNFL9F2O2S3');
 INSERT INTO `t_dept_uuid` VALUES ('52', '15a', '88b34556-35f9-45c5-9144-7fbd57e80fde', 'T_FNFL9F2O2S3');
 INSERT INTO `t_dept_uuid` VALUES ('54', '15a', 'aebde574-0902-408b-8b8a-f8147350f485', 'T_FNFL9F2O2S3');
-INSERT INTO `t_dept_uuid` VALUES ('55', '15a', '78cfa410-a0b4-431f-89c0-0ad6918af297', 'T_FNFL9F2O2S3');
 INSERT INTO `t_dept_uuid` VALUES ('56', '15a', 'e3b5cda8-e58c-47c1-8deb-67fd0b794316', 'T_FNFL9F2O2S3');
 INSERT INTO `t_dept_uuid` VALUES ('57', '15a', 'ba33f7c9-b0b0-4373-82f0-cbc54dff0531', 'T_FNFL9F2O2S3');
 INSERT INTO `t_dept_uuid` VALUES ('58', '15a', '97222039-df6c-4ecf-b02a-6bbe20d64d92', 'T_FNFL9F2O2S3');
@@ -779,7 +785,7 @@ INSERT INTO `t_fnfl9f2o2s3` VALUES ('08b51ea5-abd6-414b-ae3a-65f2199b4bdf', '22d
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('0a4b44af-63bd-43ff-882c-8306b2df02dc', '20a973f1-7976-4c24-bbe3-c6b81e6de27d', 'phone', '010-88888888', null, '2017-12-08 17:11 18', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('10585461-d223-443a-8a35-9e0394b82508', '18f295e7-d1e8-4a1e-81fd-253e2889bacb', 'bak', '1', null, '2017-12-06 14:43 14', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('1100bb28-e8c5-49c0-a6c4-0ffee17aef6f', '4a6c0802-d4eb-42cb-aabd-4dc5fedaa7ee', 'bak', '', null, '2017-12-06 14:02 16', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('11b7cc75-2bae-4f66-8c70-d7c9a6400e4a', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'phone', '7', null, '2017-12-08 17:14 15', null, '0', null, null);
+INSERT INTO `t_fnfl9f2o2s3` VALUES ('11b7cc75-2bae-4f66-8c70-d7c9a6400e4a', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'phone', '70', null, '2017-12-08 17:14 15', '2017-12-14 16:52 40', '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('1b0aa157-3349-4062-acac-2c1685adb1b4', 'ca1e45b5-4048-4708-bf0e-ebf78515e11a', 'address', '北京市朝阳区', null, '2017-12-08 17:10 43', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('1f993f8b-e989-4332-a953-11388eace06b', '88b34556-35f9-45c5-9144-7fbd57e80fde', 'phone', '1388888889', null, '2017-12-08 17:11 36', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('24b97a32-1c91-4b50-9199-5e31a354f469', '4a6c0802-d4eb-42cb-aabd-4dc5fedaa7ee', 'address', '北京市西城区', null, '2017-12-06 14:02 16', null, '0', null, null);
@@ -796,7 +802,7 @@ INSERT INTO `t_fnfl9f2o2s3` VALUES ('36caca5c-02a2-41a2-956e-29e0d5152132', '98e
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('3700b61f-e806-455b-9c22-e4b83691693b', '18f295e7-d1e8-4a1e-81fd-253e2889bacb', 'email', '1', null, '2017-12-06 14:43 14', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('393a2e1b-bb06-4b90-942d-8a6d43a58da4', 'ad421861-f0d5-41ac-bd8c-98cb80e73acd', 'phone', '6', null, '2017-12-06 14:45 22', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('3a28cf92-89a3-4a1b-9560-f304e313c11a', '22dbed5a-07e6-4ca7-a022-afbda025e015', 'bak', '4', null, '2017-12-06 14:45 04', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('3a7d4aa3-e8d3-4095-8bad-48ac3bb614c0', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'bak', '', null, '2017-12-08 17:14 15', null, '0', null, null);
+INSERT INTO `t_fnfl9f2o2s3` VALUES ('3a7d4aa3-e8d3-4095-8bad-48ac3bb614c0', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'bak', '00', null, '2017-12-08 17:14 15', '2017-12-14 16:52 40', '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('3b6e9532-5668-4418-aae8-4d1bf3a9bb20', '588ec9f5-0cb3-41e4-b70c-4ca2734351c6', 'fax', '2', null, '2017-12-06 14:44 51', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('3cc166e6-c8ba-4eee-8828-1397c87b7282', 'b46dc954-6e71-4876-b08a-24532b9fc13a', 'fax', '7', null, '2017-12-06 14:45 33', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('3ee65a64-a757-45f8-9a93-c6b373520442', '88b34556-35f9-45c5-9144-7fbd57e80fde', 'email', '', null, '2017-12-08 17:11 36', null, '0', null, null);
@@ -824,25 +830,22 @@ INSERT INTO `t_fnfl9f2o2s3` VALUES ('629439d1-ae73-472d-9705-87979a7eadb2', 'aeb
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('662d50ad-f55a-45a5-91db-5cb39dfd30eb', 'ca1e45b5-4048-4708-bf0e-ebf78515e11a', 'fax', '010-66666666', null, '2017-12-08 17:10 43', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('66347c02-b2a0-4e9e-bde6-3e7cce361e21', '18f295e7-d1e8-4a1e-81fd-253e2889bacb', 'address', '1', null, '2017-12-06 14:43 14', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('66c8fcdb-f661-4cd0-9a10-3f12dfb34bb1', '734f1d6c-6975-4d58-ad9a-adf7ca8804a1', 'bak', '5', null, '2017-12-06 14:45 10', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('6754dd08-63d4-4ca6-8451-25f15bd1fd45', '78cfa410-a0b4-431f-89c0-0ad6918af297', 'email', '', null, '2017-12-08 17:13 50', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('68625933-d93b-4571-ba72-824709ca8448', '4a7ed7b5-1ab7-483d-9a56-4391b36c5755', 'bak', '8', null, '2017-12-08 17:14 23', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('69770e33-6bd4-45d1-8781-d4b829b0a924', '88b34556-35f9-45c5-9144-7fbd57e80fde', 'bak', '', null, '2017-12-08 17:11 36', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('6d0d4502-af6e-4e20-8148-e7d49546dd0b', 'e3b5cda8-e58c-47c1-8deb-67fd0b794316', 'bak', '', null, '2017-12-08 17:13 55', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('6e4d5ed7-3092-409b-b0a8-c46f9684af18', '06f28625-4e4a-46d5-ae87-cbe5326c46b6', 'bak', '12', null, '2017-12-07 11:58 25', '2017-12-07 13:48 41', '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('7245f554-b642-4e10-9218-cfce239d5b0a', '734f1d6c-6975-4d58-ad9a-adf7ca8804a1', 'fax', '5', null, '2017-12-06 14:45 10', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('745ed31d-5d66-4d34-ab63-8c263b7e0df7', '06f28625-4e4a-46d5-ae87-cbe5326c46b6', 'email', '', null, '2017-12-07 11:58 25', '2017-12-07 13:48 41', '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('7711699b-0fe6-4d62-be28-e116053f827e', '78cfa410-a0b4-431f-89c0-0ad6918af297', 'fax', '2', null, '2017-12-08 17:13 50', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('7769e9ce-326c-448b-9c0e-3a14062835a5', '588ec9f5-0cb3-41e4-b70c-4ca2734351c6', 'bak', '12', null, '2017-12-06 14:44 51', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('77d2e922-978b-4e46-86e9-442ea0bfd45e', '097b9ad8-57ef-486a-8edd-d357ec033469', 'fax', '33', null, '2017-12-06 14:44 58', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('7889c5d9-8ffb-40f5-861f-472513522876', '37f01c3f-2a26-4e78-adec-a2063c43badf', 'fax', '010-88888888', null, '2017-12-06 14:00 05', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('7ba0b4a7-77bc-4fd9-a823-68e45f3c1ed3', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'email', '7', null, '2017-12-08 17:14 15', null, '0', null, null);
+INSERT INTO `t_fnfl9f2o2s3` VALUES ('7ba0b4a7-77bc-4fd9-a823-68e45f3c1ed3', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'email', '7', null, '2017-12-08 17:14 15', '2017-12-14 16:52 40', '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('7bf41381-267c-45c9-9b55-c5a6928e5ff0', '097b9ad8-57ef-486a-8edd-d357ec033469', 'address', '3', null, '2017-12-06 14:44 58', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('7cf5e1c1-0f4c-48f0-8403-6dc540b6b3a1', '97222039-df6c-4ecf-b02a-6bbe20d64d92', 'phone', '5', null, '2017-12-08 17:14 04', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('8a90cc86-fd8f-496f-9c62-d409c65c1afd', 'e3b5cda8-e58c-47c1-8deb-67fd0b794316', 'email', '', null, '2017-12-08 17:13 55', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('8c233738-10c8-49be-acb7-4779dddc7552', '4a6c0802-d4eb-42cb-aabd-4dc5fedaa7ee', 'email', 'xu.bf@neusoft.com', null, '2017-12-06 14:02 16', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('8f6653ce-f277-4d86-9a49-5f8021f1c169', '98e65002-e02b-43c7-8e03-07a3b162bf1b', 'phone', '22', null, '2017-12-06 15:19 26', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('915e3829-56af-4348-9706-8e00b0427a7b', 'ba33f7c9-b0b0-4373-82f0-cbc54dff0531', 'address', '4', null, '2017-12-08 17:13 59', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('93918cb8-f3f9-4c28-bdfb-ed522511f8bd', '78cfa410-a0b4-431f-89c0-0ad6918af297', 'bak', '', null, '2017-12-08 17:13 50', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('94ac5bfa-4282-4913-9690-1e1f8683a671', '588ec9f5-0cb3-41e4-b70c-4ca2734351c6', 'address', '2', null, '2017-12-06 14:44 51', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('94d91df6-2f3f-4f8f-9bc0-25551c59fcb5', '4a7ed7b5-1ab7-483d-9a56-4391b36c5755', 'fax', '', null, '2017-12-08 17:14 23', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('98245e01-34dc-46c3-8edf-079e0605aa85', 'ad421861-f0d5-41ac-bd8c-98cb80e73acd', 'bak', '6', null, '2017-12-06 14:45 22', null, '0', null, null);
@@ -853,20 +856,18 @@ INSERT INTO `t_fnfl9f2o2s3` VALUES ('a4dc6caa-6bbb-40c0-8555-8639f4600790', '097
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('a5f5f0a1-d954-4c89-b563-9b2447411e18', '97222039-df6c-4ecf-b02a-6bbe20d64d92', 'fax', '5', null, '2017-12-08 17:14 04', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('a80337a1-c42b-43f7-b6c6-08347413fbf7', '4a6c0802-d4eb-42cb-aabd-4dc5fedaa7ee', 'fax', '010-66666666', null, '2017-12-06 14:02 16', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('a87cf41d-74c3-4480-b972-eaaa97bcc2eb', '4a6c0802-d4eb-42cb-aabd-4dc5fedaa7ee', 'phone', '18800000000', null, '2017-12-06 14:02 16', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('aaa2306e-b3ec-4979-91de-00fdf1050880', '78cfa410-a0b4-431f-89c0-0ad6918af297', 'phone', '2', null, '2017-12-08 17:13 50', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('af1a2b72-009d-4353-899b-7cd792ff62e1', '78cfa410-a0b4-431f-89c0-0ad6918af297', 'address', '', null, '2017-12-08 17:13 50', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('b1c00160-d8ad-4f08-80a0-0744573ffb38', 'b555be7e-9f1d-4348-9b8d-43bee5c854c1', 'email', '8', null, '2017-12-06 14:45 48', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('b5dcc206-cd66-41cb-a8bf-1df469958c02', '588ec9f5-0cb3-41e4-b70c-4ca2734351c6', 'phone', '1', null, '2017-12-06 14:44 51', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('b8f3694d-4bef-4923-8366-d0ff8acafe85', 'b46dc954-6e71-4876-b08a-24532b9fc13a', 'email', '7', null, '2017-12-06 14:45 33', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('b999e733-971c-4766-828a-5b7ddb5f1972', '88b34556-35f9-45c5-9144-7fbd57e80fde', 'fax', '010-66666666', null, '2017-12-08 17:11 36', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('ba10317a-e107-48e5-94ad-df231bc4b360', '88b34556-35f9-45c5-9144-7fbd57e80fde', 'address', '天津市', null, '2017-12-08 17:11 36', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('bb907fc2-a3d8-45e3-8bd6-7acd667beb9d', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'address', '7', null, '2017-12-08 17:14 15', null, '0', null, null);
+INSERT INTO `t_fnfl9f2o2s3` VALUES ('bb907fc2-a3d8-45e3-8bd6-7acd667beb9d', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'address', '70', null, '2017-12-08 17:14 15', '2017-12-14 16:52 40', '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('bd8a25ad-5159-4620-9889-94f9dff86116', 'd1502129-c532-4d7c-8b61-4d855bc0ba7f', 'phone', '18800000000', null, '2017-12-06 14:43 44', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('c0c14e37-2bd3-47fc-8313-0eb786b2a1e1', '98e65002-e02b-43c7-8e03-07a3b162bf1b', 'email', '22', null, '2017-12-06 15:19 26', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('c3d1d06b-1064-4078-9421-0cfc74ce0438', 'b46dc954-6e71-4876-b08a-24532b9fc13a', 'phone', '7', null, '2017-12-06 14:45 33', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('c5636bb5-1b3b-4c2c-bf5c-a7cd174672d4', '20a973f1-7976-4c24-bbe3-c6b81e6de27d', 'fax', '010-66666666', null, '2017-12-08 17:11 18', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('cda1c110-e16d-4ac5-b56e-8dfc4e38855f', 'ba33f7c9-b0b0-4373-82f0-cbc54dff0531', 'bak', '4', null, '2017-12-08 17:13 59', null, '0', null, null);
-INSERT INTO `t_fnfl9f2o2s3` VALUES ('d01de5a8-746e-477f-892c-da22b22a1dd0', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'fax', '', null, '2017-12-08 17:14 15', null, '0', null, null);
+INSERT INTO `t_fnfl9f2o2s3` VALUES ('d01de5a8-746e-477f-892c-da22b22a1dd0', '3ee3484b-772e-445c-bf23-2a9aa991e851', 'fax', '', null, '2017-12-08 17:14 15', '2017-12-14 16:52 40', '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('d0250b28-cf17-4065-811f-0892b43fa5b5', '734f1d6c-6975-4d58-ad9a-adf7ca8804a1', 'email', '5', null, '2017-12-06 14:45 10', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('d07cbd39-0118-463e-9299-369e1c133234', '20a973f1-7976-4c24-bbe3-c6b81e6de27d', 'email', '', null, '2017-12-08 17:11 18', null, '0', null, null);
 INSERT INTO `t_fnfl9f2o2s3` VALUES ('d13ff100-7f43-44b0-a8d1-19f3374efd96', 'b555be7e-9f1d-4348-9b8d-43bee5c854c1', 'address', '8', null, '2017-12-06 14:45 48', null, '0', null, null);
@@ -999,18 +1000,123 @@ CREATE TABLE `t_position` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for t_position_duty_test
+-- ----------------------------
+DROP TABLE IF EXISTS `t_position_duty_test`;
+CREATE TABLE `t_position_duty_test` (
+  `id` varchar(64) NOT NULL,
+  `sub_id` varchar(64) DEFAULT NULL,
+  `property` varchar(100) DEFAULT NULL,
+  `value` varchar(500) DEFAULT NULL,
+  `bak` varchar(1000) DEFAULT NULL,
+  `createtime` varchar(64) DEFAULT NULL,
+  `updatetime` varchar(64) DEFAULT NULL,
+  `available` varchar(2) DEFAULT NULL,
+  `creator` varchar(32) DEFAULT NULL,
+  `updatername` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_position_duty_test
+-- ----------------------------
+INSERT INTO `t_position_duty_test` VALUES ('021f5129-3ceb-418a-868f-59180bd3d5fb', 'fb1a889a-a34e-427b-a3c5-4add618a99ba', 'content', '你猜', null, '2017-12-14 16:54 29', '2017-12-14 16:54 44', '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('05565924-5bf7-43b1-b0f7-227c8d34f052', 'fb1a889a-a34e-427b-a3c5-4add618a99ba', 'name', '你猜', null, '2017-12-14 16:54 29', '2017-12-14 16:54 44', '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('121d0ef7-30eb-4b20-88fd-4b1f207b61ce', '6d6a4157-694e-4429-b21e-80968ceef08b', 'content', '2', null, '2017-12-14 16:57 44', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('13e1b065-7ed9-4136-a3ee-f247f8b477b9', 'a1351d27-9a16-4738-8873-1d510a3d2b79', 'content', '5', null, '2017-12-14 16:58 01', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('1f09e8de-69be-4a22-9264-866c853fff73', '8466cde0-d37c-4c96-ae16-9dd8842fd7fd', 'test', '7', null, '2017-12-14 16:58 12', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('205d8b5b-5eec-48b0-8c9d-792f0598289e', 'd01076d6-af26-494b-b1c7-5a357e0af420', 'name', '检控通过', null, '2017-12-13 19:10 58', '2017-12-14 16:53 17', '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('21cf6706-40b7-41ec-ac26-400304b5b1bf', '8466cde0-d37c-4c96-ae16-9dd8842fd7fd', 'name', '7', null, '2017-12-14 16:58 12', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('239b5775-978d-4bc7-b162-7451775e9652', 'f0536217-216e-4c59-92d2-6471663b23df', 'content', '后勤管理', null, '2017-12-14 16:56 42', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('26641515-bc0d-4e99-af99-dec6c63f7617', 'fb1a889a-a34e-427b-a3c5-4add618a99ba', 'test', '1', null, '2017-12-14 16:54 29', '2017-12-14 16:54 44', '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('36640ddf-1262-4865-98e6-b474eadaad2d', 'c80d0794-c673-4c26-9957-4c7b59331619', 'content', '8', null, '2017-12-14 16:58 17', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('39cfa70d-2bbe-4683-a67e-c0a1f0cca57d', '9d776ef0-460a-4157-bee7-0d523ab64dea', 'test', '11', null, '2017-12-14 16:58 28', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('39d11d64-c16d-4c5b-b080-1c66d476c7cd', '037167cb-0bac-49d8-a084-e1c60a55428c', 'test', '9', null, '2017-12-14 16:58 22', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('444d5770-1655-44b1-ab59-46f250086f9d', '8466cde0-d37c-4c96-ae16-9dd8842fd7fd', 'content', '7', null, '2017-12-14 16:58 12', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('5711707c-30d8-4ee0-a670-4b0ae017c9c0', '785444d2-73d5-471e-aedf-b1623f2fa8b9', 'content', '3', null, '2017-12-14 16:57 49', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('59d0e6a7-e07c-4fab-9a10-212c7d765a7b', '037167cb-0bac-49d8-a084-e1c60a55428c', 'content', '9', null, '2017-12-14 16:58 22', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('5e82a730-97db-4247-94eb-334eced00026', '51976865-e5ba-4fef-93c3-71c449803c41', 'test', '6', null, '2017-12-14 16:58 07', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('5efb6de2-1d93-4e02-8f46-83852594c3c3', '6d6a4157-694e-4429-b21e-80968ceef08b', 'name', '2', null, '2017-12-14 16:57 44', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('649d8dfb-625e-464c-b7a2-869970dfaa2c', 'f0536217-216e-4c59-92d2-6471663b23df', 'name', '后勤', null, '2017-12-14 16:56 42', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('64cf93d8-4b8f-4bdb-ab06-b193da562804', 'f0536217-216e-4c59-92d2-6471663b23df', 'test', '', null, '2017-12-14 16:56 42', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('707dbf6c-6747-4f79-8b38-0511770fc4aa', 'a1351d27-9a16-4738-8873-1d510a3d2b79', 'name', '5', null, '2017-12-14 16:58 01', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('74ec02f5-1b8f-456a-8996-d69c1598aa67', '39b24105-46c4-4ba5-b6b9-4ddb0bb7c91a', 'content', '4', null, '2017-12-14 16:57 55', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('81a5813c-2d6c-42fb-8eec-a8333c70b1f4', '51976865-e5ba-4fef-93c3-71c449803c41', 'content', '6', null, '2017-12-14 16:58 07', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('86b4f740-eee1-4cee-8c20-1938b5b99b5e', '6d6a4157-694e-4429-b21e-80968ceef08b', 'test', '2', null, '2017-12-14 16:57 44', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('88bd8367-c998-4afd-887c-729f299b6569', '39b24105-46c4-4ba5-b6b9-4ddb0bb7c91a', 'name', '4', null, '2017-12-14 16:57 55', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('892f633a-9a34-4caa-aa8a-88735e03346f', 'c80d0794-c673-4c26-9957-4c7b59331619', 'name', '8', null, '2017-12-14 16:58 17', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('9e01243d-3f51-40d7-9133-13caadba5522', '785444d2-73d5-471e-aedf-b1623f2fa8b9', 'name', '3', null, '2017-12-14 16:57 49', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('a69b854a-41e3-4fde-8910-6cc179b221c9', 'a1351d27-9a16-4738-8873-1d510a3d2b79', 'test', '5', null, '2017-12-14 16:58 01', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('a908224f-a99e-4202-8f3b-3accf4855974', '707706f2-53f4-473d-897f-6e245728b277', 'name', '1', null, '2017-12-14 16:57 37', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('b00d4275-4828-484a-abb3-04e8102dd1d0', '51976865-e5ba-4fef-93c3-71c449803c41', 'name', '6', null, '2017-12-14 16:58 07', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('b5c125e5-7151-4860-b67f-877fe69a2182', '785444d2-73d5-471e-aedf-b1623f2fa8b9', 'test', '3', null, '2017-12-14 16:57 49', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('b90698bb-2b88-4a2b-a29e-45b3f16447fb', '9d776ef0-460a-4157-bee7-0d523ab64dea', 'content', '11', null, '2017-12-14 16:58 28', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('c1a8f2ac-a058-43ab-bb80-bbc993ede574', '9d776ef0-460a-4157-bee7-0d523ab64dea', 'name', '11', null, '2017-12-14 16:58 28', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('c8ebfeb2-fb03-4757-9b68-8749e877c7cf', '39b24105-46c4-4ba5-b6b9-4ddb0bb7c91a', 'test', '4', null, '2017-12-14 16:57 55', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('db0c796c-069d-4c9b-a06b-a30c0c4f51cf', '707706f2-53f4-473d-897f-6e245728b277', 'test', '1', null, '2017-12-14 16:57 37', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('dbbb6244-1f5e-45a4-ace1-d34a2a68f3d2', '707706f2-53f4-473d-897f-6e245728b277', 'content', '1', null, '2017-12-14 16:57 37', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('e47807c3-b464-43a9-94fb-876221a5c483', 'c80d0794-c673-4c26-9957-4c7b59331619', 'test', '8', null, '2017-12-14 16:58 17', null, '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('ec02c533-1e25-4841-a8f4-c7386920150d', 'd01076d6-af26-494b-b1c7-5a357e0af420', 'content', '中国经济标题', null, '2017-12-13 19:10 58', '2017-12-14 16:53 17', '0', null, null);
+INSERT INTO `t_position_duty_test` VALUES ('f01046cd-e7c0-4539-8f99-289ecffaabb4', '037167cb-0bac-49d8-a084-e1c60a55428c', 'name', '9', null, '2017-12-14 16:58 22', null, '0', null, null);
+
+-- ----------------------------
+-- Table structure for t_position_level
+-- ----------------------------
+DROP TABLE IF EXISTS `t_position_level`;
+CREATE TABLE `t_position_level` (
+  `id` varchar(64) NOT NULL,
+  `sub_id` varchar(64) DEFAULT NULL,
+  `property` varchar(100) DEFAULT NULL,
+  `value` varchar(500) DEFAULT NULL,
+  `bak` varchar(1000) DEFAULT NULL,
+  `createtime` varchar(64) DEFAULT NULL,
+  `updatetime` varchar(64) DEFAULT NULL,
+  `available` varchar(2) DEFAULT NULL,
+  `creator` varchar(32) DEFAULT NULL,
+  `updatername` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_position_level
+-- ----------------------------
+INSERT INTO `t_position_level` VALUES ('10590685-56a6-4e73-8312-facd699f430b', 'ac50937b-2a95-4c27-b718-5c5741ae0d96', 'level_mark', '高级岗位', null, '2017-12-16 13:32 39', null, '0', null, null);
+INSERT INTO `t_position_level` VALUES ('693b7be0-f5b8-4cc5-944e-795cfdad51e2', '75a69705-6a81-4ece-b049-4108e4330f83', 'level', '初级', null, '2017-12-16 13:30 35', '2017-12-16 13:32 19', '0', null, null);
+INSERT INTO `t_position_level` VALUES ('82a5e553-08f6-41af-aee6-f5a07b65b127', '75a69705-6a81-4ece-b049-4108e4330f83', 'level_mark', '初级岗位', null, '2017-12-16 13:30 35', '2017-12-16 13:32 19', '0', null, null);
+INSERT INTO `t_position_level` VALUES ('974b0b62-c401-4463-965d-86db53bf8767', 'ac50937b-2a95-4c27-b718-5c5741ae0d96', 'level', '高级', null, '2017-12-16 13:32 39', null, '0', null, null);
+
+-- ----------------------------
 -- Table structure for t_position_uuid
 -- ----------------------------
 DROP TABLE IF EXISTS `t_position_uuid`;
 CREATE TABLE `t_position_uuid` (
-  `id` varchar(64) NOT NULL,
-  `r_id` varchar(64) DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `sub_id` varchar(64) DEFAULT NULL,
+  `position_id` varchar(64) DEFAULT NULL,
+  `en_table_name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='表（子集）表明记录';
 
 -- ----------------------------
 -- Records of t_position_uuid
 -- ----------------------------
+INSERT INTO `t_position_uuid` VALUES ('0', '0', '0', '');
+INSERT INTO `t_position_uuid` VALUES ('1', 'd01076d6-af26-494b-b1c7-5a357e0af420', '0e5102e4-cbc3-4b61-aa02-0fbdb8359e35', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('2', 'bbeb4743-3783-4b86-a567-43af99ca2693', '0e5102e4-cbc3-4b61-aa02-0fbdb8359e35', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('3', 'fb1a889a-a34e-427b-a3c5-4add618a99ba', '9d0fb533-6531-4892-a774-7f3c94be4cd7', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('4', 'f0536217-216e-4c59-92d2-6471663b23df', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('5', '707706f2-53f4-473d-897f-6e245728b277', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('6', '6d6a4157-694e-4429-b21e-80968ceef08b', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('7', '785444d2-73d5-471e-aedf-b1623f2fa8b9', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('8', '39b24105-46c4-4ba5-b6b9-4ddb0bb7c91a', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('9', 'a1351d27-9a16-4738-8873-1d510a3d2b79', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('10', '51976865-e5ba-4fef-93c3-71c449803c41', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('11', '8466cde0-d37c-4c96-ae16-9dd8842fd7fd', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('12', 'c80d0794-c673-4c26-9957-4c7b59331619', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('13', '037167cb-0bac-49d8-a084-e1c60a55428c', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('14', '9d776ef0-460a-4157-bee7-0d523ab64dea', '649ae315-fcf6-4e30-9666-a9a26e2afc58', 't_position_duty_test');
+INSERT INTO `t_position_uuid` VALUES ('15', '75a69705-6a81-4ece-b049-4108e4330f83', '4e9dd7d9-74fa-4a8b-8a4a-0dc426dcf7df', 't_position_level');
+INSERT INTO `t_position_uuid` VALUES ('16', 'ac50937b-2a95-4c27-b718-5c5741ae0d96', '5a3697b8-2ff9-49cd-9f94-7935fec3a3e7', 't_position_level');
 
 -- ----------------------------
 -- Table structure for ucenter_oauth
@@ -1134,7 +1240,7 @@ CREATE TABLE `upms_log` (
   `permissions` varchar(100) DEFAULT NULL COMMENT '权限值',
   PRIMARY KEY (`log_id`),
   KEY `log_id` (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14897 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=16454 DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of upms_log
@@ -1162,6 +1268,7 @@ INSERT INTO `upms_organization` VALUES ('14a', null, '0', '组织机构', '组�
 INSERT INTO `upms_organization` VALUES ('15a', null, '14a', '北京总部', '北京总部1', '1512723785991', '10001');
 INSERT INTO `upms_organization` VALUES ('16a', null, '14a', '天津总部', '天津总部0', '1510103605062', '10002');
 INSERT INTO `upms_organization` VALUES ('19a', null, '14a', '上海总部', '上海总部', '1510103687350', null);
+INSERT INTO `upms_organization` VALUES ('1afa884a-8f41-43db-9ae4-543da868be01', 'da93da9c-a7a7-4296-95e2-133ab8fcfb4b', '14a', 'ce测试', 'ce测试', '1513071262186', '1111');
 INSERT INTO `upms_organization` VALUES ('1c1df1ea-8d44-4769-abe8-71de70f24fb4', '27b441ab-0a43-4a89-acb8-a8676e190825', '23a', '测试', '测试', '1512298143654', null);
 INSERT INTO `upms_organization` VALUES ('20a', null, '15a', '东城区', '东城区', '1510103712960', null);
 INSERT INTO `upms_organization` VALUES ('21a', null, '15a', '西城区', '西城区1', '1510103794165', null);
@@ -1211,7 +1318,7 @@ CREATE TABLE `upms_permission` (
   `ctime` bigint(20) DEFAULT NULL COMMENT '创建时间',
   `orders` bigint(20) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COMMENT='权限';
 
 -- ----------------------------
 -- Records of upms_permission
@@ -1286,6 +1393,71 @@ INSERT INTO `upms_permission` VALUES ('83', '2', '80', '删除专题', '3', 'cms
 INSERT INTO `upms_permission` VALUES ('84', '2', '68', '上移菜单', '3', 'cms:menu:up', '/manage/menu/up', 'zmdi zmdi-long-arrow-up', '1', '1489846486548', '1489846486548');
 INSERT INTO `upms_permission` VALUES ('85', '2', '68', '下移菜单', '3', 'cms:menu:down', '/manage/menu/down', 'zmdi zmdi-long-arrow-down', '1', '1489846578051', '1489846578051');
 INSERT INTO `upms_permission` VALUES ('86', '1', '3', '新增子集数据', '3', 'upms:organization:createSubset', '/manage/organization/createSubset', 'zmdi zmdi-plus', '1', '1511438441867', '1511438441867');
+INSERT INTO `upms_permission` VALUES ('87', '1', '1', '岗位管理', '2', 'upms:position:read', '/manage/position/index', 'zmdi zmdi-widgets', '1', '1513067381894', '1513067381894');
+INSERT INTO `upms_permission` VALUES ('88', '1', '87', '新增岗位', '3', 'upms:position:create', '/manage/position/create', 'zmdi zmdi-plus', '1', '1513070579812', '1513070579812');
+INSERT INTO `upms_permission` VALUES ('89', '1', '87', '编辑岗位', '3', 'upms:position:update', '/manage/position/update', 'zmdi zmdi-edit', '1', '1513070777450', '1513070777450');
+INSERT INTO `upms_permission` VALUES ('90', '1', '87', '删除岗位', '3', 'upms:position:delete', '/manage/position/delete', 'zmdi zmdi-close', '1', '1513070881684', '1513070881684');
+INSERT INTO `upms_permission` VALUES ('91', '1', '87', '新增子集', '3', 'upms:position:createSubset', '/manage/position/createSubset', 'zmdi zmdi-plus', '1', '1513070942981', '1513070942981');
+
+-- ----------------------------
+-- Table structure for upms_position
+-- ----------------------------
+DROP TABLE IF EXISTS `upms_position`;
+CREATE TABLE `upms_position` (
+  `position_id` varchar(64) NOT NULL COMMENT '编号',
+  `dept_id` varchar(64) DEFAULT NULL COMMENT '业务主键',
+  `pid` varchar(64) DEFAULT NULL COMMENT '所属上级',
+  `name` varchar(20) DEFAULT NULL COMMENT '岗位名称',
+  `description` varchar(1000) DEFAULT NULL COMMENT '岗位描述',
+  `ctime` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `position_code` varchar(64) DEFAULT NULL COMMENT '岗位编号',
+  PRIMARY KEY (`position_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='岗位';
+
+-- ----------------------------
+-- Records of upms_position
+-- ----------------------------
+INSERT INTO `upms_position` VALUES ('08dedd5f-cc47-4613-8254-c5a1246da6c4', null, '649ae315-fcf6-4e30-9666-a9a26e2afc58', '后勤保障', '后勤保障', '1513401806294', '100005');
+INSERT INTO `upms_position` VALUES ('0e5102e4-cbc3-4b61-aa02-0fbdb8359e35', 'cdde2d56-1387-405f-a010-e90fbbe04579', '1', '测试', '测试', '1513237748214', '100001');
+INSERT INTO `upms_position` VALUES ('1', '1', '0', '岗位信息', '岗位信息', '1513401739492', '100001');
+INSERT INTO `upms_position` VALUES ('18d647b5-70e6-44d6-b69e-39caa69b4a4a', null, '1', '技术岗位', '技术岗位', '1513400827707', '100003');
+INSERT INTO `upms_position` VALUES ('249816c8-ef23-4a3c-b9fc-fc8580279e33', null, '606a55a5-4261-45dd-bf1b-f1d71e025211', '售前咨询', '售前咨询', '1513401776347', '100004');
+INSERT INTO `upms_position` VALUES ('4e9dd7d9-74fa-4a8b-8a4a-0dc426dcf7df', null, '18d647b5-70e6-44d6-b69e-39caa69b4a4a', '初级技工', '初级技工', '1513400950972', '100001-2');
+INSERT INTO `upms_position` VALUES ('5a3697b8-2ff9-49cd-9f94-7935fec3a3e7', null, '18d647b5-70e6-44d6-b69e-39caa69b4a4a', '高级技工', '高级技工', '1513400916760', '100001-1');
+INSERT INTO `upms_position` VALUES ('606a55a5-4261-45dd-bf1b-f1d71e025211', null, '1', '销售岗位', '销售岗位', '1513400847584', '100004');
+INSERT INTO `upms_position` VALUES ('649ae315-fcf6-4e30-9666-a9a26e2afc58', null, '1', '后勤岗位', '后勤岗', '1513400793719', '100003');
+INSERT INTO `upms_position` VALUES ('78239b1e-37e3-48b5-8a12-2a6b1d2f8cc6', null, '7aacad90-2e13-4439-80da-95c89fc86705', '总经理', '总经理', '1513400993940', '100002-1');
+INSERT INTO `upms_position` VALUES ('7aacad90-2e13-4439-80da-95c89fc86705', null, '1', '管理岗位', '管理岗', '1513400803171', '100002');
+INSERT INTO `upms_position` VALUES ('9d0fb533-6531-4892-a774-7f3c94be4cd7', '6ded940b-4128-4e0e-934e-d422341c61cb', '0e5102e4-cbc3-4b61-aa02-0fbdb8359e35', 'test', '分部3', '1513073084056', '2fdffff');
+INSERT INTO `upms_position` VALUES ('bc7b54c3-0779-478e-9e9f-1558f3f3f840', null, '1', '临时岗位', '临时岗位', '1513401834957', '100006');
+INSERT INTO `upms_position` VALUES ('e30eadf2-f7a7-4a83-a40b-b6863632307b', null, '7aacad90-2e13-4439-80da-95c89fc86705', '董事会', '董事会', '1513401023039', '100002-2');
+
+-- ----------------------------
+-- Table structure for upms_position_his
+-- ----------------------------
+DROP TABLE IF EXISTS `upms_position_his`;
+CREATE TABLE `upms_position_his` (
+  `id` varchar(64) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `position_id` varchar(64) DEFAULT NULL,
+  `dept_id` varchar(64) DEFAULT NULL,
+  `pid` varchar(64) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `ctime` bigint(20) DEFAULT NULL,
+  `position_code` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of upms_position_his
+-- ----------------------------
+INSERT INTO `upms_position_his` VALUES ('1cf32b68-4be6-4441-a652-a80f6cf3d61b', '测试', '0e5102e4-cbc3-4b61-aa02-0fbdb8359e35', null, '1', '测试11', '1513237748214', '100001');
+INSERT INTO `upms_position_his` VALUES ('2200d502-48e9-4068-91dd-8646d863a232', '测试', '0e5102e4-cbc3-4b61-aa02-0fbdb8359e35', null, '1', '测试', '1513237735976', '100001');
+INSERT INTO `upms_position_his` VALUES ('41a864ec-06b7-4f7e-a1f5-2a7f546f7b26', '后勤岗', '649ae315-fcf6-4e30-9666-a9a26e2afc58', null, '1', '后勤岗', '1513400793719', '100003');
+INSERT INTO `upms_position_his` VALUES ('58711c95-2fd2-4a66-96aa-f001d2e14789', '222', '05c76403-44ae-4d8c-9724-81fef42c34a6', 'b3743475-178c-438f-9e59-8b6cfabc1bdd', '1', '2', '1513072917152', '2');
+INSERT INTO `upms_position_his` VALUES ('8aa15eb1-00f9-4b40-b9e7-fa77de0e0fd4', '岗位结构', '1', null, '0', '岗位结构', '1513401739492', '100001');
+INSERT INTO `upms_position_his` VALUES ('9fb3f884-768a-4d98-939f-88e4f5bb9245', '管理岗', '7aacad90-2e13-4439-80da-95c89fc86705', null, '1', '管理岗', '1513400803171', '100002');
+INSERT INTO `upms_position_his` VALUES ('f2f7ea9d-0023-465b-aa35-ace434e0e8b6', '1', '1', '1', '0', '1', '1513073039963', '1');
 
 -- ----------------------------
 -- Table structure for upms_role
@@ -1318,7 +1490,7 @@ CREATE TABLE `upms_role_permission` (
   PRIMARY KEY (`role_permission_id`),
   KEY `FK_Reference_23` (`role_id`),
   CONSTRAINT `FK_Reference_23` FOREIGN KEY (`role_id`) REFERENCES `upms_role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
 
 -- ----------------------------
 -- Records of upms_role_permission
@@ -1455,6 +1627,11 @@ INSERT INTO `upms_role_permission` VALUES ('150', '2', '53');
 INSERT INTO `upms_role_permission` VALUES ('151', '2', '15');
 INSERT INTO `upms_role_permission` VALUES ('152', '2', '57');
 INSERT INTO `upms_role_permission` VALUES ('153', '1', '86');
+INSERT INTO `upms_role_permission` VALUES ('154', '1', '87');
+INSERT INTO `upms_role_permission` VALUES ('155', '1', '88');
+INSERT INTO `upms_role_permission` VALUES ('156', '1', '89');
+INSERT INTO `upms_role_permission` VALUES ('157', '1', '90');
+INSERT INTO `upms_role_permission` VALUES ('158', '1', '91');
 
 -- ----------------------------
 -- Table structure for upms_system

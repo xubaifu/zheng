@@ -75,5 +75,14 @@
     <!-- 组织历史 -->
     <bean id="upmsOrganizationHisService" class="com.zheng.upms.rpc.service.impl.UpmsOrganizationHisServiceImpl"/>
     <dubbo:service interface="com.zheng.upms.rpc.api.UpmsOrganizationHisService" ref="upmsOrganizationHisService" timeout="10000"/>
-
+    
+    <!-- 岗位-->
+    <bean id="upmsPositionService" class="com.zheng.upms.rpc.service.impl.UpmsPositionServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.UpmsPositionService" ref="upmsPositionService" timeout="10000"/>
+    <!-- 组织历史 -->
+    <bean id="upmsPositionHisService" class="com.zheng.upms.rpc.service.impl.UpmsPositionHisServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.UpmsPositionHisService" ref="upmsPositionHisService" timeout="10000"/>
+	<!-- 岗位信息主键存储表相关接口服务 -->
+    <bean id="tPositionUuidService" class="com.zheng.upms.rpc.service.impl.TPositionUuidServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.TPositionUuidService" ref="tPositionUuidService" timeout="10000"/>
 </beans>

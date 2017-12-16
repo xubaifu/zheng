@@ -1,7 +1,6 @@
 package com.zheng.upms.rpc.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,18 +15,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zheng.common.annotation.BaseService;
 import com.zheng.common.base.BaseServiceImpl;
-import com.zheng.common.db.DataSourceEnum;
-import com.zheng.common.db.DynamicDataSource;
 import com.zheng.upms.common.constant.ToolUtil;
 import com.zheng.upms.dao.mapper.SysTableinfoMapper;
 import com.zheng.upms.dao.mapper.SysTemplateTableMapper;
 import com.zheng.upms.dao.mapper.TDeptUuidMapper;
+import com.zheng.upms.dao.mapper.TPositionUuidMapper;
 import com.zheng.upms.dao.model.SysColumnInfo;
 import com.zheng.upms.dao.model.SysTableinfo;
 import com.zheng.upms.dao.model.SysTemplateTable;
 import com.zheng.upms.dao.model.SysTemplateTableExample;
 import com.zheng.upms.dao.model.TDeptUuid;
 import com.zheng.upms.dao.model.TDeptUuidExample;
+import com.zheng.upms.dao.model.TPositionUuid;
+import com.zheng.upms.dao.model.TPositionUuidExample;
 import com.zheng.upms.rpc.api.SysTemplateTableService;
 import com.zheng.upms.rpc.mapper.TableInfoAPIMapper;
 
@@ -53,6 +53,9 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
     
     @Autowired
     private TDeptUuidMapper tDeptUuidMapper;
+    
+    @Autowired
+    private TPositionUuidMapper tPositionUuidMapper;
 
 	@Override
 	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list, String search) {
@@ -61,16 +64,32 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 	
 	@Override
 	public List<SysTemplateTable> getDataInfoPage(Map<String, Object> params) {
-		DynamicDataSource.setDataSource(DataSourceEnum.SLAVE.getName());
-		List<SysTemplateTable> result = tableInfoAPIMapper.getDataInfoPage(params);
-		DynamicDataSource.clearDataSource();
+		List<SysTemplateTable> result = new ArrayList<SysTemplateTable>();
+		if(ToolUtil.ORGANIZATION_SUBSET_TYPE.equals(params.get("type"))){
+			result = tableInfoAPIMapper.getDataInfoPage(params);
+		}
+		if(ToolUtil.POSITION_SUBSET_TYPE.equals(params.get("type"))){
+			result = tableInfoAPIMapper.getDataInfoPagePosition(params);
+		}
+		if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(params.get("type"))){
+			//result = tableInfoAPIMapper.getDataInfoPage(params);
+		}
 		return result;
 	}
 	
 	@Override
 	public int getDataInfoPageCount(Map<String, Object> params) {
-		// TODO Auto-generated method stub
-		return tableInfoAPIMapper.getDataInfoPageCount(params);
+		int count = 0;
+		if(ToolUtil.ORGANIZATION_SUBSET_TYPE.equals(params.get("type"))){
+			count = tableInfoAPIMapper.getDataInfoPageCount(params);
+		}
+		if(ToolUtil.POSITION_SUBSET_TYPE.equals(params.get("type"))){
+			count = tableInfoAPIMapper.getDataInfoPagePositionCount(params);
+		}
+		if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(params.get("type"))){
+			//result = tableInfoAPIMapper.getDataInfoPage(params);
+		}
+		return count;
 	}
 	
 	@Override
@@ -80,14 +99,28 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 
 
 	@Override
-	public int insertSubsetData(String tableName, String organizationId, String data) {
-    	
+	public int insertSubsetData(String tableName, String id, String data, String type) {
+		int count = 0;
     	String subId = UUID.randomUUID().toString();
-    	TDeptUuid tDeptUuid = new TDeptUuid();
-    	tDeptUuid.setDeptId(organizationId);
-    	tDeptUuid.setSubId(subId);
-    	tDeptUuid.setEnTableName(tableName);
-    	int count = tableInfoAPIMapper.insertTDeptUuid(tDeptUuid);
+    	if(ToolUtil.ORGANIZATION_SUBSET_TYPE.equals(type)){
+    		TDeptUuid tDeptUuid = new TDeptUuid();
+        	tDeptUuid.setDeptId(id);
+        	tDeptUuid.setSubId(subId);
+        	tDeptUuid.setEnTableName(tableName);
+        	count = tableInfoAPIMapper.insertTDeptUuid(tDeptUuid);
+    	}
+    	if(ToolUtil.POSITION_SUBSET_TYPE.equals(type)){
+    		TPositionUuid tPositionUuid = new TPositionUuid();
+        	tPositionUuid.setPositionId(id);
+        	tPositionUuid.setSubId(subId);
+        	tPositionUuid.setEnTableName(tableName);
+        	count = tableInfoAPIMapper.insertTPositionUuid(tPositionUuid);
+    	}
+		if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(type)){
+			
+		}
+    	
+    	
     	SysTemplateTable sysTemplateTable = new SysTemplateTable();
     	
     	
@@ -111,7 +144,7 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 	public int createSubsetTable(SysTableinfo sysTableinfo) {
 		//sys_tableinfo中添加表信息
 		sysTableinfo.setId(UUID.randomUUID().toString());
-    	sysTableinfo.setType(ToolUtil.ORGANIZATION_SUBSET_TYPE);
+    	//sysTableinfo.setType(ToolUtil.ORGANIZATION_SUBSET_TYPE);
     	sysTableinfo.setAvailable(ToolUtil.AVAILABLE);
     	sysTableinfo.setCreatetime(ToolUtil.getCurrentTime());
     	int count = sysTableinfoMapper.insert(sysTableinfo);
@@ -122,12 +155,11 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 
 	@Override
 	public int insertSubsetTableData(SysColumnInfo sysColumnInfo) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteSubsetData(String tableName, String subId) {
+	public int deleteSubsetData(String tableName, String subId, String type) {
 		if (StringUtils.isBlank(subId)) {
 			return 0;
 		}
@@ -137,15 +169,34 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 			if (StringUtils.isBlank(idStr)) {
 				continue;
 			}
-			TDeptUuidExample tDeptUuidExample = new TDeptUuidExample();
-	    	TDeptUuidExample.Criteria criteria=tDeptUuidExample.createCriteria();  
-	    	criteria.andSubIdEqualTo(idStr);
-	    	//删除部门信息主键存储表数据
-	    	Object result = tDeptUuidMapper.deleteByExample(tDeptUuidExample);
-			//删除子集表数据
-	    	tableInfoAPIMapper.deleteBySubId(tableName, subId);
+			if(ToolUtil.ORGANIZATION_SUBSET_TYPE.equals(type)){
+				TDeptUuidExample tDeptUuidExample = new TDeptUuidExample();
+		    	TDeptUuidExample.Criteria criteria=tDeptUuidExample.createCriteria();  
+		    	criteria.andSubIdEqualTo(idStr);
+		    	//删除部门信息主键存储表数据
+		    	Object result = tDeptUuidMapper.deleteByExample(tDeptUuidExample);
+				//删除子集表数据
+		    	tableInfoAPIMapper.deleteBySubId(tableName, subId);
+		    	count += Integer.parseInt(String.valueOf(result));
+	    	}
+	    	if(ToolUtil.POSITION_SUBSET_TYPE.equals(type)){
+	    		TPositionUuidExample tPositionUuidExample = new TPositionUuidExample();
+	    		TPositionUuidExample.Criteria criteria=tPositionUuidExample.createCriteria();  
+		    	criteria.andSubIdEqualTo(idStr);
+		    	//删除部门信息主键存储表数据
+		    	Object result = tPositionUuidMapper.deleteByExample(tPositionUuidExample);
+				//删除子集表数据
+		    	tableInfoAPIMapper.deleteBySubId(tableName, subId);
+		    	count += Integer.parseInt(String.valueOf(result));
+	    	}
+			if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(type)){
+				
+			}
+			
+			
+			
 	    	
-	    	count += Integer.parseInt(String.valueOf(result));
+	    	
 		}
 		
 		
@@ -153,7 +204,7 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 	}
 
 	@Override
-	public int updateSubsetData(String tableName, String subId, String data) {
+	public int updateSubsetData(String tableName, String subId, String data, String type) {
 		//String subId = UUID.randomUUID().toString();
     	//TDeptUuid tDeptUuid = new TDeptUuid();
     	//tDeptUuid.setDeptId(organizationId);

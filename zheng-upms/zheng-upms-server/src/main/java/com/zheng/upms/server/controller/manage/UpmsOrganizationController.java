@@ -402,6 +402,7 @@ public class UpmsOrganizationController extends BaseController {
     	params.put("limit", limit);
     	params.put("offset", offset);
     	params.put("available", ToolUtil.AVAILABLE);
+    	params.put("type", ToolUtil.ORGANIZATION_SUBSET_TYPE);
     	//获取行数
     	int count = sysTemplateTableService.getDataInfoPageCount(params);
     	//获取具体的数据信息
@@ -440,7 +441,7 @@ public class UpmsOrganizationController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/insertSubsetData/{tableName}/{organizationId}", method = RequestMethod.POST)
     public Object insertSubsetData(@PathVariable("tableName") String tableName, @PathVariable("organizationId") String organizationId, @RequestParam("data") String data) {
-    	int count = sysTemplateTableService.insertSubsetData(tableName, organizationId, data);
+    	int count = sysTemplateTableService.insertSubsetData(tableName, organizationId, data, ToolUtil.ORGANIZATION_SUBSET_TYPE);
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
     
@@ -457,6 +458,7 @@ public class UpmsOrganizationController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/insertSubsetTableData", method = RequestMethod.POST)
     public Object insertSubsetTableData(SysTableinfo sysTableinfo) {
+    	sysTableinfo.setType(ToolUtil.ORGANIZATION_SUBSET_TYPE);
     	int count = sysTemplateTableService.createSubsetTable(sysTableinfo);
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
@@ -487,7 +489,7 @@ public class UpmsOrganizationController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/updateSubsetData/{tableName}/{subId}", method = RequestMethod.POST)
     public Object updateSubsetData(@PathVariable("tableName") String tableName, @PathVariable("subId") String subId, @RequestParam("data") String data) {
-    	int count = sysTemplateTableService.updateSubsetData(tableName, subId, data);
+    	int count = sysTemplateTableService.updateSubsetData(tableName, subId, data, ToolUtil.ORGANIZATION_SUBSET_TYPE);
         
     	return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
@@ -496,7 +498,7 @@ public class UpmsOrganizationController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/deletebsetData/{tableName}/{subId}", method = RequestMethod.GET)
     public Object deletebsetData(@PathVariable("tableName") String tableName, @PathVariable("subId") String ids) {
-    	int count = sysTemplateTableService.deleteSubsetData(tableName, ids);
+    	int count = sysTemplateTableService.deleteSubsetData(tableName, ids, ToolUtil.ORGANIZATION_SUBSET_TYPE);
     	
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }

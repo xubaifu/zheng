@@ -23,7 +23,7 @@ public class SysTemplateTableServiceMock extends BaseServiceMock<SysTemplateTabl
 	}
 
 	@Override
-	public int insertSubsetData(String tableName, String organizationId, String data) {
+	public int insertSubsetData(String tableName, String organizationId, String data, String type) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -41,13 +41,13 @@ public class SysTemplateTableServiceMock extends BaseServiceMock<SysTemplateTabl
 	}
 
 	@Override
-	public int deleteSubsetData(String tableName, String subId) {
+	public int deleteSubsetData(String tableName, String subId, String type) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int updateSubsetData(String tableName, String subId, String data) {
+	public int updateSubsetData(String tableName, String subId, String data, String type) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

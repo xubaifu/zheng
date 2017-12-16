@@ -43,9 +43,10 @@ public interface SysTemplateTableService extends BaseService<SysTemplateTable, S
 	 * @param tableName
 	 * @param organizationId
 	 * @param data
+	 * @param type 类型（组织、岗位、人员）
 	 * @return
 	 */
-	int insertSubsetData(String tableName, String organizationId, String data);
+	int insertSubsetData(String tableName, String organizationId, String data, String type);
 	
 	/**
 	 * 创建子集表
@@ -65,7 +66,7 @@ public interface SysTemplateTableService extends BaseService<SysTemplateTable, S
 	 * @param subId
 	 * @return
 	 */
-	int deleteSubsetData(String tableName, String subId);
+	int deleteSubsetData(String tableName, String subId, String type);
 	/**
 	 * 修改子集数据
 	 * @param tableName
@@ -73,5 +74,5 @@ public interface SysTemplateTableService extends BaseService<SysTemplateTable, S
 	 * @param data
 	 * @return
 	 */
-	int updateSubsetData(String tableName, String subId, String data);
+	int updateSubsetData(String tableName, String subId, String data, String type);
 }
