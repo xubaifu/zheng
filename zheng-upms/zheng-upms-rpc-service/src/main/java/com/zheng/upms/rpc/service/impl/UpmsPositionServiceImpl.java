@@ -2,6 +2,7 @@ package com.zheng.upms.rpc.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import com.zheng.common.annotation.BaseService;
 import com.zheng.common.base.BaseServiceImpl;
 import com.zheng.upms.dao.mapper.UpmsPositionMapper;
 import com.zheng.upms.dao.model.TPositionOrganization;
+import com.zheng.upms.dao.model.UpmsOrganization;
 import com.zheng.upms.dao.model.UpmsPosition;
 import com.zheng.upms.dao.model.UpmsPositionExample;
 import com.zheng.upms.rpc.api.UpmsPositionService;
@@ -55,5 +57,41 @@ public class UpmsPositionServiceImpl extends BaseServiceImpl<UpmsPositionMapper,
 		int count = upmsPositionAPIMapper.insertTPositionOrganization(list);
 		return count;
 	}
+
+	@Override
+	public List<UpmsPosition> getPositionByOrg(Map<Object, Object> params) {
+		List<UpmsPosition> list = upmsPositionAPIMapper.getPositionByOrg(params);
+		return list;
+	}
+
+	@Override
+	public int getPositionByOrgCount(Map<Object, Object> params) {
+		// TODO Auto-generated method stub
+		return upmsPositionAPIMapper.getPositionByOrgCount(params);
+	}
+
+	@Override
+	public List<UpmsPosition> getPositionByOrgAll(String organizationId) {
+		List<UpmsPosition> list = upmsPositionAPIMapper.getPositionByOrgAll(organizationId);
+		return list;
+	}
+
+	@Override
+	public List<UpmsOrganization> getOrgByPosition(Map<Object, Object> params) {
+		List<UpmsOrganization> list = upmsPositionAPIMapper.getOrgByPosition(params);
+		return list;
+	}
+
+	@Override
+	public int getOrgByPositionCount(Map<Object, Object> params) {
+		return upmsPositionAPIMapper.getOrgByPositionCount(params);
+	}
+
+	@Override
+	public List<UpmsOrganization> getOrgByPositionAll(String positionId) {
+		List<UpmsOrganization> list = upmsPositionAPIMapper.getOrgByPositionAll(positionId);
+		return list;
+	}
+
 
 }

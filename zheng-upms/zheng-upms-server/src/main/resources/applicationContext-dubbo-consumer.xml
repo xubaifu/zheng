@@ -53,5 +53,9 @@
     <dubbo:reference id="upmsPositionHisService" interface="com.zheng.upms.rpc.api.UpmsPositionHisService" mock="true"/>
     <!-- 岗位信息主键存储表相关接口服务 -->
     <dubbo:reference id="tPositionUuidService" interface="com.zheng.upms.rpc.api.TPositionUuidService" mock="true"/>
+    
+    <!-- 岗位部门统计 -->
+    <dubbo:reference id="tPositionOrganizationService" interface="com.zheng.upms.rpc.api.TPositionOrganizationService" mock="true"/>
+
 
 </beans>

@@ -8,6 +8,25 @@
 		<result column="sequence" jdbcType="INTEGER" property="sequence" />
 		<result column="update_time" jdbcType="DATE" property="updateTime" />
 	</resultMap>
+	<resultMap id="BaseResultMapPosition" type="com.zheng.upms.dao.model.UpmsPositionHis">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="position_id" jdbcType="VARCHAR" property="positionId" />
+		<result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+		<result column="pid" jdbcType="VARCHAR" property="pid" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="ctime" jdbcType="BIGINT" property="ctime" />
+		<result column="position_code" jdbcType="VARCHAR" property="positionCode" />
+	</resultMap>
+	<resultMap id="BaseResultMapOrg" type="com.zheng.upms.dao.model.UpmsOrganization">
+		<id column="organization_id" jdbcType="VARCHAR" property="organizationId" />
+		<result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+		<result column="pid" jdbcType="VARCHAR" property="pid" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="ctime" jdbcType="BIGINT" property="ctime" />
+		<result column="organization_code" jdbcType="VARCHAR" property="organizationCode" />
+	</resultMap>
 	<insert id="insertTPositionOrganization" parameterType="java.util.List">
 		insert into t_position_organization (sequence, organization_id, position_id, update_time)
 		values
@@ -20,6 +39,79 @@
 	<select id="selectMaxsequence" resultType="int">
 		SELECT  max(sequence) from t_position_organization
 	</select>
+	<select id="getPositionByOrg" parameterType="java.util.Map" resultMap="BaseResultMapPosition">
+		SELECT * FROM upms_position p
+		WHERE p.position_id IN (
+				SELECT
+					o.position_id
+				FROM
+					t_position_organization o
+				WHERE
+				o.organization_id = #{organizationId, jdbcType=VARCHAR}
+			)
+		LIMIT #{offset, jdbcType=INTEGER}, #{limit, jdbcType=INTEGER}
+	</select>
+	<select id="getPositionByOrgCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1) FROM upms_position p
+		WHERE p.position_id IN (
+				SELECT
+					o.position_id
+				FROM
+					t_position_organization o
+				WHERE
+				o.organization_id = #{organizationId, jdbcType=VARCHAR}
+			)
+		<!-- LIMIT #{offset, jdbcType=INTEGER}, #{limit, jdbcType=INTEGER} -->
+	</select>
+	<select id="getPositionByOrgAll" parameterType="java.lang.String" resultMap="BaseResultMapPosition">
+		SELECT * FROM upms_position p
+		WHERE p.position_id IN (
+				SELECT
+					o.position_id
+				FROM
+					t_position_organization o
+				WHERE
+				o.organization_id = #{organizationId, jdbcType=VARCHAR}
+			)
+	</select>
+	
+	<select id="getOrgByPosition" parameterType="java.util.Map" resultMap="BaseResultMapOrg">
+		SELECT * FROM upms_organization p
+		WHERE p.organization_id IN (
+				SELECT
+					o.organization_id
+				FROM
+					t_position_organization o
+				WHERE
+				o.position_id = #{positionId, jdbcType=VARCHAR}
+			)
+		LIMIT #{offset, jdbcType=INTEGER}, #{limit, jdbcType=INTEGER}
+	</select>
+	<select id="getOrgByPositionCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1) FROM upms_organization p
+		WHERE p.organization_id IN (
+				SELECT
+					o.organization_id
+				FROM
+					t_position_organization o
+				WHERE
+				o.position_id = #{positionId, jdbcType=VARCHAR}
+			)
+		<!-- LIMIT #{offset, jdbcType=INTEGER}, #{limit, jdbcType=INTEGER} -->
+	</select>
+	<select id="getOrgByPositionAll" parameterType="java.lang.String" resultMap="BaseResultMapOrg">
+		SELECT * FROM upms_organization p
+		WHERE p.organization_id IN (
+				SELECT
+					o.organization_id
+				FROM
+					t_position_organization o
+				WHERE
+				o.position_id = #{positionId, jdbcType=VARCHAR}
+			)
+	</select>
+	
+	
 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 
 </mapper>

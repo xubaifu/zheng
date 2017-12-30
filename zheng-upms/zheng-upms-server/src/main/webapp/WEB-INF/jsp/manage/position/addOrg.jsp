@@ -36,6 +36,7 @@
 		},
 		check : {
 			enable : true,
+			chkboxType : { "Y" : "", "N" : "" },//父子关联关系
 		},
 		callback : {
 		//beforeCheck: zTreeBeforeCheck
@@ -52,7 +53,15 @@
 
 		//获取选择的组织信息
 		var nodes = $.fn.zTree.getZTreeObj("orgTree").getCheckedNodes();
-		if(nodes == null || nodes.length == 0){
+		var orgNodes = '';
+		//获取所有选中节点的id值
+		for (var i = 0; i < nodes.length; i++) {
+			if(nodes[i].level != 0){//去掉根节点
+				orgNodes += nodes[i].id + ',';
+			}
+		}
+		console.log(orgNodes)
+		if(nodes == null || nodes.length == 0 || orgNodes == ''){
 			$.confirm({
 				title: false,
 				content: '请选择组织！',
@@ -65,40 +74,38 @@
 					}
 				}
 			});
-		}
-		var orgNodes = '';
-		//获取所有选中节点的id值
-		for (var i = 0; i < nodes.length; i++) {
-			if(nodes[i].level != 0){//去掉根节点
-				orgNodes += nodes[i].id + ',';
-			}
-		}
-		console.log(orgNodes)
-		
-		
-		$.ajax({
-			type : 'post',
-			url : '${basePath}/manage/positionStatistics/addPosition',
-			data : {"orgNodes": orgNodes, "positionNodes": positionNodes},
-			success : function(data) {
-				if(data.code){
-					addDialog.close();
-					$.confirm({
-						title: "SUCCESS",
-						content: '岗位添加成功！',
-						autoClose: 'cancel|1000',
-						backgroundDismiss: true,
-						buttons: {
-							cancel: {
-								text: 'OK',
-								btnClass: 'waves-effect waves-button'
+		}else{
+			$.ajax({
+				type : 'post',
+				url : '${basePath}/manage/positionStatistics/addPosition',
+				data : {"orgNodes": orgNodes, "positionNodes": positionNodes},
+				success : function(data) {
+					if(data.code){
+						addDialog.close();
+						$('#tableByOrg').bootstrapTable(
+					            "refresh",  
+					            {  
+					                url:'${basePath}/manage/positionStatistics/getOrgByPosition'
+					            }  
+					    );
+						/* $.confirm({
+							title: "SUCCESS",
+							content: '岗位添加成功！',
+							autoClose: 'cancel|1000',
+							backgroundDismiss: true,
+							buttons: {
+								cancel: {
+									text: 'OK',
+									btnClass: 'waves-effect waves-button'
+								}
 							}
-						}
-					});
+						}); */
+					}
 				}
-			}
-				
-		});
+					
+			});
+		}
+		
 	}
 
 

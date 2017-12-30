@@ -1,11 +1,10 @@
 package com.zheng.upms.rpc.api;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Map;
 
 import com.zheng.common.base.BaseService;
+import com.zheng.upms.dao.model.UpmsOrganization;
 import com.zheng.upms.dao.model.UpmsPosition;
 import com.zheng.upms.dao.model.UpmsPositionExample;
 
@@ -15,4 +14,11 @@ import com.zheng.upms.dao.model.UpmsPositionExample;
 */
 public interface UpmsPositionService extends BaseService<UpmsPosition, UpmsPositionExample> {
 	int insertTPositionOrganization(String orgNodes, String positionNodes);
+	List<UpmsPosition> getPositionByOrg(Map<Object, Object> map);
+	int getPositionByOrgCount(Map<Object, Object> map);
+	List<UpmsPosition> getPositionByOrgAll(String organizationId);
+	
+	List<UpmsOrganization> getOrgByPosition(Map<Object, Object> params);
+	int getOrgByPositionCount(Map<Object, Object> params);
+	List<UpmsOrganization> getOrgByPositionAll(String positionId);
 }

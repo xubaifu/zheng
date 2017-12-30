@@ -85,4 +85,9 @@
 	<!-- 岗位信息主键存储表相关接口服务 -->
     <bean id="tPositionUuidService" class="com.zheng.upms.rpc.service.impl.TPositionUuidServiceImpl"/>
     <dubbo:service interface="com.zheng.upms.rpc.api.TPositionUuidService" ref="tPositionUuidService" timeout="10000"/>
+    
+    <!-- 岗位部门统计 -->
+    <bean id="tPositionOrganizationService" class="com.zheng.upms.rpc.service.impl.TPositionOrganizationServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.TPositionOrganizationService" ref="tPositionOrganizationService" timeout="10000"/>
+    
 </beans>

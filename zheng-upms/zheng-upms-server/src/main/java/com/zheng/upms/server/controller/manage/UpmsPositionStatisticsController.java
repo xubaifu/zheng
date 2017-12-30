@@ -1,14 +1,15 @@
 package com.zheng.upms.server.controller.manage;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.catalina.tribes.util.Arrays;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,11 @@ import com.zheng.common.base.BaseController;
 import com.zheng.upms.common.constant.UpmsResult;
 import com.zheng.upms.common.constant.UpmsResultConstant;
 import com.zheng.upms.dao.model.TPositionOrganization;
+import com.zheng.upms.dao.model.TPositionOrganizationExample;
+import com.zheng.upms.dao.model.UpmsOrganization;
+import com.zheng.upms.dao.model.UpmsPosition;
+import com.zheng.upms.dao.model.UpmsPositionExample;
+import com.zheng.upms.rpc.api.TPositionOrganizationService;
 import com.zheng.upms.rpc.api.UpmsPositionService;
 
 import io.swagger.annotations.Api;
@@ -35,6 +41,9 @@ public class UpmsPositionStatisticsController extends BaseController {
 
 	    @Autowired
 	    private UpmsPositionService upmsPositionService;
+	    
+	    @Autowired
+	    private TPositionOrganizationService tPositionOrganizationService;
 	    /*@Autowired
 	    private TPositionUuidService tPositionUuidService;*/
 /*	    @Autowired
@@ -93,5 +102,78 @@ public class UpmsPositionStatisticsController extends BaseController {
 	    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	    public String addUser() {
 	        return "/manage/position/addUser.jsp";
+	    }
+	    
+	    @ApiOperation(value = "根据部门获取岗位列表")
+	    @RequiresPermissions("upms:position:read")
+	    @RequestMapping(value = "/getPositionByOrg", method = RequestMethod.GET)
+	    @ResponseBody
+	    public Object getPositionByOrg(@RequestParam("organizationId")String organizationId,
+	    		@RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
+	            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
+	            @RequestParam(required = false, defaultValue = "", value = "search") String search) {
+	    	Map<Object, Object> params = new HashMap<Object, Object>();
+	    	//添加查询条件
+	    	params.put("search", search);
+	    	params.put("limit", limit);
+	    	params.put("offset", offset);
+	    	params.put("organizationId", organizationId);
+	    	int count = upmsPositionService.getPositionByOrgCount(params);
+	    	List<UpmsPosition> list = upmsPositionService.getPositionByOrg(params);
+	    	Map<String, Object> result = new HashMap<>();
+	    	result.put("rows", list);
+	    	result.put("total", count);
+	    	return result;
+	    }
+	    
+	    @ApiOperation(value = "根据部门获取所有岗位列表")
+	    @RequiresPermissions("upms:position:read")
+	    @RequestMapping(value = "/getPositionByOrgAll", method = RequestMethod.GET)
+	    @ResponseBody
+	    public Object getPositionByOrgAll(String organizationId){
+	    	TPositionOrganizationExample tPositionOrganizationExample = new TPositionOrganizationExample();
+	    	
+	    	TPositionOrganizationExample.Criteria criteria=tPositionOrganizationExample.createCriteria();
+	    	criteria.andOrganizationIdEqualTo(organizationId);
+	    	
+	    	List<TPositionOrganization> list = tPositionOrganizationService.selectByExample(tPositionOrganizationExample);
+	    	//List<UpmsPosition> list = upmsPositionService.getPositionByOrgAll(organizationId);
+	    	return list;
+	    }
+	    
+	    @ApiOperation(value = "根据岗位获取部门列表")
+	    @RequiresPermissions("upms:position:read")
+	    @RequestMapping(value = "/getOrgByPosition", method = RequestMethod.GET)
+	    @ResponseBody
+	    public Object getOrgByPosition(@RequestParam("positionId")String positionId,
+	    		@RequestParam(required = false, defaultValue = "0", value = "offset") int offset,
+	            @RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
+	            @RequestParam(required = false, defaultValue = "", value = "search") String search) {
+	    	Map<Object, Object> params = new HashMap<Object, Object>();
+	    	//添加查询条件
+	    	params.put("search", search);
+	    	params.put("limit", limit);
+	    	params.put("offset", offset);
+	    	params.put("positionId", positionId);
+	    	int count = upmsPositionService.getOrgByPositionCount(params);
+	    	List<UpmsOrganization> list = upmsPositionService.getOrgByPosition(params);
+	    	Map<String, Object> result = new HashMap<>();
+	    	result.put("rows", list);
+	    	result.put("total", count);
+	    	return result;
+	    }
+	    
+	    @ApiOperation(value = "根据岗位获取所有部门列表")
+	    @RequiresPermissions("upms:position:read")
+	    @RequestMapping(value = "/getOrgByPositionAll", method = RequestMethod.GET)
+	    @ResponseBody
+	    public Object getOrgByPositionAll(String positionId){
+	    	TPositionOrganizationExample tPositionOrganizationExample = new TPositionOrganizationExample();
+	    	
+	    	TPositionOrganizationExample.Criteria criteria=tPositionOrganizationExample.createCriteria();
+	    	criteria.andPositionIdEqualTo(positionId);
+	    	
+	    	List<TPositionOrganization> list = tPositionOrganizationService.selectByExample(tPositionOrganizationExample);
+	    	return list;
 	    }
 }

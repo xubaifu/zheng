@@ -35,6 +35,7 @@
 		},
 		check : {
 			enable : true,
+			chkboxType : { "Y" : "", "N" : ""  },//父子关联关系
 		},
 		callback : {
 		//beforeCheck: zTreeBeforeCheck
@@ -59,7 +60,14 @@
 
 		//获取选择的岗位信息
 		var nodes = $.fn.zTree.getZTreeObj("positionTree").getCheckedNodes();
-		if(nodes == null || nodes.length == 0){
+		var positionNodes = '';
+		//获取所有非父节点的id值
+		for (var i = 0; i < nodes.length; i++) {
+			if (!nodes[i].isParent) {
+				positionNodes += nodes[i].positionId + ',';
+			}
+		}
+		if(nodes == null || nodes.length == 0 || positionNodes == ''){
 			$.confirm({
 				title: false,
 				content: '请选择岗位！',
@@ -72,38 +80,55 @@
 					}
 				}
 			});
-		}
-		var positionNodes = '';
-		//获取所有非父节点的id值
-		for (var i = 0; i < nodes.length; i++) {
-			if (!nodes[i].isParent) {
-				positionNodes += nodes[i].positionId + ',';
-			}
-		}
-		console.log(positionNodes);
-		$.ajax({
-			type : 'post',
-			url : '${basePath}/manage/positionStatistics/addPosition',
-			data : {"orgNodes": orgNodes, "positionNodes": positionNodes},
-			success : function(data) {
-				if(data.code){
-					addDialog.close();
+		}else{
+			
+			console.log(positionNodes);
+			//return;
+			$.ajax({
+				type : 'post',
+				url : '${basePath}/manage/positionStatistics/addPosition',
+				data : {"orgNodes": orgNodes, "positionNodes": positionNodes},
+				success : function(data) {
+					if(data.code){
+						addDialog.close();
+						$('#tableByPosition').bootstrapTable(
+					            "refresh",  
+					            {  
+					                url:'${basePath}/manage/positionStatistics/getPositionByOrg'
+					            }  
+					    );
+						/* $.confirm({
+							title: "SUCCESS",
+							content: '岗位添加成功！',
+							autoClose: 'cancel|1000',
+							backgroundDismiss: true,
+							buttons: {
+								cancel: {
+									text: 'OK',
+									btnClass: 'waves-effect waves-button'
+								}
+							}
+						}); */
+					}
+				},
+				error : function(data){
 					$.confirm({
-						title: "SUCCESS",
-						content: '岗位添加成功！',
-						autoClose: 'cancel|1000',
+						title: "FAILED",
+						content: '岗位添加失败！',
+						autoClose: 'cancel|3000',
 						backgroundDismiss: true,
 						buttons: {
 							cancel: {
-								text: 'OK',
+								text: 'Close',
 								btnClass: 'waves-effect waves-button'
 							}
 						}
-					});
+					}); 
 				}
-			}
-				
-		});
+					
+			});
+		}
+		
 		
 	}
 

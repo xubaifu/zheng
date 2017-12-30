@@ -46,21 +46,11 @@
 			</div>
 		</div>
 	</div>
-	<div id="treepagebtn" class="unfolded-btn">
+	<!-- <div id="treepagebtn" class="unfolded-btn">
 		<div id="openClose" class="close" style="height: 100%;" onclick="shrinkage()">&nbsp;</div>
-	</div>
+	</div> -->
 	<div id="main" class="treepage-main">
-		<!-- <div style="overflow-x: auto;">
-			<div id="tabPage" style="height: 40px">
-				<ul id="myTab" class="nav nav-tabs">
-					<li id="positionList" class="active"><a href="#listtableBySelected" data-toggle="tab">岗位列表</a></li>
-					<li id="firstLi"><a href="#listtable" data-toggle="tab">基本信息</a></li>
-					<li><a href="#ios" data-toggle="tab">iOS</a></li>
-					<li><a href="#ios" data-toggle="tab">iOS</a></li>
-				</ul>
-			</div>
-		</div> -->
-		<div id="myTabContent" class="tab-content">
+		<%-- <div id="myTabContent" class="tab-content">
 			<!-- 选中岗位列表以及子岗位列表 -->
 			<div class="tab-pane fade in active" id="listtableBySelected" style="height: 212px; padding-bottom: 40px;">
 				<div id="toolbar">
@@ -68,17 +58,41 @@
 					<shiro:hasPermission name="upms:position:addOrg"><a id="addOrg" style="display: none" class="waves-effect waves-button" href="javascript:;" onclick="addOrgFun()"><i class="zmdi zmdi-plus"></i> 添加组织</a></shiro:hasPermission>
 					<shiro:hasPermission name="upms:position:addUser"><a id="addUser" style="display: none" class="waves-effect waves-button" href="javascript:;" onclick="addUserFun()"><i class="zmdi zmdi-plus"></i> 添加人员</a></shiro:hasPermission>
 				</div>
-				<table id="tableBySelected">sdfghdh</table>
+				<input id="organizationId" style="display: none;">
+				<input id="positionId" style="display: none;">
+				<div id="tableByPositionDiv" style="display: none;"><table id="tableByPosition"></table></div>
+				<!-- <div id="tableByOrgDiv" style="display: none;"><table id="tableByOrg"></table></div>
+				<div id="tableByUserDiv" style="display: none;"><table id="tableByUser"></table></div> -->
 			</div>
-			<!-- 选中岗位基本信息以及子集信息 -->
-			<div class="tab-pane fade in active" id="listtable">
-				<table id="table"></table>
+		</div> --%>
+		<input id="organizationId" style="display: none;">
+		<input id="positionId" style="display: none;">
+		<!-- 岗位列表 -->
+		<div id="myTabContent1" class="tab-content" style="display: none">
+			<div class="tab-pane fade in active" id="listtableBySelected1" style="height: 212px; padding-bottom: 40px;">
+				<div id="toolbar1">
+					<shiro:hasPermission name="upms:position:addPosition"><a id="addPosition" class="waves-effect waves-button" href="javascript:;" onclick="addPositionFun()"><i class="zmdi zmdi-plus"></i> 添加岗位</a></shiro:hasPermission>
+				</div>
+				<table id="tableByPosition"></table>
 			</div>
-			
-			<!-- <div class="tab-pane fade" id="ios">
-				<p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
-					TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
-			</div> -->
+		</div>
+		<!-- 组织列表 -->
+		<div id="myTabContent2" class="tab-content" style="display: none">
+			<div class="tab-pane fade in active" id="listtableBySelected2" style="height: 212px; padding-bottom: 40px;">
+				<div id="toolbar2">
+					<shiro:hasPermission name="upms:position:addOrg"><a id="addOrg" class="waves-effect waves-button" href="javascript:;" onclick="addOrgFun()"><i class="zmdi zmdi-plus"></i> 添加组织</a></shiro:hasPermission>
+				</div>
+				<table id="tableByOrg"></table>
+			</div>
+		</div>
+		<!-- 人员列表 -->
+		<div id="myTabContent3" class="tab-content" style="display: none">
+			<div class="tab-pane fade in active" id="listtableBySelected3" style="height: 212px; padding-bottom: 40px;">
+				<div id="toolbar3">
+					<shiro:hasPermission name="upms:position:addUser"><a id="addUser" class="waves-effect waves-button" href="javascript:;" onclick="addUserFun()"><i class="zmdi zmdi-plus"></i> 添加人员</a></shiro:hasPermission>
+				</div>
+				<table id="tableByUser"></table>
+			</div>
 		</div>
 	</div>
 
@@ -87,6 +101,8 @@
 <script>
 	$(document).ready(function() {
 		//$.fn.zTree.init($("#tree"), setting, zNodes);
+		loadPositionByOrg();
+		loadOrgByPosition();
 		getPositionList(positionType);
 		getOrganizationList();
 	});
@@ -116,9 +132,141 @@
 		
 	}
 	function onClick(event, treeId, treeNode, clickFlag) {
+		if(treeNode.type == orgType){
+			$("#myTabContent3").hide();
+			$("#myTabContent2").hide();
+			$("#myTabContent1").show();
+			$("#addPosition").show();
+			$("#organizationId").val(treeNode.organizationId)
+			$('#tableByPosition').bootstrapTable(
+		            "refresh",  
+		            {  
+		                url:'${basePath}/manage/positionStatistics/getPositionByOrg'
+		            }  
+		    );
+		}
+		if(treeNode.type == positionType){
+			$("#myTabContent3").hide();
+			$("#myTabContent1").hide();
+			$("#myTabContent2").show();
+			$("#addOrg").show();
+			$("#positionId").val(treeNode.positionId)
+			$('#tableByOrg').bootstrapTable(
+		            "refresh",  
+		            {  
+		                url:'${basePath}/manage/positionStatistics/getOrgByPosition'
+		            }  
+		    );
+		}
+		if(treeNode.type == userType){
+			/* $("#tableByOrg").hide();
+			$("#tableByPosition").hide(); */
+		}
 		
 	}
 	
+	//var $table = $('#tableBySelected');
+	//岗位列表
+	function loadPositionByOrg(){
+		// bootstrap table初始化
+		$('#tableByPosition').bootstrapTable({
+			url: '${basePath}/manage/positionStatistics/getPositionByOrg',
+			height: getHeight(),
+			striped: true,
+			search: true,
+			showRefresh: true,
+			showColumns: true,
+			minimumCountColumns: 2,
+			clickToSelect: true,
+			detailView: true,
+			detailFormatter: 'detailFormatter',
+			pagination: true,
+			paginationLoop: false,
+			sidePagination: 'server',
+			silentSort: false,
+			smartDisplay: false,
+			escape: true,
+			searchOnEnterKey: true,
+			idField: 'positionId',
+			maintainSelected: true,
+			toolbar: '#toolbar',
+			queryParams: queryPositionParams,
+			columns: [
+				{field: 'ck', checkbox: true},
+				{field: 'positionId', title: 'ID', visible: false, align: 'center'},
+				{field: 'name', title: '岗位名称',align: 'center'},
+				{field: 'positionCode', title: '岗位编号',align: 'center'},
+	            {field: 'description', title: '岗位描述', align: 'center'},
+				/* {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false} */
+			],
+			//数据加载成功后执行
+			onLoadSuccess: function(data){
+				$("#addPosition").show();
+			},
+		});
+	}
+	function queryPositionParams(params){
+		var organizationId = $("#organizationId").val();
+	    return {
+	        limit : params.limit,
+	        offset : params.offset,
+	        order : params.order,
+	        search : params.search,
+	        sort : params.sort,
+	        organizationId : organizationId
+	    }
+	}
+	//组织列表
+	function loadOrgByPosition(){
+		//$('#tableByPosition').children();
+		// bootstrap table初始化
+		$('#tableByOrg').bootstrapTable({
+			url: '${basePath}/manage/positionStatistics/getOrgByPosition',
+			height: getHeight(),
+			striped: true,
+			search: true,
+			showRefresh: true,
+			showColumns: true,
+			minimumCountColumns: 2,
+			clickToSelect: true,
+			detailView: true,
+			detailFormatter: 'detailFormatter',
+			pagination: true,
+			paginationLoop: false,
+			sidePagination: 'server',
+			silentSort: false,
+			smartDisplay: false,
+			escape: true,
+			searchOnEnterKey: true,
+			idField: 'organizationId',
+			maintainSelected: true,
+			toolbar: '#toolbar',
+			queryParams: queryOrgParams,
+			columns: [
+				{field: 'ck', checkbox: true},
+				{field: 'organizationId', title: 'ID', visible: false, align: 'center'},
+				{field: 'name', title: '组织名称',align: 'center'},
+				{field: 'organizationCode', title: '组织编号',align: 'center'},
+	            {field: 'description', title: '组织描述', align: 'center'},
+				/* {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false} */
+			],
+			//数据加载成功后执行
+			onLoadSuccess: function(data){
+				
+			},
+		});
+	}
+	function queryOrgParams(params){
+		var positionId = $("#positionId").val();
+	    return {
+	        limit : params.limit,
+	        offset : params.offset,
+	        order : params.order,
+	        search : params.search,
+	        sort : params.sort,
+	        positionId : positionId
+	    }
+	}
 	//获取所有组织列表
 	function getOrganizationList() {
 		$("#toolbar").children().hide();
@@ -224,11 +372,22 @@
 	//加载岗位树结构
 	function loadPosition(){
 		$.fn.zTree.init($("#positionTree"), settingForPosition, zNodesPosition);
-		/* //设置节点选中
-		var treeObj = $.fn.zTree.getZTreeObj("positionTree");
-		var node = treeObj.getNodeByParam("id", $('#pid').val());
-		treeObj.selectNode(node); */
-		//settingForPosition.callback.onClick = onClickForCheck;
+		$.ajax({
+			type : 'get',
+			url : '${basePath}/manage/positionStatistics/getPositionByOrgAll',
+			data : {"organizationId" : $("#organizationId").val()},
+			success : function(data) {
+				//设置节点选中
+				var treeObj = $.fn.zTree.getZTreeObj("positionTree");
+				for(var i = 0; i < data.length; i++){
+					var node = treeObj.getNodeByParam("id", data[i].positionId, null);
+					treeObj.checkNode(node, true, true);
+					//设置禁选
+					node.chkDisabled = true;
+					treeObj.updateNode(node);
+				}
+			}
+		});
 	}
 	//添加组织
 	function addOrgFun(){
@@ -261,6 +420,23 @@
 	//加载组织结构树结构
 	function loadOrganization(){
 		$.fn.zTree.init($("#orgTree"), settingForOrg, zNodesOrg);
+		$.ajax({
+			type : 'get',
+			url : '${basePath}/manage/positionStatistics/getOrgByPositionAll',
+			data : {"positionId" : $("#positionId").val()},
+			success : function(data) {
+				console.log(data);
+				//设置节点选中
+				var treeObj = $.fn.zTree.getZTreeObj("orgTree");
+				for(var i = 0; i < data.length; i++){
+					var node = treeObj.getNodeByParam("id", data[i].organizationId, null);
+					treeObj.checkNode(node, true, true);
+					//设置禁选
+					node.chkDisabled = true;
+					treeObj.updateNode(node);
+				}
+			}
+		});
 		/* //设置节点选中
 		var treeObj = $.fn.zTree.getZTreeObj("positionTree");
 		var node = treeObj.getNodeByParam("id", $('#pid').val());
@@ -311,10 +487,13 @@
 				for (var i = 0; i < childrenNodes.length; i++) {
 					if(!childrenNodes[i].children){
 						result += childrenNodes[i].id + ',';
-					}
-					result = getAllLeavesNodes(childrenNodes[i], result);
+					}//else{
+						result = getAllLeavesNodes(childrenNodes[i], result);
+					//}
 				}
 			}
+		}else{
+			result += treeNode.id + ',';
 		}
 		return result;
 		
