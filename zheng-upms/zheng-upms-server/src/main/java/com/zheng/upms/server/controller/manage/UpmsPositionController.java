@@ -1,6 +1,5 @@
 package com.zheng.upms.server.controller.manage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,15 +31,12 @@ import com.zheng.upms.dao.model.SysColumnInfoExample;
 import com.zheng.upms.dao.model.SysTableinfo;
 import com.zheng.upms.dao.model.SysTableinfoExample;
 import com.zheng.upms.dao.model.SysTemplateTable;
-import com.zheng.upms.dao.model.TPositionUuid;
-import com.zheng.upms.dao.model.TPositionUuidExample;
 import com.zheng.upms.dao.model.UpmsPosition;
 import com.zheng.upms.dao.model.UpmsPositionExample;
 import com.zheng.upms.dao.model.UpmsPositionHis;
 import com.zheng.upms.rpc.api.SysColumnInfoService;
 import com.zheng.upms.rpc.api.SysTableinfoService;
 import com.zheng.upms.rpc.api.SysTemplateTableService;
-import com.zheng.upms.rpc.api.TPositionUuidService;
 import com.zheng.upms.rpc.api.UpmsPositionHisService;
 import com.zheng.upms.rpc.api.UpmsPositionService;
 
@@ -60,8 +56,8 @@ public class UpmsPositionController extends BaseController {
 
     @Autowired
     private UpmsPositionService upmsPositionService;
-    @Autowired
-    private TPositionUuidService tPositionUuidService;
+    /*@Autowired
+    private TPositionUuidService tPositionUuidService;*/
     @Autowired
     private SysColumnInfoService sysColumnInfoService;
     @Autowired

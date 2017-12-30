@@ -11,4 +11,10 @@ import com.zheng.upms.dao.model.UpmsPositionExample;
 */
 public class UpmsPositionServiceMock extends BaseServiceMock<UpmsPositionMapper, UpmsPosition, UpmsPositionExample> implements UpmsPositionService {
 
+	@Override
+	public int insertTPositionOrganization(String orgNodes, String positionNodes) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

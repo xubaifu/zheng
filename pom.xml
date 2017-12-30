@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zheng</groupId>
@@ -21,14 +21,15 @@
     <modules>
         <module>zheng-admin</module>
         <module>zheng-common</module>
-        <module>zheng-oss</module>
+        <!-- <module>zheng-oss</module> -->
         <module>zheng-upms</module>
         <module>zheng-cms</module>
-        <module>zheng-pay</module>
+        <!-- <module>zheng-pay</module>
         <module>zheng-ucenter</module>
         <module>zheng-wechat</module>
-        <module>zheng-shop</module>
+        <module>zheng-shop</module> -->
         <module>zheng-api</module>
-        <module>zheng-demo</module>
-    </modules>
+        <!-- <module>zheng-demo</module> -->
+    	<module>zheng-ehr</module>
+  </modules>
 </project>
