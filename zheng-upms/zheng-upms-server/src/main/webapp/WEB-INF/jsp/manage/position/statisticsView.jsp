@@ -70,8 +70,9 @@
 		<!-- 岗位列表 -->
 		<div id="myTabContent1" class="tab-content" style="display: none">
 			<div class="tab-pane fade in active" id="listtableBySelected1" style="height: 212px; padding-bottom: 40px;">
-				<div id="toolbar1">
-					<shiro:hasPermission name="upms:position:addPosition"><a id="addPosition" class="waves-effect waves-button" href="javascript:;" onclick="addPositionFun()"><i class="zmdi zmdi-plus"></i> 添加岗位</a></shiro:hasPermission>
+				<div id="addPosition" >
+					<shiro:hasPermission name="upms:position:addPosition"><a id="" class="waves-effect waves-button" href="javascript:;" onclick="addPositionFun()"><i class="zmdi zmdi-plus"></i> 添加岗位</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:position:delPosition"><a id="" class="waves-effect waves-button" href="javascript:;" onclick="delPositionFun()"><i class="zmdi zmdi-plus"></i> 删除岗位</a></shiro:hasPermission>
 				</div>
 				<table id="tableByPosition"></table>
 			</div>
@@ -79,8 +80,9 @@
 		<!-- 组织列表 -->
 		<div id="myTabContent2" class="tab-content" style="display: none">
 			<div class="tab-pane fade in active" id="listtableBySelected2" style="height: 212px; padding-bottom: 40px;">
-				<div id="toolbar2">
-					<shiro:hasPermission name="upms:position:addOrg"><a id="addOrg" class="waves-effect waves-button" href="javascript:;" onclick="addOrgFun()"><i class="zmdi zmdi-plus"></i> 添加组织</a></shiro:hasPermission>
+				<div id="addOrg" >
+					<shiro:hasPermission name="upms:position:addOrg"><a class="waves-effect waves-button" href="javascript:;" onclick="addOrgFun()"><i class="zmdi zmdi-plus"></i> 添加组织</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:position:delOrg"><a class="waves-effect waves-button" href="javascript:;" onclick="delOrgFun()"><i class="zmdi zmdi-plus"></i> 删除组织</a></shiro:hasPermission>
 				</div>
 				<table id="tableByOrg"></table>
 			</div>
@@ -88,8 +90,9 @@
 		<!-- 人员列表 -->
 		<div id="myTabContent3" class="tab-content" style="display: none">
 			<div class="tab-pane fade in active" id="listtableBySelected3" style="height: 212px; padding-bottom: 40px;">
-				<div id="toolbar3">
-					<shiro:hasPermission name="upms:position:addUser"><a id="addUser" class="waves-effect waves-button" href="javascript:;" onclick="addUserFun()"><i class="zmdi zmdi-plus"></i> 添加人员</a></shiro:hasPermission>
+				<div id="addUser" >
+					<shiro:hasPermission name="upms:position:addUser"><a class="waves-effect waves-button" href="javascript:;" onclick="addUserFun()"><i class="zmdi zmdi-plus"></i> 添加人员</a></shiro:hasPermission>
+					<shiro:hasPermission name="upms:position:delUser"><a class="waves-effect waves-button" href="javascript:;" onclick="delUserFun()"><i class="zmdi zmdi-plus"></i> 删除人员</a></shiro:hasPermission>
 				</div>
 				<table id="tableByUser"></table>
 			</div>
@@ -101,8 +104,8 @@
 <script>
 	$(document).ready(function() {
 		//$.fn.zTree.init($("#tree"), setting, zNodes);
-		loadPositionByOrg();
-		loadOrgByPosition();
+		/* loadPositionByOrg();
+		loadOrgByPosition(); */
 		getPositionList(positionType);
 		getOrganizationList();
 	});
@@ -133,6 +136,7 @@
 	}
 	function onClick(event, treeId, treeNode, clickFlag) {
 		if(treeNode.type == orgType){
+			loadPositionByOrg();
 			$("#myTabContent3").hide();
 			$("#myTabContent2").hide();
 			$("#myTabContent1").show();
@@ -146,6 +150,7 @@
 		    );
 		}
 		if(treeNode.type == positionType){
+			loadOrgByPosition();
 			$("#myTabContent3").hide();
 			$("#myTabContent1").hide();
 			$("#myTabContent2").show();
@@ -159,6 +164,9 @@
 		    );
 		}
 		if(treeNode.type == userType){
+			$("#myTabContent1").hide();
+			$("#myTabContent2").hide();
+			$("#myTabContent3").show();
 			/* $("#tableByOrg").hide();
 			$("#tableByPosition").hide(); */
 		}
@@ -269,8 +277,8 @@
 	}
 	//获取所有组织列表
 	function getOrganizationList() {
-		$("#toolbar").children().hide();
-		$("#addPosition").show();
+		/* $("#toolbar").children().hide();
+		$("#addPosition").show(); */
 		if($("#treeOrg").children().length !=0){
 			return;
 		}
@@ -296,13 +304,13 @@
 	}
 	//获取岗位列表
 	function getPositionList(type) {
-		$("#toolbar").children().hide();
-		if(type == userType){
+		//$("#toolbar").children().hide();
+		/* if(type == userType){
 			$("#addUser").show();
 		}
 		if(type == positionType){
 			$("#addOrg").show();
-		}
+		} */
 		
 		if(type == userType && $("#treeUser").children().length !=0){
 			return;
@@ -497,6 +505,212 @@
 		}
 		return result;
 		
+	}
+	//删除岗位下的组织
+	function delOrgFun(){
+		var treeObj = $.fn.zTree.getZTreeObj("treePosition").getSelectedNodes();
+		var positionId = treeObj[0].positionId;
+		var rows = $("#tableByOrg").bootstrapTable('getSelections');
+		if (rows == null || rows.length == 0) {
+			$.confirm({
+				title: false,
+				content: '请至少选择一条记录！',
+				autoClose: 'cancel|3000',
+				backgroundDismiss: true,
+				buttons: {
+					cancel: {
+						text: '取消',
+						btnClass: 'waves-effect waves-button'
+					}
+				}
+			});
+		} else {
+			var orgIds = new Array();
+			for (var i in rows) {
+				orgIds.push(rows[i].organizationId);
+			}
+			deleteDialog = $.confirm({
+				type: 'red',
+				animationSpeed: 300,
+				title: false,
+				content: '确认将该组织在岗位下删除吗？',
+				buttons: {
+					confirm: {
+						text: '确认',
+						btnClass: 'waves-effect waves-button',
+						action: function () {
+							$.ajax({
+								type: 'get',
+								url: '${basePath}/manage/positionStatistics/deleteOrg/'+ positionId + '/' + orgIds.join(","),
+								success: function(result) {
+									if (result.code != 1) {
+										if (result.data instanceof Array) {
+											$.each(result.data, function(index, value) {
+												$.confirm({
+													theme: 'dark',
+													animation: 'rotateX',
+													closeAnimation: 'rotateX',
+													title: false,
+													content: value.errorMsg,
+													buttons: {
+														confirm: {
+															text: '确认',
+															btnClass: 'waves-effect waves-button waves-light'
+														}
+													}
+												});
+											});
+										} else {
+											$.confirm({
+												theme: 'dark',
+												animation: 'rotateX',
+												closeAnimation: 'rotateX',
+												title: false,
+												content: result.data.errorMsg,
+												buttons: {
+													confirm: {
+														text: '确认',
+														btnClass: 'waves-effect waves-button waves-light'
+													}
+												}
+											});
+										}
+									} else {
+										deleteDialog.close();
+										$("#tableByOrg").bootstrapTable('refresh');
+										//getPositionList();
+									}
+								},
+								error: function(XMLHttpRequest, textStatus, errorThrown) {
+									$.confirm({
+										theme: 'dark',
+										animation: 'rotateX',
+										closeAnimation: 'rotateX',
+										title: false,
+										content: textStatus,
+										buttons: {
+											confirm: {
+												text: '确认',
+												btnClass: 'waves-effect waves-button waves-light'
+											}
+										}
+									});
+								}
+							});
+						}
+					},
+					cancel: {
+						text: '取消',
+						btnClass: 'waves-effect waves-button'
+					}
+				}
+			});
+		}
+	}
+	//删除组织下的岗位
+	function delPositionFun(){
+		var treeObj = $.fn.zTree.getZTreeObj("treeOrg").getSelectedNodes();
+		var organizationId = treeObj[0].organizationId;
+		var rows = $("#tableByPosition").bootstrapTable('getSelections');
+		if (rows == null || rows.length == 0) {
+			$.confirm({
+				title: false,
+				content: '请至少选择一条记录！',
+				autoClose: 'cancel|3000',
+				backgroundDismiss: true,
+				buttons: {
+					cancel: {
+						text: '取消',
+						btnClass: 'waves-effect waves-button'
+					}
+				}
+			});
+		} else {
+			var positionIds = new Array();
+			for (var i in rows) {
+				positionIds.push(rows[i].positionId);
+			}
+			deleteDialog = $.confirm({
+				type: 'red',
+				animationSpeed: 300,
+				title: false,
+				content: '确认将该岗位在组织下删除吗？',
+				buttons: {
+					confirm: {
+						text: '确认',
+						btnClass: 'waves-effect waves-button',
+						action: function () {
+							$.ajax({
+								type: 'get',
+								url: '${basePath}/manage/positionStatistics/deletePosition/'+ organizationId + '/' + positionIds.join(","),
+								success: function(result) {
+									if (result.code != 1) {
+										if (result.data instanceof Array) {
+											$.each(result.data, function(index, value) {
+												$.confirm({
+													theme: 'dark',
+													animation: 'rotateX',
+													closeAnimation: 'rotateX',
+													title: false,
+													content: value.errorMsg,
+													buttons: {
+														confirm: {
+															text: '确认',
+															btnClass: 'waves-effect waves-button waves-light'
+														}
+													}
+												});
+											});
+										} else {
+											$.confirm({
+												theme: 'dark',
+												animation: 'rotateX',
+												closeAnimation: 'rotateX',
+												title: false,
+												content: result.data.errorMsg,
+												buttons: {
+													confirm: {
+														text: '确认',
+														btnClass: 'waves-effect waves-button waves-light'
+													}
+												}
+											});
+										}
+									} else {
+										deleteDialog.close();
+										$("#tableByPosition").bootstrapTable('refresh');
+										//getPositionList();
+									}
+								},
+								error: function(XMLHttpRequest, textStatus, errorThrown) {
+									$.confirm({
+										theme: 'dark',
+										animation: 'rotateX',
+										closeAnimation: 'rotateX',
+										title: false,
+										content: textStatus,
+										buttons: {
+											confirm: {
+												text: '确认',
+												btnClass: 'waves-effect waves-button waves-light'
+											}
+										}
+									});
+								}
+							});
+						}
+					},
+					cancel: {
+						text: '取消',
+						btnClass: 'waves-effect waves-button'
+					}
+				}
+			});
+		}
+	}
+	//删除岗位下的人员
+	function delUserFun(){
+		alert("删除人员");
 	}
 </script>
 </body>

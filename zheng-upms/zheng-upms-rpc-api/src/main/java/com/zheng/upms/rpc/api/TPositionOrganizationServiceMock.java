@@ -11,4 +11,16 @@ import com.zheng.upms.dao.model.TPositionOrganizationExample;
 */
 public class TPositionOrganizationServiceMock extends BaseServiceMock<TPositionOrganizationMapper, TPositionOrganization, TPositionOrganizationExample> implements TPositionOrganizationService {
 
+	@Override
+	public int deleteOrg(String positionId, String orgIds) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deletePosition(String organizationId, String positionIds) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

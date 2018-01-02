@@ -22,7 +22,6 @@ import com.zheng.upms.dao.model.TPositionOrganization;
 import com.zheng.upms.dao.model.TPositionOrganizationExample;
 import com.zheng.upms.dao.model.UpmsOrganization;
 import com.zheng.upms.dao.model.UpmsPosition;
-import com.zheng.upms.dao.model.UpmsPositionExample;
 import com.zheng.upms.rpc.api.TPositionOrganizationService;
 import com.zheng.upms.rpc.api.UpmsPositionService;
 
@@ -176,4 +175,22 @@ public class UpmsPositionStatisticsController extends BaseController {
 	    	List<TPositionOrganization> list = tPositionOrganizationService.selectByExample(tPositionOrganizationExample);
 	    	return list;
 	    }
+	    
+	    @ApiOperation(value = "删除岗位下的组织")
+	    @RequiresPermissions("upms:position:delOrg")
+	    @RequestMapping(value = "/deleteOrg/{positionId}/{orgIds}",method = RequestMethod.GET)
+	    @ResponseBody
+	    public Object deleteObj(@PathVariable("positionId") String positionId, @PathVariable("orgIds") String orgIds) {
+	        int count = tPositionOrganizationService.deleteOrg(positionId, orgIds);
+	        return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+	    } 
+	    
+	    @ApiOperation(value = "删除组织下的岗位")
+	    @RequiresPermissions("upms:position:delPosition")
+	    @RequestMapping(value = "/deletePosition/{organizationId}/{positionIds}",method = RequestMethod.GET)
+	    @ResponseBody
+	    public Object deletePosition(@PathVariable("organizationId") String organizationId, @PathVariable("positionIds") String positionIds) {
+	        int count = tPositionOrganizationService.deletePosition(organizationId, positionIds);
+	        return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+	    }  
 }

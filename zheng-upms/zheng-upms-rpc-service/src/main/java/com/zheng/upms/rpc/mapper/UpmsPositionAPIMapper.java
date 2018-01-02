@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.zheng.upms.dao.model.TPositionOrganizationHis;
 import com.zheng.upms.dao.model.UpmsOrganization;
 import com.zheng.upms.dao.model.UpmsPosition;
 
@@ -18,4 +19,5 @@ public interface UpmsPositionAPIMapper {
 	List<UpmsOrganization> getOrgByPosition(Map<Object, Object> params);
 	int getOrgByPositionCount(Map<Object, Object> params);
 	List<UpmsOrganization> getOrgByPositionAll(String positionId);
+	int insertTPositionOrganizationHis(TPositionOrganizationHis tPositionOrganizationHis);
 }

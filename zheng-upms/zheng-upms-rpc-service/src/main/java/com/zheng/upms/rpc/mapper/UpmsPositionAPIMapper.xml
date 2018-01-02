@@ -111,7 +111,10 @@
 			)
 	</select>
 	
-	
+	<insert id="insertTPositionOrganizationHis" parameterType="com.zheng.upms.dao.model.TPositionOrganizationHis">
+		insert into t_position_organization_his (sequence, id, organization_id, position_id, update_time)
+		SELECT  max(sequence)+1, #{id}, #{organizationId}, #{positionId}, NOW() from t_position_organization_his
+	</insert>
 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 
 </mapper>
