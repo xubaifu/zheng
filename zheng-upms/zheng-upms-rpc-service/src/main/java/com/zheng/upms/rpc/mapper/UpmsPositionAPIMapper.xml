@@ -115,6 +115,31 @@
 		insert into t_position_organization_his (sequence, id, organization_id, position_id, update_time)
 		SELECT  max(sequence)+1, #{id}, #{organizationId}, #{positionId}, NOW() from t_position_organization_his
 	</insert>
+	
+	<select id="getAllUser" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT
+			t.user_id AS userId,
+			t.username,
+			t.realname,
+			o.organization_code AS organizationCode,
+			o.organization_id AS organizationId,
+			o.pid,
+			o. name
+		FROM
+			(
+				SELECT
+					u.user_id,
+					u.username,
+					u.realname,
+					uo.organization_id
+				FROM
+					upms_user u
+				LEFT JOIN upms_user_organization uo ON u.user_id = uo.user_id
+			) t
+		LEFT JOIN upms_organization o ON o.organization_id = t.organization_id
+	</select>
+	
+	
 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 
 </mapper>

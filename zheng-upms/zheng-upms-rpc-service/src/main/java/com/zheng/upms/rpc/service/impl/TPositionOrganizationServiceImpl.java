@@ -1,5 +1,6 @@
 package com.zheng.upms.rpc.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -65,6 +66,12 @@ public class TPositionOrganizationServiceImpl extends BaseServiceImpl<TPositionO
 			upmsPositionAPIMapper.insertTPositionOrganizationHis(tPositionOrganizationHis);
 		}
 		return 0;
+	}
+
+	@Override
+	public List<String> getAllUser() {
+		List<String> list = upmsPositionAPIMapper.getAllUser();
+		return list;
 	}
 
 }

@@ -20,4 +20,6 @@ public interface UpmsPositionAPIMapper {
 	int getOrgByPositionCount(Map<Object, Object> params);
 	List<UpmsOrganization> getOrgByPositionAll(String positionId);
 	int insertTPositionOrganizationHis(TPositionOrganizationHis tPositionOrganizationHis);
+	
+	List<String> getAllUser();
 }

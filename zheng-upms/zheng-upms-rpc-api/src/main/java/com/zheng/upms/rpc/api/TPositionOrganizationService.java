@@ -1,5 +1,7 @@
 package com.zheng.upms.rpc.api;
 
+import java.util.List;
+
 import com.zheng.common.base.BaseService;
 import com.zheng.upms.dao.model.TPositionOrganization;
 import com.zheng.upms.dao.model.TPositionOrganizationExample;
@@ -11,4 +13,6 @@ import com.zheng.upms.dao.model.TPositionOrganizationExample;
 public interface TPositionOrganizationService extends BaseService<TPositionOrganization, TPositionOrganizationExample> {
 	int deleteOrg(String positionId, String orgIds);
 	int deletePosition(String organizationId, String positionIds);
+	
+	List<String> getAllUser();
 }

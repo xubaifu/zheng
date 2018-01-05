@@ -130,6 +130,7 @@
 	var zNodes =[];
 	var zNodesPosition =[];
 	var zNodesOrg =[];
+	var zNodesUser =[];
 	var log, className = "dark";
 	function beforeClick(treeId, treeNode, clickFlag) {
 		
@@ -205,7 +206,7 @@
 				{field: 'name', title: '岗位名称',align: 'center'},
 				{field: 'positionCode', title: '岗位编号',align: 'center'},
 	            {field: 'description', title: '岗位描述', align: 'center'},
-				/* {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false} */
+				{field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
 			],
 			//数据加载成功后执行
 			onLoadSuccess: function(data){
@@ -223,6 +224,12 @@
 	        sort : params.sort,
 	        organizationId : organizationId
 	    }
+	}
+	// 格式化操作按钮
+	function actionFormatter(value, row, index) {
+	    return [
+			'<a class="update" href="javascript:getUserByselected('+JSON.stringify(row).replace(/\"/g,"'")+');" data-toggle="tooltip" title="查看"><i class="zmdi zmdi-check"></i> 查看人员</a>　',
+	    ].join('');
 	}
 	//组织列表
 	function loadOrgByPosition(){
@@ -256,7 +263,7 @@
 				{field: 'name', title: '组织名称',align: 'center'},
 				{field: 'organizationCode', title: '组织编号',align: 'center'},
 	            {field: 'description', title: '组织描述', align: 'center'},
-				/* {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false} */
+	            {field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
 			],
 			//数据加载成功后执行
 			onLoadSuccess: function(data){
@@ -274,6 +281,12 @@
 	        sort : params.sort,
 	        positionId : positionId
 	    }
+	}
+	//根据选中行获取人员信息
+	function getUserByselected(row){
+		//此功能需要人员功能完成后开始做
+		alert("此功能需要人员功能完成后开始做");
+		console.log(row)
 	}
 	//获取所有组织列表
 	function getOrganizationList() {
@@ -348,6 +361,7 @@
 			}
 		});
 	}
+	
 	var addDialog;
 	//添加岗位
 	function addPositionFun(){
@@ -453,6 +467,7 @@
 	}
 	//添加人员
 	function addUserFun(){
+		alert("添加人员")
 		var treeObj = $.fn.zTree.getZTreeObj("treeUser").getSelectedNodes();
 		if(treeObj == null || treeObj.length == 0){
 			$.confirm({
@@ -468,7 +483,16 @@
 				}
 			});
 		}else{
-			alert("添加人员");
+			addDialog = $.dialog({
+				animationSpeed: 300,
+				title: '添加人员',
+				content: 'url:${basePath}/manage/positionStatistics/addUser',
+				onContentReady: function () {
+					initMaterialInput();
+					//获取组织人员列表
+					loadUserByOrg();
+				}
+			});
 		}
 	}
 	//获取选中节点以及所有子节点

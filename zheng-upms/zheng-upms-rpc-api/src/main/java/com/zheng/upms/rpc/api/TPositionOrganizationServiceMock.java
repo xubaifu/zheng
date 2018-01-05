@@ -1,5 +1,7 @@
 package com.zheng.upms.rpc.api;
 
+import java.util.List;
+
 import com.zheng.common.base.BaseServiceMock;
 import com.zheng.upms.dao.mapper.TPositionOrganizationMapper;
 import com.zheng.upms.dao.model.TPositionOrganization;
@@ -21,6 +23,12 @@ public class TPositionOrganizationServiceMock extends BaseServiceMock<TPositionO
 	public int deletePosition(String organizationId, String positionIds) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<String> getAllUser() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

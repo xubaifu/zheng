@@ -176,6 +176,15 @@ public class UpmsPositionStatisticsController extends BaseController {
 	    	return list;
 	    }
 	    
+	    @ApiOperation(value = "根据部门获取所有岗位列表")
+	    @RequiresPermissions("upms:position:read")
+	    @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
+	    @ResponseBody
+	    public Object getAllUser(){
+	    	List<String> list = tPositionOrganizationService.getAllUser();
+	    	return list;
+	    }
+	    
 	    @ApiOperation(value = "删除岗位下的组织")
 	    @RequiresPermissions("upms:position:delOrg")
 	    @RequestMapping(value = "/deleteOrg/{positionId}/{orgIds}",method = RequestMethod.GET)
