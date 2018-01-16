@@ -24,13 +24,13 @@
 			<ul id="treeDemo" class="ztree"></ul>
 		</div>
 		<div class="form-group text-right dialog-buttons">
-			<a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetTable();">保存</a>
+			<a class="waves-effect waves-button" href="javascript:;" onclick="createSubsetTableSubmit();">保存</a>
 			<a class="waves-effect waves-button" href="javascript:;" onclick="subsetTableDialog.close();">取消</a>
 		</div>
 	</form>
 </div>
 <script>
-function createSubsetTable(){
+function createSubsetTableSubmit(){
 	$.ajax({
         type: 'post',
         url: '${basePath}/manage/organization/insertSubsetTableData',
