@@ -854,9 +854,9 @@
 			}
 			
 		}
-		//console.log(data);
-		//console.log(dataArr);
-		//console.log(rowColArr);
+		console.log(data);
+		console.log(dataArr);
+		console.log(rowColArr);
 		//testFun(data,dataArr);
 		dataFun(data,dataArr,rowColArr);		
 	}
@@ -864,31 +864,41 @@
 	function dataFun(data,dataArr,rowColArr){
 		//遍历dataArr数组，并获取对应元素的行列值，并赋值到data
 		var m =0, n = 0;
+		var colspan = 0, rowspan = 0;
+		var colNum = 0, rowNum = 0;
 		for(var i = 0; i < data.length; i++){
+			colNum = 0;
 			n = 0;
 			for(var j = 0,len = data[i].length; j < len; j++){
+				rowspan = rowColArr[i][j].row;
+				colspan = rowColArr[i][j].col;
 				
-				/* if(rowColArr[i][j].row > 1 || rowColArr[i][j].col > 1 ){
-					m = rowColArr[i][j].row;
+				console.log("rowspan="+rowspan);
+				console.log("colspan="+colspan);
+				if(rowspan > 1 || colspan > 1 ){
+					///m = rowColArr[i][j].row;
 					
-					for(var k = 0; k < m; k++){
-						for(var l = 0; l < rowColArr[i][j].col; l++){
-							dataArr[i+k][n+l] = data[i][j];
+					for(var k = 0; k < rowspan; k++){
+						for(var l = 0; l < colspan; l++){
+							dataArr[i+k][j+colNum+l] = data[i][j];
 						}
 					}
 				}
-				console.log(dataArr); */
+				colNum = colspan;
+				rowNum = rowspan;
+				console.log(dataArr);
+				debugger;
 				//return;
 				
 				
-				dataArr[i][n] = data[i][j];
+				/* dataArr[i][n] = data[i][j];
 				//console.log("占用行:"+rowColArr[i][j].row);
 				console.log("占用列:"+rowColArr[i][j].col);
 				console.log("本次计数列"+n);
 				n = n + rowColArr[i][j].col;
 				//m = m + rowColArr[i][j].row;
 				//console.log("下一次计数行"+m);
-				console.log("下一次计数列"+n);
+				console.log("下一次计数列"+n); */
 				
 				
 				//console.log("本次计数行："+m);
