@@ -1,13 +1,20 @@
 package com.zheng.common.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Redis 工具类
@@ -302,4 +309,105 @@ public class RedisUtil {
 		return value;
 	}
 
+	/**
+     * 设置 list
+     * @param <T>
+     * @param key
+     * @param value
+     */
+	public static <T> void setList(String key, List<T> list) {
+		try {
+			Jedis jedis = getJedis();
+			jedis.close();
+			jedis.set(key.getBytes(), serialize(list));
+
+		} catch (Exception e) {
+			_log.error("setList error : " + e);
+		}
+
+	}
+	
+	/**
+     * 获取list
+     * @param <T>
+     * @param key
+     * @return list
+     */
+    @SuppressWarnings("unchecked")
+	public static <T> List<T> getList(String key) {
+		Jedis jedis = getJedis();
+		if (null == jedis) {
+			return null;
+		}
+		byte[] in = jedis.get(key.getBytes());
+		List<T> list = (List<T>) unserialize(in);
+		jedis.close();
+		return list;
+
+	}
+    /**
+     * 序列化
+     * @param value
+     * @return
+     */
+	public static byte[] serialize(Object value) {
+		if (value == null) {
+			throw new NullPointerException("Can't serialize null");
+		}
+		byte[] rv = null;
+		ByteArrayOutputStream bos = null;
+		ObjectOutputStream os = null;
+		try {
+			bos = new ByteArrayOutputStream();
+			os = new ObjectOutputStream(bos);
+			os.writeObject(value);
+			os.close();
+			bos.close();
+			rv = bos.toByteArray();
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Non-serializable object", e);
+		} finally {
+			try {
+				if (os != null)
+					os.close();
+				if (bos != null)
+					bos.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return rv;
+	}
+	
+	/**
+	 * 反序列化
+	 * @param bytes
+	 * @return
+	 */
+	public static Object unserialize(byte[] bytes) {
+		Object rv = null;
+		ByteArrayInputStream bis = null;
+		ObjectInputStream is = null;
+		try {
+			if (bytes != null) {
+				bis = new ByteArrayInputStream(bytes);
+				is = new ObjectInputStream(bis);
+				rv = is.readObject();
+				is.close();
+				bis.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (is != null)
+					is.close();
+				if (bis != null)
+					bis.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return rv;
+	}
 }

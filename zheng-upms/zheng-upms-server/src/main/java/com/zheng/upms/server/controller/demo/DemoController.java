@@ -17,12 +17,26 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @Api(value = "DEMO", description = "DEMO")
 @RequestMapping("/demo")
-public class CemoController extends BaseController{
+public class DemoController extends BaseController{
 	@ApiOperation(value = "demo")
     //@RequiresPermissions("upms:demo:index")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
-        return "/manage/demo/index.jsp";
+        return "/manage/demo/template.jsp";
+    }
+	
+	@ApiOperation(value = "ueditor")
+    //@RequiresPermissions("upms:demo:index")
+    @RequestMapping(value = "/ueditor", method = RequestMethod.GET)
+    public String ueditor() {
+        return "/manage/demo/ueditor.jsp";
+    }
+	
+	@ApiOperation(value = "select")
+    //@RequiresPermissions("upms:demo:index")
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    public String select() {
+        return "/manage/demo/select.jsp";
     }
 	
 	
@@ -57,4 +71,9 @@ public class CemoController extends BaseController{
         result.put("total", list.size());
         return result;
     }
+	public static List<Object> getDictList(String type){
+		System.out.println("hsjadg");
+		System.out.println(type);
+		return null;
+	}
 }

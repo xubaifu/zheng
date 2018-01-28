@@ -28,15 +28,13 @@
 ::-webkit-scrollbar-thumb {
 	background-color: rgba(0, 0, 0, .2);
 }
-/* ::-webkit-scrollbar-thumb<a href="https://www.baidu.com/s?wd=%3Ahover&tn=44039180_cpr&fenlei=mv6quAkxTZn0IZRqIHckPjm4nH00T1YLm16suWTkmW9-uWfYm1cv0ZwV5Hcvrjm3rH6sPfKWUMw85HfYnjn4nH6sgvPsT6KdThsqpZwYTjCEQLGCpyw9Uz4Bmy-bIi4WUvYETgN-TLwGUv3EP1RkPjRYP1TvPHf3rjRsnW0Y" target="_blank" class="baidu-highlight">:hover</a> {background-color:#9c3} */
+/* ::-webkit-scrollbar-thumb<a href="https://www.baidu.com/s?wd=%3Ahover&tn=44039180_cpr&fenlei=mv6quAkxTZn0IZRqIHckPjm4nH00T1YLm16suWTkmW9-uWfYm1cv0ZwV5Hcvrjm3rH6sPfKWUEw85HfYnjn4nH6sgvPsT6KdThsqpZwYTjCEQLGCpyw9Uz4Bmy-bIi4WUvYETgN-TLwGUv3EP1RkPjRYP1TvPHf3rjRsnW0Y" target="_blank" class="baidu-highlight">:hover</a> {background-color:#9c3} */
 ::-webkit-scrollbar-thumb:active {
 	background-color: rgba(0, 0, 0, .2)
 }
 </style>
 </head>
 <body>
-
-
 	<div style="height: 100%">
 		<!-- 选中部门基本信息以及子集信息 -->
 		<div class="tab-pane fade in active" id="listtable">
@@ -46,6 +44,7 @@
 	<jsp:include page="/resources/inc/footer.jsp" flush="true" />
 	<script src="${basePath}/resources/zheng-admin/plugins/bootstrap3-editable-1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 	<script src="${basePath}/resources/zheng-admin/plugins/bootstrap3-editable-1.5.1/bootstrap3-editable/js/bootstrap-table-editable.js"></script>
+	
 	<script>
 		$(document).ready(function() {
 			//$.fn.zTree.init($("#tree"), setting, zNodes);
@@ -57,7 +56,7 @@
 			//var curRow = {};
 			// bootstrap table初始化
 			$table.bootstrapTable({
-				url: '${basePath}/demo/getData',
+				//url: '${basePath}/demo/getData',
 				//editable : true,//开启编辑模式  
 				height : getHeight(),
 				//striped : true,
@@ -78,14 +77,52 @@
 				idField : 'name',
 				maintainSelected : true,
 				toolbar : '#toolbar',
-				edit:{
-					click:function(){alert("单列点击")} //这个地主，如何设置onkeypress事件，我需要键盘按下去的时候就响应事件！！设为keypress不行!
-					},
+				data : [ {
+							"name" : "测试组",
+							"level" : "1级",
+							"mideaNum" : "0",
+							"mideaPercent" : "0",
+							"panasonicNum" : "0",
+							"panasonicPercent" : "0"
+						}, {
+							"name" : "测试组",
+							"level" : "2级",
+							"mideaNum" : "0",
+							"mideaPercent" : "0",
+							"panasonicNum" : "0",
+							"panasonicPercent" : "0"
+						}, {
+							"name" : "测试组",
+							"level" : "3级",
+							"mideaNum" : "0",
+							"mideaPercent" : "0",
+							"panasonicNum" : "0",
+							"panasonicPercent" : "0"
+						}, {
+							"name" : "测试组",
+							"level" : "4级",
+							"mideaNum" : "0",
+							"mideaPercent" : "0",
+							"panasonicNum" : "0",
+							"panasonicPercent" : "0"
+						}, {
+							"name" : "测试组",
+							"level" : "5级",
+							"mideaNum" : "0",
+							"mideaPercent" : "0",
+							"panasonicNum" : "0",
+							"panasonicPercent" : "0"
+				} ],
+				edit : {
+					click : function() {
+						alert("单列点击")
+					} //这个地主，如何设置onkeypress事件，我需要键盘按下去的时候就响应事件！！设为keypress不行!
+				},
 				columns : [ [ {
 					"title" : "通过",
 					"halign" : "center",
 					"align" : "center",
-					"colspan" : 6
+					"colspan" : 7
 				} ], [ {
 					field : 'name',
 					title : "分组",
@@ -112,57 +149,62 @@
 					align : "center",
 					colspan : 2,
 					rowspan : 1
-				} ], [ {
+				}], [ {
 					field : 'mideaNum',
 					title : '四级',
 					valign : "middle",
 					align : "center",
-					editable: {
-	                    type: 'text',
-	                    title: '二级',
-	                    validate: function (v) {
-	                        if (!v) return '二级不能为空';
-	                    }
-	                },
+					editable : {
+						type : 'text',
+						title : '二级',
+						validate : function(v) {
+							if (!v)
+								return '二级不能为空';
+						}
+					},
 				}, {
 					field : 'mideaPercent',
 					title : '六级',
 					valign : "middle",
 					align : "center",
-					editable: {
-	                    type: 'text',
-	                    title: '二级',
-	                    validate: function (v) {
-	                        if (!v) return '二级不能为空';
-	                    }
-	                },
+					editable : {
+						type : 'text',
+						title : '二级',
+						validate : function(v) {
+							if (!v)
+								return '二级不能为空';
+						}
+					},
 				}, {
 					field : 'panasonicNum',
 					title : '一级',
 					valign : "middle",
 					align : "center",
-					editable: {
-	                    type: 'text',
-	                    title: '二级',
-	                    validate: function (v) {
-	                        if (!v) return '二级不能为空';
-	                    }
-	                },
+					editable : {
+						type : 'text',
+						title : '二级',
+						validate : function(v) {
+							if (!v)
+								return '二级不能为空';
+						}
+					},
 				}, {
 					field : 'panasonicPercent',
 					title : '二级',
 					valign : "middle",
 					align : "center",
-					editable: {
-	                    type: 'text',
-	                    title: '二级',
-	                    validate: function (v) {
-	                        if (!v) return '二级不能为空';
-	                    }
-	                },
-				} ] ], //数据加载成功后执行，加载树结构
+					editable : {
+						type : 'text',
+						title : '二级',
+						validate : function(v) {
+							if (!v)
+								return '二级不能为空';
+						}
+					},
+				}
+				 ] ], //数据加载成功后执行，加载树结构
 				onLoadSuccess : function(data) {
-					console.log(data)
+					console.log(JSON.stringify(data))
 					var data = $('#table').bootstrapTable('getData', true);
 					//合并单元格
 					mergeCells(data, "name", 1, $('#table'));
@@ -170,29 +212,29 @@
 
 				},
 				/* onClickRow: function (row, $element) {
-	                curRow = row;
-	            }, */
-	            onEditableSave: function (field, row, oldValue, $el) {
-	            	alert("");
-	                 /* $.ajax({
-	                    type: "post",
-	                    url: "/Editable/Edit",
-	                    data: row,
-	                    dataType: 'JSON',
-	                    success: function (data, status) {
-	                        if (status == "success") {
-	                            alert('提交数据成功');
-	                        }
-	                    },
-	                    error: function () {
-	                        alert('编辑失败');
-	                    },
-	                    complete: function () {
+				    curRow = row;
+				}, */
+				onEditableSave : function(field, row, oldValue, $el) {
+					alert("111");
+					/* $.ajax({
+					   type: "post",
+					   url: "/Editable/Edit",
+					   data: row,
+					   dataType: 'JSON',
+					   success: function (data, status) {
+					       if (status == "success") {
+					           alert('提交数据成功');
+					       }
+					   },
+					   error: function () {
+					       alert('编辑失败');
+					   },
+					   complete: function () {
 
-	                    }
+					   }
 
-	                });  */
-	            }
+					});  */
+				}
 			});
 		}
 
@@ -240,5 +282,6 @@
 			}
 		}
 	</script>
+	
 </body>
 </html>
