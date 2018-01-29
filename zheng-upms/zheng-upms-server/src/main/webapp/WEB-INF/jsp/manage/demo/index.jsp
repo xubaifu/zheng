@@ -49,7 +49,6 @@
 		$(document).ready(function() {
 			//$.fn.zTree.init($("#tree"), setting, zNodes);
 			loadBootstrapTable();
-
 		});
 		var $table = $('#table');
 		function loadBootstrapTable() {
