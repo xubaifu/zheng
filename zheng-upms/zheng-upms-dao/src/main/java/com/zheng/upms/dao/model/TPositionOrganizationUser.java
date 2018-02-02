@@ -4,24 +4,24 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class TPositionOrganizationUser implements Serializable {
-    private String positionId;
+    private Integer id;
 
     private String organizationId;
 
     private String userId;
 
-    private Integer sequence;
+    private Boolean isPrimary;
 
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
-    public String getPositionId() {
-        return positionId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPositionId(String positionId) {
-        this.positionId = positionId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getOrganizationId() {
@@ -40,12 +40,12 @@ public class TPositionOrganizationUser implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getSequence() {
-        return sequence;
+    public Boolean getIsPrimary() {
+        return isPrimary;
     }
 
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
+    public void setIsPrimary(Boolean isPrimary) {
+        this.isPrimary = isPrimary;
     }
 
     public Date getUpdateTime() {
@@ -62,10 +62,10 @@ public class TPositionOrganizationUser implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", positionId=").append(positionId);
+        sb.append(", id=").append(id);
         sb.append(", organizationId=").append(organizationId);
         sb.append(", userId=").append(userId);
-        sb.append(", sequence=").append(sequence);
+        sb.append(", isPrimary=").append(isPrimary);
         sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
@@ -83,10 +83,10 @@ public class TPositionOrganizationUser implements Serializable {
             return false;
         }
         TPositionOrganizationUser other = (TPositionOrganizationUser) that;
-        return (this.getPositionId() == null ? other.getPositionId() == null : this.getPositionId().equals(other.getPositionId()))
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getOrganizationId() == null ? other.getOrganizationId() == null : this.getOrganizationId().equals(other.getOrganizationId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getSequence() == null ? other.getSequence() == null : this.getSequence().equals(other.getSequence()))
+            && (this.getIsPrimary() == null ? other.getIsPrimary() == null : this.getIsPrimary().equals(other.getIsPrimary()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
@@ -94,10 +94,10 @@ public class TPositionOrganizationUser implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getPositionId() == null) ? 0 : getPositionId().hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getOrganizationId() == null) ? 0 : getOrganizationId().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getSequence() == null) ? 0 : getSequence().hashCode());
+        result = prime * result + ((getIsPrimary() == null) ? 0 : getIsPrimary().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
     }

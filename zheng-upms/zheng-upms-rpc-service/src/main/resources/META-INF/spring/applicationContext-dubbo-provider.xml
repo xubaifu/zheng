@@ -90,6 +90,10 @@
     <bean id="tPositionOrganizationService" class="com.zheng.upms.rpc.service.impl.TPositionOrganizationServiceImpl"/>
     <dubbo:service interface="com.zheng.upms.rpc.api.TPositionOrganizationService" ref="tPositionOrganizationService" timeout="10000"/>
     
+    <!-- 组织用户 -->
+    <bean id="tPositionOrganizationUserService" class="com.zheng.upms.rpc.service.impl.TPositionOrganizationUserServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.TPositionOrganizationUserService" ref="tPositionOrganizationUserService" timeout="10000"/>
+    
     <!-- 字典管理 -->
     <bean id="upmsDictService" class="com.zheng.upms.rpc.service.impl.UpmsDictServiceImpl"/>
     <dubbo:service interface="com.zheng.upms.rpc.api.UpmsDictService" ref="upmsDictService" timeout="10000"/>

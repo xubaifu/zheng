@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zheng.upms.dao.mapper.TPositionOrganizationUserMapper">
   <resultMap id="BaseResultMap" type="com.zheng.upms.dao.model.TPositionOrganizationUser">
-    <id column="position_id" jdbcType="VARCHAR" property="positionId" />
-    <id column="organization_id" jdbcType="VARCHAR" property="organizationId" />
-    <id column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="sequence" jdbcType="INTEGER" property="sequence" />
-    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="organization_id" jdbcType="VARCHAR" property="organizationId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="is_primary" jdbcType="BIT" property="isPrimary" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    position_id, organization_id, user_id, sequence, update_time
+    id, organization_id, user_id, is_primary, update_time
   </sql>
   <select id="selectByExample" parameterType="com.zheng.upms.dao.model.TPositionOrganizationUserExample" resultMap="BaseResultMap">
     select
@@ -83,19 +83,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_position_organization_user
-    where position_id = #{positionId,jdbcType=VARCHAR}
-      and organization_id = #{organizationId,jdbcType=VARCHAR}
-      and user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="map">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_position_organization_user
-    where position_id = #{positionId,jdbcType=VARCHAR}
-      and organization_id = #{organizationId,jdbcType=VARCHAR}
-      and user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.zheng.upms.dao.model.TPositionOrganizationUserExample">
     delete from t_position_organization_user
@@ -104,16 +100,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.zheng.upms.dao.model.TPositionOrganizationUser">
-    insert into t_position_organization_user (position_id, organization_id, user_id, 
-      sequence, update_time)
-    values (#{positionId,jdbcType=VARCHAR}, #{organizationId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{sequence,jdbcType=INTEGER}, #{updateTime,jdbcType=DATE})
+    insert into t_position_organization_user (id, organization_id, user_id, 
+      is_primary, update_time)
+    values (#{id,jdbcType=INTEGER}, #{organizationId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{isPrimary,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.TPositionOrganizationUser">
     insert into t_position_organization_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="positionId != null">
-        position_id,
+      <if test="id != null">
+        id,
       </if>
       <if test="organizationId != null">
         organization_id,
@@ -121,16 +117,16 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="sequence != null">
-        sequence,
+      <if test="isPrimary != null">
+        is_primary,
       </if>
       <if test="updateTime != null">
         update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="positionId != null">
-        #{positionId,jdbcType=VARCHAR},
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="organizationId != null">
         #{organizationId,jdbcType=VARCHAR},
@@ -138,11 +134,11 @@
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="sequence != null">
-        #{sequence,jdbcType=INTEGER},
+      <if test="isPrimary != null">
+        #{isPrimary,jdbcType=BIT},
       </if>
       <if test="updateTime != null">
-        #{updateTime,jdbcType=DATE},
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -155,8 +151,8 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_position_organization_user
     <set>
-      <if test="record.positionId != null">
-        position_id = #{record.positionId,jdbcType=VARCHAR},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.organizationId != null">
         organization_id = #{record.organizationId,jdbcType=VARCHAR},
@@ -164,11 +160,11 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
-      <if test="record.sequence != null">
-        sequence = #{record.sequence,jdbcType=INTEGER},
+      <if test="record.isPrimary != null">
+        is_primary = #{record.isPrimary,jdbcType=BIT},
       </if>
       <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=DATE},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -177,11 +173,11 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_position_organization_user
-    set position_id = #{record.positionId,jdbcType=VARCHAR},
+    set id = #{record.id,jdbcType=INTEGER},
       organization_id = #{record.organizationId,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
-      sequence = #{record.sequence,jdbcType=INTEGER},
-      update_time = #{record.updateTime,jdbcType=DATE}
+      is_primary = #{record.isPrimary,jdbcType=BIT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -189,24 +185,28 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zheng.upms.dao.model.TPositionOrganizationUser">
     update t_position_organization_user
     <set>
-      <if test="sequence != null">
-        sequence = #{sequence,jdbcType=INTEGER},
+      <if test="organizationId != null">
+        organization_id = #{organizationId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="isPrimary != null">
+        is_primary = #{isPrimary,jdbcType=BIT},
       </if>
       <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=DATE},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where position_id = #{positionId,jdbcType=VARCHAR}
-      and organization_id = #{organizationId,jdbcType=VARCHAR}
-      and user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zheng.upms.dao.model.TPositionOrganizationUser">
     update t_position_organization_user
-    set sequence = #{sequence,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=DATE}
-    where position_id = #{positionId,jdbcType=VARCHAR}
-      and organization_id = #{organizationId,jdbcType=VARCHAR}
-      and user_id = #{userId,jdbcType=VARCHAR}
+    set organization_id = #{organizationId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      is_primary = #{isPrimary,jdbcType=BIT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 </mapper>

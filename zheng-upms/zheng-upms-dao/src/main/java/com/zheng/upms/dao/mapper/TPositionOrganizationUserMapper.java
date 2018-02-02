@@ -10,7 +10,7 @@ public interface TPositionOrganizationUserMapper {
 
     int deleteByExample(TPositionOrganizationUserExample example);
 
-    int deleteByPrimaryKey(@Param("positionId") String positionId, @Param("organizationId") String organizationId, @Param("userId") String userId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(TPositionOrganizationUser record);
 
@@ -18,7 +18,7 @@ public interface TPositionOrganizationUserMapper {
 
     List<TPositionOrganizationUser> selectByExample(TPositionOrganizationUserExample example);
 
-    TPositionOrganizationUser selectByPrimaryKey(@Param("positionId") String positionId, @Param("organizationId") String organizationId, @Param("userId") String userId);
+    TPositionOrganizationUser selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") TPositionOrganizationUser record, @Param("example") TPositionOrganizationUserExample example);
 

@@ -846,6 +846,76 @@ public class UpmsUserExample implements Serializable {
             addCriterion("ctime not between", value1, value2, "ctime");
             return (Criteria) this;
         }
+
+        public Criteria andPositionIdIsNull() {
+            addCriterion("position_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdIsNotNull() {
+            addCriterion("position_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdEqualTo(String value) {
+            addCriterion("position_id =", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdNotEqualTo(String value) {
+            addCriterion("position_id <>", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdGreaterThan(String value) {
+            addCriterion("position_id >", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdGreaterThanOrEqualTo(String value) {
+            addCriterion("position_id >=", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdLessThan(String value) {
+            addCriterion("position_id <", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdLessThanOrEqualTo(String value) {
+            addCriterion("position_id <=", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdLike(String value) {
+            addCriterion("position_id like", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdNotLike(String value) {
+            addCriterion("position_id not like", value, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdIn(List<String> values) {
+            addCriterion("position_id in", values, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdNotIn(List<String> values) {
+            addCriterion("position_id not in", values, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdBetween(String value1, String value2) {
+            addCriterion("position_id between", value1, value2, "positionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPositionIdNotBetween(String value1, String value2) {
+            addCriterion("position_id not between", value1, value2, "positionId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

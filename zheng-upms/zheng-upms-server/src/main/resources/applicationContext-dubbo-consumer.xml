@@ -56,6 +56,9 @@
     
     <!-- 岗位部门统计 -->
     <dubbo:reference id="tPositionOrganizationService" interface="com.zheng.upms.rpc.api.TPositionOrganizationService" mock="true"/>
+
+    <!-- 用户组织 -->
+    <dubbo:reference id="tPositionOrganizationUserService" interface="com.zheng.upms.rpc.api.TPositionOrganizationUserService" mock="true"/>
     
     <!-- 字典管理 -->
     <dubbo:reference id="upmsDictService" interface="com.zheng.upms.rpc.api.UpmsDictService" mock="true"/>

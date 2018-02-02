@@ -80,6 +80,13 @@ public class UpmsUser implements Serializable {
      */
     private Long ctime;
 
+    /**
+     * 部门
+     *
+     * @mbg.generated
+     */
+    private String positionId;
+
     private static final long serialVersionUID = 1L;
 
     public String getUserId() {
@@ -170,6 +177,14 @@ public class UpmsUser implements Serializable {
         this.ctime = ctime;
     }
 
+    public String getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -187,6 +202,7 @@ public class UpmsUser implements Serializable {
         sb.append(", sex=").append(sex);
         sb.append(", locked=").append(locked);
         sb.append(", ctime=").append(ctime);
+        sb.append(", positionId=").append(positionId);
         sb.append("]");
         return sb.toString();
     }
@@ -213,7 +229,8 @@ public class UpmsUser implements Serializable {
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getLocked() == null ? other.getLocked() == null : this.getLocked().equals(other.getLocked()))
-            && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()));
+            && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()))
+            && (this.getPositionId() == null ? other.getPositionId() == null : this.getPositionId().equals(other.getPositionId()));
     }
 
     @Override
@@ -231,6 +248,7 @@ public class UpmsUser implements Serializable {
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         result = prime * result + ((getLocked() == null) ? 0 : getLocked().hashCode());
         result = prime * result + ((getCtime() == null) ? 0 : getCtime().hashCode());
+        result = prime * result + ((getPositionId() == null) ? 0 : getPositionId().hashCode());
         return result;
     }
 }

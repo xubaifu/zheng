@@ -212,5 +212,7 @@
 <script src="${basePath}/resources/zheng-admin/js/admin.js"></script>
 <script src="${basePath}/resources/zheng-admin/plugins/fullPage/jquery.fullPage.min.js"></script>
 <script src="${basePath}/resources/zheng-admin/plugins/fullPage/jquery.jdirk.min.js"></script>
+<script src="${basePath}/resources/zheng-admin/plugins/select2/js/select2.min.js"></script></span>
+<script src="${basePath}/resources/zheng-admin/plugins/select2/js/i18n/zh-CN.js"></script></span>
 </body>
 </html>
