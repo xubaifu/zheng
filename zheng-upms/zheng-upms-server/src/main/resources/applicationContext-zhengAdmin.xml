@@ -5,5 +5,7 @@
 
     <!-- 启动解压zhengAdmin-x.x.x.jar到resources目录 -->
     <bean id="zhengAdminUtil" class="com.zheng.common.util.ZhengAdminUtil"></bean>
+    
+    <bean id="BeanDefineConfigue" class="com.zheng.upms.server.dict.BeanDefineConfigue"></bean>
 
 </beans>

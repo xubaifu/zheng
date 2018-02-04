@@ -11,6 +11,8 @@ public class ToolUtil {
 	public static final String AVAILABLE = "0";//有效的
 	public static final String UNAVAILABLE = "1";//无效的
 	
+	public static final String ZHENG_UPMS_DICT = "zheng-upms-dict";//字典数据前缀
+	
 	public static final String ORGANIZATION_UUID_TABLENAME = "t_dept_uuid";//组织结构子集数据记录表
 	public static final String POSITION_UUID_TABLENAME = "t_position_uuid";//岗位子集数据记录表
 	public static final String PERSONNEL_UUID_TABLENAME = "t_employee_uuid";//人员子集数据记录表

@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baidu.unbiz.fluentvalidator.ComplexResult;
-import com.baidu.unbiz.fluentvalidator.FluentValidator;
-import com.baidu.unbiz.fluentvalidator.ResultCollectors;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.zheng.common.base.BaseController;
 import com.zheng.common.util.RedisUtil;
-import com.zheng.common.validator.LengthValidator;
 import com.zheng.upms.common.constant.ToolUtil;
 import com.zheng.upms.common.constant.UpmsResult;
 import com.zheng.upms.common.constant.UpmsResultConstant;
@@ -33,6 +31,7 @@ import com.zheng.upms.rpc.api.UpmsDictService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import redis.clients.jedis.Jedis;
 
 /**
  * 字典表管理
@@ -124,6 +123,19 @@ public class UpmsDictController extends BaseController {
     	upmsDict.setDelFlag(ToolUtil.AVAILABLE);
     	//upmsDict.setCreateBy();
         int count = upmsDictService.insert(upmsDict);
+        //将字典数据写入redis缓存
+        if(null != upmsDict){
+        	JSONObject object = new JSONObject();
+        	Jedis jedis = RedisUtil.getJedis();
+        	if(null == jedis.get(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType())){
+        		object.put(upmsDict.getValue(), upmsDict.getLabel());
+        		jedis.set(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType(), object.toString());
+        	}else{
+        		object = JSONObject.parseObject(jedis.get(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType()));
+        		object.put(upmsDict.getValue(), upmsDict.getLabel());
+        		jedis.set(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType(), object.toString());
+        	}
+        }
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
     
@@ -141,8 +153,21 @@ public class UpmsDictController extends BaseController {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Object update(@PathVariable("id") String id, UpmsDict upmsDict) {
-       
         int count = upmsDictService.updateByPrimaryKeySelective(upmsDict);
+        //BeanDefineConfigue
+        //将字典数据写入redis缓存
+        if(null != upmsDict){
+        	JSONObject object = new JSONObject();
+        	Jedis jedis = RedisUtil.getJedis();
+        	if(null == jedis.get(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType())){
+        		object.put(upmsDict.getValue(), upmsDict.getLabel());
+        		jedis.set(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType(), object.toString());
+        	}else{
+        		object = JSONObject.parseObject(jedis.get(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType()));
+        		object.put(upmsDict.getValue(), upmsDict.getLabel());
+        		jedis.set(ToolUtil.ZHENG_UPMS_DICT + "_" + upmsDict.getType(), object.toString());
+        	}
+        }
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     } 
     
@@ -153,6 +178,18 @@ public class UpmsDictController extends BaseController {
     public Object delete(@PathVariable("ids") String ids) {
         int count = upmsDictService.deleteByPrimaryKeys(ids);
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
+    }
+    
+    @ApiOperation(value = "根据类型查询字典")
+    @RequiresPermissions("upms:dict:read")
+    @RequestMapping(value = "/getDictByType/{type}",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getDict(@PathVariable("type") String type) {
+    	//JSONObject object = new JSONObject();
+    	Jedis jedis = RedisUtil.getJedis();
+    	//object = JSONObject.parseObject(jedis.get(type));
+    	Map<String,Object> mapTypes = JSON.parseObject(jedis.get(ToolUtil.ZHENG_UPMS_DICT + "_" + type));  
+    	return mapTypes;
     }
     
 }

@@ -223,8 +223,7 @@
 	
 	<div>
 		<div id="conditions" class="input-group input-group-sm">
-			<!-- <span class="input-group-addon">横向条件</span> -->
-			<!-- <input type="text" class="form-control" style="width: 200px"> -->
+			
 		</div>
 	</div>
 
@@ -677,20 +676,28 @@
 		}
 		
 		
-		/* for(var i = 0; i < mytable.rows.length; i++){
+		for(var i = 0; i < mytable.rows.length; i++){
 			for(var j = 0;j < mytable.rows[i].cells.length; j++){
 				if($(mytable.rows[i].cells[j]).attr("rowspan") > 1){
 					len = $(mytable.rows[i].cells[j]).attr("rowspan");
+					console.log("len="+len);
 					$(mytable.rows[i].cells[j]).attr("rowspan",1);
-					console.log(len);
+					
+					$("#conditions").append($(mytable.rows[i].cells[j]).clone());
+					console.log($("#conditions").html());
+					var str = $("#conditions").html();
+					$("#conditions").html("");
+					console.log($(mytable.rows[i].cells[j]).context);
 					for(var k = 1; k < len; k++){
 						//console.log("k="+k);
-						//$(mytable.rows[i+k].cells[j]).after($(mytable.rows[i].cells[j]).clone());
+						debugger;
+						$(mytable.rows[i+k].cells[j]).after("<td>11</td>");
 					}
+					return;
 				}
 			}
 		}
-		 */
+		
 		
 		console.log(mytable);
 	}
