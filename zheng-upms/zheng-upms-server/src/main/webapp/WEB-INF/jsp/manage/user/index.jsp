@@ -27,6 +27,7 @@
 	</div>
 	<table id="table"></table>
 </div>
+<div id="userDialog"></div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
 var $table = $('#table');
@@ -102,10 +103,11 @@ function createAction() {
 	createDialog = $.dialog({
 		animationSpeed: 300,
 		title: '新增用户',
+		columnClass: 'col-md-8 col-md-offset-2',
 		content: 'url:${basePath}/manage/user/create',
 		onContentReady: function () {
 			initMaterialInput();
-            initUploader();
+            initUploader();         
 		}
 	});
 }
@@ -130,6 +132,7 @@ function updateAction() {
 		updateDialog = $.dialog({
 			animationSpeed: 300,
 			title: '编辑用户',
+			columnClass: 'col-md-8 col-md-offset-2',
 			content: 'url:${basePath}/manage/user/update/' + rows[0].userId,
 			onContentReady: function () {
 				initMaterialInput();
