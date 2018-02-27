@@ -132,6 +132,7 @@ function updateAction() {
 		updateDialog = $.dialog({
 			animationSpeed: 300,
 			title: '编辑用户',
+			columnClass: 'col-md-8 col-md-offset-2',
 			content: 'url:${basePath}/manage/user/update/' + rows[0].userId,
 			onContentReady: function () {
 				initMaterialInput();
