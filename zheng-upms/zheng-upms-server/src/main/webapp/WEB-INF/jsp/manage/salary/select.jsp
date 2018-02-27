@@ -12,15 +12,16 @@
 			<label for="subsetColumn" id="subsetLabel">选择条件</label> <input id="subsetColumn"
 				type="text" class="form-control" name="subsetColumn" maxlength="20"
 				value="" >
+				<input id="conditionVal" style="display: none;">
 		</div>
 		<div id="tree" style="border:1px solid #d2d1d1;display: none;">
 			<ul id="subsetTree" class="ztree"></ul>
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="subsetValue">输入数值</label> <input id="subsetValue"
 				type="text" class="form-control" name="subsetValue" maxlength="20"
 				value="">
-		</div>
+		</div> -->
 		<div class="form-group text-right dialog-buttons">
 			<a class="waves-effect waves-button" href="javascript:;"
 				onclick="getSelectVal()">保存</a> <a class="waves-effect waves-button"
@@ -36,10 +37,11 @@
 
 	function getSelectVal() {
 		//获取当前单元格的class属性
-		console.log(sessionStorage.getItem("class"));
+		//console.log(sessionStorage.getItem("class"));
 		//将所选条件赋值到当前单元格
-		if($("#subsetColumn").val() != null && $("#subsetColumn").val() != ''){
+		if($("#conditionVal").val() != null && $("#conditionVal").val() != ''){
 			$("#ueditor_0").contents().find(".myTable").find("." + sessionStorage.getItem("class")).text($("#subsetColumn").val());
+			
 			//页面隐藏输入框，存放所选的单元格的条件
 			if ($("#" + sessionStorage.getItem("class")).val() != null
 					&& $("#" + sessionStorage.getItem("class")).val() != "undefined") {
@@ -48,14 +50,21 @@
 				$("#conditions").append('<input id="'+ sessionStorage.getItem("class")+ '" type="text" class="form-control" style="width: 200px" value="'+ $("#subsetColumn").val() + '">');
 				//um.setContent('<input id="'+ sessionStorage.getItem("class")+ '" type="text" class="form-control" style="width: 200px" value="'+ $("#subsetColumn").val() + '">', true);
 			}
+		}else{
+			$("#ueditor_0").contents().find(".myTable").find("." + sessionStorage.getItem("class")).text($("#subsetColumn").val());
+			var domElement = $("#ueditor_0").contents().find(".myTable").find("." + sessionStorage.getItem("class"));
+			for(var i = 0; i < heightArr.length; i++){
+        		if(domElement.offset().top >= heightArr[i][0] && (domElement.offset().top + domElement.height()) <= heightArr[i][1]){
+	        		console.log("纵向条件")
+        			console.log($("#" + heightArr[i][2]).val());
+        		}
+        		if(domElement.offset().left >= widthArr[i][0] && (domElement.offset().left + domElement.width()) <= widthArr[i][1]){
+	        		console.log("横向条件");
+        			console.log($("#" + widthArr[i][2]).val());
+        		}
+        	}
 		}
-		//将所填数值赋值到单元格
-		if($("#subsetValue").val() != null && $("#subsetValue").val() != ''){
-			$("#ueditor_0").contents().find(".myTable").find("." + sessionStorage.getItem("class")).text($("#subsetValue").val());
-		}
-		
 		selectDialog.close();
-		//splitTable();
 	}
 
 	var setting = {
@@ -80,8 +89,14 @@
 	}
 	function onClick(event, treeId, treeNode, clickFlag) {
 		$("#subsetColumn").val(treeNode.name);
+		
+		$("#conditionVal").val(treeNode.name);
+		
 		//$("#pName").val(treeNode.name);
 		$("#subsetLabel").addClass('active');
+		
+		
+		
 		/* //点击组织切换时，将内容定位到基本信息位置
 		$("#myTabContent").children().removeClass("active");
 		$("#myTab").children().removeClass("active");

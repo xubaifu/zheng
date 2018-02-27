@@ -157,20 +157,21 @@
 <div id="btns">
 
 		<table>
-        <tr>
+       <!--  <tr>
             <td>
                 <button class="btn" id="enable" onclick="setEnabled()">可以编辑</button>&nbsp;
                 <button class="btn" onclick="setDisabled()">不可编辑</button>
             </td>
-        </tr>
+        </tr> -->
         <tr>
             <td>
-                <button class="btn" onclick="turnTable()">模板转换</button>
+                <!-- <button class="btn" onclick="turnTable()">模板转换</button>
                 <button class="btn" onclick="turnToUeditor()">编辑编辑</button>
                 <button class="btn" onclick="splitTable()">表格拆分</button>
-                <button class="btn" onclick="getData()">获取表格数据</button>
+                <button class="btn" onclick="getData()">获取表格数据</button> -->
                 <button class="btn" onclick="getTemplate()">固定模板</button>
-                <button class="btn" onclick="getAllData()">获取数据</button>
+                <!-- <button class="btn" onclick="getAllData()">获取数据</button>-->
+                
             </td>
         </tr>
     </table>
@@ -210,20 +211,25 @@ function disableBtn(str) {
     }
 }
 
-
+var heightArr = [], widthArr = [];//元素高度范围，宽度范围
 //固定模板
 function getTemplate(){
     //绑定事件，设置class属性
     //取消绑定
     $("#ueditor_0").contents().find(".myTable").find("td").unbind();
-    for(var i = 0; i < $("#ueditor_0").contents().find(".myTable").find("td").length; i++){
-        $("#ueditor_0").contents().find(".myTable").find("td:eq("+i+")").attr("class",guid())
-    }
     
+    for(var i = 0; i < $("#ueditor_0").contents().find(".myTable").find("td").length; i++){
+        $("#ueditor_0").contents().find(".myTable").find("td:eq("+i+")").attr("class",guid());
+       // console.log($("#ueditor_0").contents().find(".myTable").find("td:eq("+i+")").offset().top);
+        var domElement = $("#ueditor_0").contents().find(".myTable").find("td:eq("+i+")");
+        heightArr[i] = [domElement.offset().top, domElement.offset().top + domElement.height(), domElement.attr("class")];
+        widthArr[i] = [domElement.offset().left, domElement.offset().left + domElement.width(), domElement.attr("class")];
+    }
+    console.log(heightArr);
+    console.log(widthArr);
     //重新绑定
     $("#ueditor_0").contents().find(".myTable").find("td").click(
         function(){
-        
         	sessionStorage.setItem("class", $(this).attr("class"));
         	//弹出子集属性选择页面
         	selectDialog = $.dialog({
@@ -241,8 +247,9 @@ function getTemplate(){
 	um.setDisabled('fullscreen');
     disableBtn("enable");
 }
+
 //获取数据
-function getAllData(){
+/* function getAllData(){
 	var mytable = $("#ueditor_0").contents().find(".myTable").find("table").prevObject[0];
 	rowLen = mytable.rows.length;//表格行数
 	var colLenArr = [];//各行列数
@@ -305,7 +312,13 @@ function getAllData(){
 	console.log(rowColArr);
 	//testFun(data,dataArr);
 	//dataFun(data,dataArr,rowColArr);		
-}
+} */
+/* function getOffset(){
+	$('#DivID').offset().top;
+} */
+
+
+
 //用于生成uuid
 function S4() {
     return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
