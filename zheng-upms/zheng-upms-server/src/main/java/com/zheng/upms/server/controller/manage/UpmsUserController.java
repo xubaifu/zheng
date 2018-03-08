@@ -1,6 +1,5 @@
 package com.zheng.upms.server.controller.manage;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +33,7 @@ import com.zheng.common.validator.NotNullValidator;
 import com.zheng.upms.common.constant.UpmsResult;
 import com.zheng.upms.common.constant.UpmsResultConstant;
 import com.zheng.upms.dao.model.TPositionOrganizationUser;
+import com.zheng.upms.dao.model.TPositionOrganizationUserExample;
 import com.zheng.upms.dao.model.UpmsOrganization;
 import com.zheng.upms.dao.model.UpmsOrganizationExample;
 import com.zheng.upms.dao.model.UpmsRole;
@@ -83,7 +83,7 @@ public class UpmsUserController extends BaseController {
 
     @Autowired
     private UpmsUserPermissionService upmsUserPermissionService;
-    
+
     @Autowired
     private TPositionOrganizationUserService tPositionOrganizationUserService;
 
@@ -207,7 +207,7 @@ public class UpmsUserController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Object create(UpmsUser upmsUser,@RequestParam String orgs) {
-    	
+
         ComplexResult result = FluentValidator.checkAll()
                 .on(upmsUser.getUsername(), new LengthValidator(1, 20, "帐号"))
                 .on(upmsUser.getPassword(), new LengthValidator(5, 32, "密码"))
@@ -227,22 +227,22 @@ public class UpmsUserController extends BaseController {
         if (null == upmsUser) {
             return new UpmsResult(UpmsResultConstant.FAILED, "帐号名已存在！");
         }else{
-        	String userId = upmsUser.getUserId();
-        	try {
-				JSONArray array = JSONArray.parseArray(orgs);
-				for(Object obj : array){
-					TPositionOrganizationUser tpou = new TPositionOrganizationUser();
-					JSONObject jo = (JSONObject)obj;
-					tpou.setOrganizationId(jo.getString("organizationId"));
-					tpou.setIsPrimary(jo.getBoolean("isPrimary"));
-					tpou.setUserId(userId);
-					tpou.setUpdateTime(new Date());
-					tPositionOrganizationUserService.insert(tpou);
-				}
-			} catch (Exception e) {
-				_log.error("新增用户组织失败!");
-				e.printStackTrace();
-			}
+            String userId = upmsUser.getUserId();
+            try {
+                JSONArray array = JSONArray.parseArray(orgs);
+                for(Object obj : array){
+                    TPositionOrganizationUser tpou = new TPositionOrganizationUser();
+                    JSONObject jo = (JSONObject)obj;
+                    tpou.setOrganizationId(jo.getString("organizationId"));
+                    tpou.setIsPrimary(jo.getBoolean("isPrimary"));
+                    tpou.setUserId(userId);
+                    tpou.setUpdateTime(new Date());
+                    tPositionOrganizationUserService.insert(tpou);
+                }
+            } catch (Exception e) {
+                _log.error("新增用户组织失败!");
+                e.printStackTrace();
+            }
         }
         _log.info("新增用户，主键：userId={}", upmsUser.getUserId());
         return new UpmsResult(UpmsResultConstant.SUCCESS, 1);
@@ -254,6 +254,14 @@ public class UpmsUserController extends BaseController {
     @ResponseBody
     public Object delete(@PathVariable("ids") String ids) {
         int count = upmsUserService.deleteByPrimaryKeys(ids);
+        if(count>0){
+            String[] idArray = ids.split(",");
+            for(String id : idArray){
+                TPositionOrganizationUserExample eg = new TPositionOrganizationUserExample();
+                eg.createCriteria().andUserIdEqualTo(id);
+                tPositionOrganizationUserService.deleteByExample(eg);
+            }
+        }
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
 
@@ -263,6 +271,26 @@ public class UpmsUserController extends BaseController {
     public String update(@PathVariable("id") String id, ModelMap modelMap) {
         UpmsUser user = upmsUserService.selectByPrimaryKeyString(id);
         modelMap.put("user", user);
+
+        List<UpmsOrganization> upmsOrganizations = upmsOrganizationService.selectByExample(new UpmsOrganizationExample());
+        modelMap.put("upmsOrganizations", upmsOrganizations);
+
+        TPositionOrganizationUserExample eg = new TPositionOrganizationUserExample();
+        eg.createCriteria().andUserIdEqualTo(id);
+        JSONArray ja = new JSONArray();
+        List<TPositionOrganizationUser> list = tPositionOrganizationUserService.selectByExample(eg);
+        if(list.size()>0){
+            for(TPositionOrganizationUser o : list){
+                JSONObject jo = new JSONObject();
+                jo.put("id", o.getId());
+                jo.put("organizationId", o.getOrganizationId());
+                jo.put("isPrimary",o.getIsPrimary());
+                ja.add(jo);
+            }
+            modelMap.put("orglist", ja.toJSONString());
+        }else{
+            modelMap.put("orglist", "[]");
+        }
         return "/manage/user/update.jsp";
     }
 
@@ -270,7 +298,7 @@ public class UpmsUserController extends BaseController {
     @RequiresPermissions("upms:user:update")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Object update(@PathVariable("id") String id, UpmsUser upmsUser) {
+    public Object update(@PathVariable("id") String id, UpmsUser upmsUser,@RequestParam String orgs) {
         ComplexResult result = FluentValidator.checkAll()
                 .on(upmsUser.getUsername(), new LengthValidator(1, 20, "帐号"))
                 .on(upmsUser.getRealname(), new NotNullValidator("姓名"))
@@ -283,6 +311,30 @@ public class UpmsUserController extends BaseController {
         upmsUser.setPassword(null);
         upmsUser.setUserId(id);
         int count = upmsUserService.updateByPrimaryKeySelective(upmsUser);
+        if(count>0){
+            //Update TPositionOrganizationUser after user is updated
+            try {
+                //1.remove by userId
+                TPositionOrganizationUserExample eg = new TPositionOrganizationUserExample();
+                eg.createCriteria().andUserIdEqualTo(id);
+                tPositionOrganizationUserService.deleteByExample(eg);
+                //2.Insert new records
+                JSONArray array = JSONArray.parseArray(orgs);
+                for(Object obj : array){
+                    TPositionOrganizationUser tpou = new TPositionOrganizationUser();
+                    JSONObject jo = (JSONObject)obj;
+                    tpou.setId(jo.getInteger("id"));
+                    tpou.setOrganizationId(jo.getString("organizationId"));
+                    tpou.setIsPrimary(jo.getBoolean("isPrimary"));
+                    tpou.setUserId(id);
+                    tpou.setUpdateTime(new Date());
+                    tPositionOrganizationUserService.insert(tpou);
+                }
+            } catch (Exception e) {
+                _log.error("新增用户组织失败!");
+                e.printStackTrace();
+            }
+        }
         return new UpmsResult(UpmsResultConstant.SUCCESS, count);
     }
 
