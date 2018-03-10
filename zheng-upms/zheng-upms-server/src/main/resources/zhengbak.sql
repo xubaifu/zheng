@@ -1598,6 +1598,7 @@ INSERT INTO `upms_permission` VALUES ('102', '1', '96', '表格编辑', '2', 'de
 INSERT INTO `upms_permission` VALUES ('103', '1', '96', 'ueditor', '2', 'demo', '/demo/ueditor', 'zmdi zmdi-widgets', '1', '1517277851222', '1517277851222');
 INSERT INTO `upms_permission` VALUES ('104', '1', '0', '薪酬管理', '1', '', '', 'zmdi zmdi-widgets', '1', '1517381280062', '1517381280062');
 INSERT INTO `upms_permission` VALUES ('105', '1', '104', '薪酬标准管理', '2', 'upms:salary:read', '/manage/salary/salaryStandard', 'zmdi zmdi-widgets', '1', '1517381328597', '1517381328597');
+INSERT INTO `upms_permission` (`system_id`, `pid`, `name`, `type`, `permission_value`, `uri`, `icon`, `status`, `ctime`, `orders`) VALUES ( 1, 6, '新增子集', 3, 'upms:user:createSubset', '/manage/user/createSubset', 'zmdi zmdi-plus', 1, 1519918160185, 1519918160185);
 
 -- ----------------------------
 -- Table structure for upms_position
@@ -1982,3 +1983,12 @@ INSERT INTO `upms_user_role` VALUES ('6', '2', '1');
 INSERT INTO `upms_user_role` VALUES ('7', '2', '2');
 INSERT INTO `upms_user_role` VALUES ('9', '84cc6ec5-6bf3-4993-82c2-842289ef21ec', '2');
 INSERT INTO `upms_user_role` VALUES ('10', 'ac5ae4c0-d782-4645-8e9f-dd32672a5ddb', '1');
+
+DROP TABLE IF EXISTS `t_user_uuid`;
+CREATE TABLE `t_user_uuid` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sub_id` varchar(64) DEFAULT NULL,
+  `user_id` varchar(64) DEFAULT NULL,
+  `en_table_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='表（子集）表明记录';

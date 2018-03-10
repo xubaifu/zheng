@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.zheng.upms.dao.model.SysTemplateTable;
 import com.zheng.upms.dao.model.TDeptUuid;
 import com.zheng.upms.dao.model.TPositionUuid;
+import com.zheng.upms.dao.model.TUserUuid;
 
 public interface TableInfoAPIMapper {
 	/**
@@ -38,8 +39,16 @@ public interface TableInfoAPIMapper {
 	int getDataInfoCountNolike(@Param("tableName") String tableName ,@Param("list") List<String> list,@Param("search") String search);
 	int insertTDeptUuid(TDeptUuid tDeptUuid);
 	int insertTPositionUuid(TPositionUuid tPositionUuid);
+	int insertTUserUuid(TUserUuid tUserUuid);
 	int insertSysTemplateTable(SysTemplateTable sysTemplateTable/*, String tableName*/);
 	void createTable(@Param("tableName") String tableName);
 	int deleteBySubId(@Param("tableName") String tableName, @Param("subId") String subId);
 	int updateSysTemplateTable(SysTemplateTable sysTemplateTable);
+	/**
+	 * Get User Subset data
+	 * @param params
+	 * @return
+	 */
+	List<SysTemplateTable> getDataInfoPageUser(Map<String, Object> params);
+	int getDataInfoPageUserCount(Map<String, Object> params);
 }

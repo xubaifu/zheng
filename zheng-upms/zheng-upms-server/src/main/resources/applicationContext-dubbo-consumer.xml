@@ -63,5 +63,7 @@
     <!-- 字典管理 -->
     <dubbo:reference id="upmsDictService" interface="com.zheng.upms.rpc.api.UpmsDictService" mock="true"/>
 
-
+	<!-- 用户子集 -->
+    <dubbo:reference id="tUserUuidService" interface="com.zheng.upms.rpc.api.TUserUuidService" mock="true"/>
+    
 </beans>
