@@ -20,6 +20,7 @@ import com.zheng.upms.dao.mapper.SysTableinfoMapper;
 import com.zheng.upms.dao.mapper.SysTemplateTableMapper;
 import com.zheng.upms.dao.mapper.TDeptUuidMapper;
 import com.zheng.upms.dao.mapper.TPositionUuidMapper;
+import com.zheng.upms.dao.mapper.TUserUuidMapper;
 import com.zheng.upms.dao.model.SysColumnInfo;
 import com.zheng.upms.dao.model.SysTableinfo;
 import com.zheng.upms.dao.model.SysTemplateTable;
@@ -28,6 +29,8 @@ import com.zheng.upms.dao.model.TDeptUuid;
 import com.zheng.upms.dao.model.TDeptUuidExample;
 import com.zheng.upms.dao.model.TPositionUuid;
 import com.zheng.upms.dao.model.TPositionUuidExample;
+import com.zheng.upms.dao.model.TUserUuid;
+import com.zheng.upms.dao.model.TUserUuidExample;
 import com.zheng.upms.rpc.api.SysTemplateTableService;
 import com.zheng.upms.rpc.mapper.TableInfoAPIMapper;
 
@@ -56,6 +59,9 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
     
     @Autowired
     private TPositionUuidMapper tPositionUuidMapper;
+    
+    @Autowired
+    private TUserUuidMapper tUserUuidMapper;
 
 	@Override
 	public List<SysTemplateTable> getDataInfo(String tableName, List<String> list, String search) {
@@ -72,7 +78,7 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 			result = tableInfoAPIMapper.getDataInfoPagePosition(params);
 		}
 		if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(params.get("type"))){
-			//result = tableInfoAPIMapper.getDataInfoPage(params);
+			result = tableInfoAPIMapper.getDataInfoPageUser(params);
 		}
 		return result;
 	}
@@ -87,7 +93,7 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 			count = tableInfoAPIMapper.getDataInfoPagePositionCount(params);
 		}
 		if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(params.get("type"))){
-			//result = tableInfoAPIMapper.getDataInfoPage(params);
+			count = tableInfoAPIMapper.getDataInfoPageUserCount(params);
 		}
 		return count;
 	}
@@ -117,7 +123,11 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
         	count = tableInfoAPIMapper.insertTPositionUuid(tPositionUuid);
     	}
 		if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(type)){
-			
+			TUserUuid u = new TUserUuid();
+			u.setUserId(id);
+			u.setSubId(subId);
+			u.setEnTableName(tableName);
+			count = tUserUuidMapper.insert(u);
 		}
     	
     	
@@ -190,13 +200,11 @@ public class SysTemplateTableServiceImpl extends BaseServiceImpl<SysTemplateTabl
 		    	count += Integer.parseInt(String.valueOf(result));
 	    	}
 			if(ToolUtil.PERSONNEL_SUBSET_TYPE.equals(type)){
-				
+				TUserUuidExample e = new TUserUuidExample();
+				e.createCriteria().andSubIdEqualTo(idStr);
+				count += tUserUuidMapper.deleteByExample(e);
 			}
 			
-			
-			
-	    	
-	    	
 		}
 		
 		

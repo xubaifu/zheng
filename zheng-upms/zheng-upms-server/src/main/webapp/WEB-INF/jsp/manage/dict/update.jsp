@@ -33,6 +33,17 @@
 				</select>
 			</span>
 		</div>
+		
+		<div class="form-group">
+			<label id="pidLable" for="pid">所属字典</label>
+			<input id="labelName" type="text" class="form-control" name="labelName" maxlength="64" onclick="loadDict()" value="${upmsDictPar.label }">
+			<input id="parentId" type="text" class="form-control" name="parentId" maxlength="64" style="display: none;" value="${dict.parentId }">
+		</div>
+		<div id="dicttree" style="border:1px solid #d2d1d1;display: none;">
+			<ul id="treeDict" class="ztree"></ul>
+		</div>
+		
+		
 		<div class="form-group text-right dialog-buttons">
 			<a class="waves-effect waves-button" href="javascript:;" onclick="updateSubmit();">保存</a>
 			<a class="waves-effect waves-button" href="javascript:;" onclick="updateDialog.close();">取消</a>
@@ -58,6 +69,10 @@ function updateSubmit() {
 			}
         	if ($('#label').val() == '') {
 				$('#label').focus();
+				return false;
+			}
+        	if ($('#parentId').val() == '') {
+				$('#labelName').focus();
 				return false;
 			}
         },
@@ -97,6 +112,7 @@ function updateSubmit() {
 			} else {
 				updateDialog.close();
 				$table.bootstrapTable('refresh');
+				getDictist();
 			}
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

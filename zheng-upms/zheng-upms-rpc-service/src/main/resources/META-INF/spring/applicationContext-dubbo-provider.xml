@@ -98,4 +98,14 @@
     <bean id="upmsDictService" class="com.zheng.upms.rpc.service.impl.UpmsDictServiceImpl"/>
     <dubbo:service interface="com.zheng.upms.rpc.api.UpmsDictService" ref="upmsDictService" timeout="10000"/>
     
+    <bean id="upmsDictTypeService" class="com.zheng.upms.rpc.service.impl.UpmsDictTypeServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.UpmsDictTypeService" ref="upmsDictTypeService" timeout="10000"/>
+    
+    <bean id="upmsDictDataService" class="com.zheng.upms.rpc.service.impl.UpmsDictDataServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.UpmsDictDataService" ref="upmsDictDataService" timeout="10000"/>
+    
+    <!-- 用户子集 -->
+    <bean id="tUserUuidService" class="com.zheng.upms.rpc.service.impl.TUserUuidServiceImpl"/>
+    <dubbo:service interface="com.zheng.upms.rpc.api.TUserUuidService" ref="tUserUuidService" timeout="10000"/>
+    
 </beans>

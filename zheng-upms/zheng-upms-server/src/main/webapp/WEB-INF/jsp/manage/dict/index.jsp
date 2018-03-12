@@ -16,18 +16,118 @@
 	<jsp:include page="/resources/inc/head.jsp" flush="true"/>
 </head>
 <body>
-<div id="main">
-	<div id="toolbar">
-		<shiro:hasPermission name="upms:dict:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:dict:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:dict:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除</a></shiro:hasPermission>
+<div style="height: 100%">
+	<div id="treepage" class="unfolded">
+		<div>
+			<ul id="tree" class="ztree"></ul>
+		</div>
 	</div>
-	<table id="table"></table>
+	<div id="treepagebtn" class="unfolded-btn">
+		<div id="openClose" class="close" style="height: 100%;" onclick="shrinkage()">&nbsp;</div>
+	</div>
+	<div id="main" class="treepage-main">
+		<div id="toolbar">
+			<shiro:hasPermission name="upms:dict:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增</a></shiro:hasPermission>
+			<%-- <shiro:hasPermission name="upms:dict:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增字典数据</a></shiro:hasPermission> --%>
+			<shiro:hasPermission name="upms:dict:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑</a></shiro:hasPermission>
+			<shiro:hasPermission name="upms:dict:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除</a></shiro:hasPermission>
+		</div>
+		<table id="table"></table>
+	</div>
 </div>
 <jsp:include page="/resources/inc/footer.jsp" flush="true"/>
 <script>
+
+$(document).ready(function() {
+	loadDictTable();
+	getDictist();
+});
+var setting = {
+		data : {
+			key : {
+				title : "title"
+			},
+			simpleData : {
+				enable : true
+			}
+		},
+		callback : {
+			//beforeClick : beforeClick,
+			onClick : onClick
+		}
+	};
+	var zNodes =[];
+	var log, className = "dark";
+	function beforeClick(treeId, treeNode, clickFlag) {
+		/* console.log("treeId=" + treeId + ";treeNode=" + treeNode
+				+ ";clickFlag=" + clickFlag);
+		console.log(treeNode.id+";"+treeNode.pId); */
+	}
+	function onClick(event, treeId, treeNode, clickFlag) {
+		$('#table').bootstrapTable(
+	            "refresh",  
+	            {  
+	                url:'${basePath}/manage/dict/list?dictId='+treeNode.id
+	            }  
+	    );
+	}
+	
+	//获取字典类型列表
+	function getDictist(){
+		 $.ajax({
+		        type: 'get',
+		        url: '${basePath}/manage/dict/listAll',
+		        data: {},
+		        success: function(data) {
+		        	//console.log(data)
+		        	zNodes = data.rows;
+		        	zNodes = data.rows;
+					for(var i = 0; i < data.rows.length; i++){
+						zNodes[i].id = data.rows[i].id;
+						zNodes[i].pId = data.rows[i].parentId;
+						zNodes[i].name = data.rows[i].label;
+						zNodes[i].title = data.rows[i].label;
+					}
+					$.fn.zTree.init($("#tree"), setting, zNodes);
+		        }
+		    });
+	}
+
+	//新增编辑页面的ztree设置（setting）
+	var settingForCreate = {
+			data : {
+				key : {
+					title : "title"
+				},
+				simpleData : {
+					enable : true
+				}
+			},
+			callback : {
+				//beforeClick : beforeClick,
+				onClick : onClickForCheck
+			}
+		};
+	//加载字典列表
+	function loadDict(){
+		$("#dicttree").show();
+		$.fn.zTree.init($("#treeDict"), settingForCreate, zNodes);
+		//设置节点选中
+		var treeObj = $.fn.zTree.getZTreeObj("treeDict");
+		var node = treeObj.getNodeByParam("id", $('#pid').val());
+		treeObj.selectNode(node);
+		settingForCreate.callback.onClick = onClickForCheck;
+		
+	}
+	//选中节点，将节点的信息添加到相应的input框
+	function onClickForCheck(event, treeId, treeNode, clickFlag){
+		$("#parentId").val(treeNode.id);
+		$("#labelName").val(treeNode.name);
+		$("#pidLable").addClass('active');
+	}
+
 var $table = $('#table');
-$(function() {
+function loadDictTable(){
 	// bootstrap table初始化
 	$table.bootstrapTable({
 		url: '${basePath}/manage/dict/list',
@@ -61,7 +161,7 @@ $(function() {
 			{field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
 		]
 	});
-});
+}
 // 格式化操作按钮
 function actionFormatter(value, row, index) {
     return [
@@ -99,7 +199,7 @@ var createDialog;
 function createAction() {
 	createDialog = $.dialog({
 		animationSpeed: 300,
-		title: '新增权限',
+		title: '新增字典',
 		content: 'url:${basePath}/manage/dict/create',
 		onContentReady: function () {
 			initMaterialInput();
@@ -133,7 +233,7 @@ function updateAction(id) {
 		}
 		updateDialog = $.dialog({
 			animationSpeed: 300,
-			title: '编辑权限',
+			title: '编辑字典',
 			content: url,
 			onContentReady: function () {
 				initMaterialInput();

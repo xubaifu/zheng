@@ -164,6 +164,37 @@
 		) t1 where 1=1  and t1.value like '%${search}%'
   </select>
   
+  <select id="getDataInfoPageUser" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select * from (
+			select sub_id AS subId ,group_concat(t.value) as value
+			,group_concat(t.property) as property from ${tableName} t where
+			t.sub_id in(
+				select  sub_id from t_user_uuid where  t_user_uuid.en_table_name = #{tableName, jdbcType=VARCHAR} and t_user_uuid.user_id = #{userId, jdbcType=VARCHAR}
+					<if test="subId != null and subId !=''">
+						and sub_id = #{subId, jdbcType=VARCHAR}
+					</if>
+				)
+				and available = #{available, jdbcType=VARCHAR}
+			GROUP BY t.sub_id 
+		) t1 where 1=1  and t1.value like '%${search}%'
+		<!-- <if test="offset != null and offset !=''"> -->
+			LIMIT #{offset, jdbcType=INTEGER}, #{limit, jdbcType=INTEGER}
+		<!-- </if> -->
+  </select>
+  <select id="getDataInfoPageUserCount" resultType="int" parameterType="java.util.Map">
+  	select count(1) from (
+			select sub_id AS subId ,group_concat(t.value) as value
+			,group_concat(t.property) as property from ${tableName} t where
+			t.sub_id in(
+				select  sub_id from t_user_uuid where  t_user_uuid.en_table_name = #{tableName, jdbcType=VARCHAR} and t_user_uuid.user_id = #{userId, jdbcType=VARCHAR}
+					<if test="subId != null and subId !=''">
+						and sub_id = #{subId, jdbcType=VARCHAR}
+					</if>
+				)
+				and available = #{available, jdbcType=VARCHAR}
+			GROUP BY t.sub_id 
+		) t1 where 1=1  and t1.value like '%${search}%'
+  </select>
   
   <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
 </mapper>

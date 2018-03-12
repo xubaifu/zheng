@@ -25,15 +25,15 @@
 			</span>
 		</div> --%>
 		<div class="form-group">
-			<label for="type">类型</label>
+			<label for="type">字典类型</label>
 			<input id="type" type="text" class="form-control" name="type" maxlength="100">
 		</div>
-		<div class="form-group type2 type3">
+		<!-- <div class="form-group type2 type3">
 			<label for="value">键值</label>
 			<input id="value" type="text" class="form-control" name="value" maxlength="100">
-		</div>
+		</div> -->
 		<div class="form-group type2 type3">
-			<label for="label">标签</label>
+			<label for="label">字典名称</label>
 			<input id="label" type="text" class="form-control" name="label" maxlength="100">
 		</div>
 		<div class="form-group type1 type3">
@@ -49,14 +49,14 @@
 				</select>
 			</span>
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label id="pidLable" for="pid">所属字典</label>
 			<input id="labelName" type="text" class="form-control" name="labelName" maxlength="64" onclick="loadDict()">
 			<input id="parentId" type="text" class="form-control" name="parentId" maxlength="64" style="display: none;">
 		</div>
 		<div id="dicttree" style="border:1px solid #d2d1d1;display: none;">
 			<ul id="treeDict" class="ztree"></ul>
-		</div>
+		</div> -->
 		<div class="form-group text-right dialog-buttons">
 			<a class="waves-effect waves-button" href="javascript:;" onclick="createSubmit();">保存</a>
 			<a class="waves-effect waves-button" href="javascript:;" onclick="createDialog.close();">取消</a>

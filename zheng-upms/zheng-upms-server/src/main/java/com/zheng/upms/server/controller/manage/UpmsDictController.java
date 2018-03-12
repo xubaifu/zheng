@@ -25,9 +25,16 @@ import com.zheng.common.util.RedisUtil;
 import com.zheng.upms.common.constant.ToolUtil;
 import com.zheng.upms.common.constant.UpmsResult;
 import com.zheng.upms.common.constant.UpmsResultConstant;
+import com.zheng.upms.dao.entity.SubsetTreeEntity;
 import com.zheng.upms.dao.model.UpmsDict;
+import com.zheng.upms.dao.model.UpmsDictData;
+import com.zheng.upms.dao.model.UpmsDictDataExample;
 import com.zheng.upms.dao.model.UpmsDictExample;
+import com.zheng.upms.dao.model.UpmsDictType;
+import com.zheng.upms.dao.model.UpmsDictTypeExample;
+import com.zheng.upms.rpc.api.UpmsDictDataService;
 import com.zheng.upms.rpc.api.UpmsDictService;
+import com.zheng.upms.rpc.api.UpmsDictTypeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,12 +53,32 @@ public class UpmsDictController extends BaseController {
 	
 	@Autowired
     private UpmsDictService upmsDictService;
+	
+	@Autowired
+    private UpmsDictTypeService upmsDictTypeService;
+	
+	@Autowired
+    private UpmsDictDataService upmsDictDataService;
 
     @ApiOperation(value = "日志首页")
     @RequiresPermissions("upms:dict:read")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
         return "/manage/dict/index.jsp";
+    }
+    
+    @ApiOperation(value = "所有字典列表")
+    @RequiresPermissions("upms:dict:read")
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    @ResponseBody
+    public Object listAll() {
+    	UpmsDictExample upmsDictExample = new UpmsDictExample();
+        List<UpmsDict> rows = upmsDictService.selectByExample(upmsDictExample);
+        //long total = upmsOrganizationService.countByExample(upmsOrganizationExample);
+        Map<String, Object> result = new HashMap<>();
+        result.put("rows", rows);
+        //result.put("total", total);
+        return result;
     }
     
     @ApiOperation(value = "字典列表")
@@ -65,7 +92,8 @@ public class UpmsDictController extends BaseController {
             @RequestParam(required = false, defaultValue = "0", value = "type") int type,
             @RequestParam(required = false, defaultValue = "0", value = "id") int id,
             @RequestParam(required = false, value = "sort") String sort,
-            @RequestParam(required = false, value = "order") String order) {
+            @RequestParam(required = false, value = "order") String order,
+            @RequestParam(required = false, value = "dictId") String dictId) {
         UpmsDictExample upmsdictExample = new UpmsDictExample();
         //UpmsDictExample.Criteria criteria = upmsdictExample.createCriteria();
         if (StringUtils.isNotBlank(search)) {
@@ -78,6 +106,11 @@ public class UpmsDictController extends BaseController {
         }
         if (!StringUtils.isBlank(sort) && !StringUtils.isBlank(order)) {
             upmsdictExample.setOrderByClause(sort + " " + order);
+        }
+        if (!StringUtils.isBlank(dictId) && !StringUtils.isBlank(dictId)) {
+            upmsdictExample.or().andIdEqualTo(dictId);
+            upmsdictExample.or().andParentIdEqualTo(dictId);
+            
         }
         List<UpmsDict> rows = upmsDictService.selectByExampleForOffsetPage(upmsdictExample, offset, limit);
         long total = upmsDictService.countByExample(upmsdictExample);
@@ -144,7 +177,12 @@ public class UpmsDictController extends BaseController {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable("id") String id, ModelMap modelMap) {
     	UpmsDict upmsDict = upmsDictService.selectByPrimaryKeyString(id);
+    	UpmsDict upmsDictPar = new UpmsDict();
+    	if(upmsDict.getParentId() != null && upmsDict.getParentId().length() != 0){
+    		upmsDictPar = upmsDictService.selectByPrimaryKeyString(upmsDict.getParentId());
+        }
         modelMap.put("dict", upmsDict);
+        modelMap.put("upmsDictPar", upmsDictPar);
         return "/manage/dict/update.jsp";
     }
 
@@ -190,6 +228,62 @@ public class UpmsDictController extends BaseController {
     	//object = JSONObject.parseObject(jedis.get(type));
     	Map<String,Object> mapTypes = JSON.parseObject(jedis.get(ToolUtil.ZHENG_UPMS_DICT + "_" + type));  
     	return mapTypes;
+    }
+    
+    
+    @ApiOperation(value = "所有字典类型列表")
+    @RequiresPermissions("upms:dict:read")
+    @RequestMapping(value = "/listDictTypeAll", method = RequestMethod.GET)
+    @ResponseBody
+    public Object listDictTypeAll() {
+    	UpmsDictTypeExample upmsDictTypeExample = new UpmsDictTypeExample();
+        List<UpmsDictType> rowsTtpe = upmsDictTypeService.selectByExample(upmsDictTypeExample);
+        
+        UpmsDictDataExample upmsDictDataExample = new UpmsDictDataExample();
+        List<UpmsDictData> rowsData = upmsDictDataService.selectByExample(upmsDictDataExample);
+        
+        int lenType = rowsTtpe.size(), lenData = rowsData.size();
+        SubsetTreeEntity[] arr = new SubsetTreeEntity[lenData + 1];
+        for(int i = 0; i < lenData; i++){
+        	SubsetTreeEntity subsetTreeEntity = new SubsetTreeEntity();
+        	subsetTreeEntity.setId(rowsData.get(i).getDictCode());
+        	subsetTreeEntity.setPid(rowsData.get(i).getParentCode());
+        	subsetTreeEntity.setName(rowsData.get(i).getDictLabel());
+        	subsetTreeEntity.setBak(rowsData.get(i).getDictLabel());
+        	arr[i] = subsetTreeEntity; 
+        }
+        SubsetTreeEntity subsetTreeEntity = new SubsetTreeEntity();
+    	subsetTreeEntity.setId("0");
+    	subsetTreeEntity.setPid("-1");
+    	subsetTreeEntity.setName("字典管理");
+    	subsetTreeEntity.setBak("字典管理");
+    	arr[lenData] = subsetTreeEntity;
+        /*SubsetTreeEntity[] arr = new SubsetTreeEntity[lenType + lenData + 1];
+        for(int i = 0; i < lenType; i++){
+        	SubsetTreeEntity subsetTreeEntity = new SubsetTreeEntity();
+        	subsetTreeEntity.setId(rowsTtpe.get(i).getDictType());
+        	subsetTreeEntity.setPid("0");
+        	subsetTreeEntity.setName(rowsTtpe.get(i).getDictName());
+        	subsetTreeEntity.setBak(rowsTtpe.get(i).getDictName());
+        	arr[i] = subsetTreeEntity; 
+        }
+        for(int i = lenType; i < lenType + lenData; i++){
+        	SubsetTreeEntity subsetTreeEntity = new SubsetTreeEntity();
+        	subsetTreeEntity.setId(rowsData.get(i-lenType).getDictCode());
+        	subsetTreeEntity.setPid(rowsData.get(i-lenType).getDictType());
+        	subsetTreeEntity.setName(rowsData.get(i-lenType).getDictLabel());
+        	subsetTreeEntity.setBak(rowsData.get(i-lenType).getDictLabel());
+        	arr[i] = subsetTreeEntity; 
+        }
+        SubsetTreeEntity subsetTreeEntity = new SubsetTreeEntity();
+    	subsetTreeEntity.setId("0");
+    	subsetTreeEntity.setPid("-1");
+    	subsetTreeEntity.setName("字典管理");
+    	subsetTreeEntity.setBak("字典管理");
+    	arr[lenType + lenData] = subsetTreeEntity; */
+        Map<String, Object> result = new HashMap<>();
+        result.put("rows", arr);
+        return result;
     }
     
 }
