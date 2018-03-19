@@ -24,6 +24,7 @@
 			<label id="pidLable" for="pid">上级组织</label>
 			<input id="pName" type="text" class="form-control" name="pName" maxlength="64" value="${organizationPar.name}" onclick="loadOrganization()">
 			<input id="pid" type="text" class="form-control" name="pid" maxlength="64" value="${organization.pid}" style="display: none;">
+			<input id="pids" type="text" class="form-control" name="pids" maxlength="1000" value="${organization.pids}" style="display: none;">
 		</div>
 		<div id="orgtree" style="border:1px solid #d2d1d1;display: none;">
 			<ul id="treeDemo" class="ztree"></ul>

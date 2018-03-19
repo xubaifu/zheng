@@ -170,9 +170,13 @@ public class UpmsOrganizationController extends BaseController {
         long time = System.currentTimeMillis();
         String organizationId = UUID.randomUUID().toString();
         String deptId = UUID.randomUUID().toString();
+        String pidS = upmsOrganization.getPids() + "," +upmsOrganization.getPid();
         upmsOrganization.setOrganizationId(organizationId);
         upmsOrganization.setCtime(time);
         upmsOrganization.setDeptId(deptId);
+        if(!(upmsOrganization.getPid().equals(upmsOrganization.getPids().substring(upmsOrganization.getPids().lastIndexOf(",")+1)))){
+        	upmsOrganization.setPids(pidS);
+        }
         //TDeptUuid tDeptUuid = new TDeptUuid();
         //向部门信息主键存储表中存入业务主键信息
         /*tDeptUuid.setId(UUID.randomUUID().toString());
@@ -232,6 +236,10 @@ public class UpmsOrganizationController extends BaseController {
         upmsOrganizationHis.setPid(organization.getPid());
         upmsOrganizationHisService.insert(upmsOrganizationHis);
         //修改
+        String pidS = upmsOrganization.getPids() + "," +upmsOrganization.getPid();
+        if(!(upmsOrganization.getPid().equals(upmsOrganization.getPids().substring(upmsOrganization.getPids().lastIndexOf(",")+1)))){
+        	upmsOrganization.setPids(pidS);
+        }
         upmsOrganization.setCtime(time);
         upmsOrganization.setOrganizationId(id);
         int count = upmsOrganizationService.updateByPrimaryKeySelective(upmsOrganization);

@@ -317,6 +317,76 @@ public class UpmsOrganizationExample implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andPidsIsNull() {
+            addCriterion("pids is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsIsNotNull() {
+            addCriterion("pids is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsEqualTo(String value) {
+            addCriterion("pids =", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsNotEqualTo(String value) {
+            addCriterion("pids <>", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsGreaterThan(String value) {
+            addCriterion("pids >", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsGreaterThanOrEqualTo(String value) {
+            addCriterion("pids >=", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsLessThan(String value) {
+            addCriterion("pids <", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsLessThanOrEqualTo(String value) {
+            addCriterion("pids <=", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsLike(String value) {
+            addCriterion("pids like", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsNotLike(String value) {
+            addCriterion("pids not like", value, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsIn(List<String> values) {
+            addCriterion("pids in", values, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsNotIn(List<String> values) {
+            addCriterion("pids not in", values, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsBetween(String value1, String value2) {
+            addCriterion("pids between", value1, value2, "pids");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidsNotBetween(String value1, String value2) {
+            addCriterion("pids not between", value1, value2, "pids");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;

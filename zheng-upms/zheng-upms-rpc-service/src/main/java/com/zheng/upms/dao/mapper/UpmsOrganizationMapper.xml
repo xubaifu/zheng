@@ -5,6 +5,7 @@
     <id column="organization_id" jdbcType="VARCHAR" property="organizationId" />
     <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
     <result column="pid" jdbcType="VARCHAR" property="pid" />
+    <result column="pids" jdbcType="VARCHAR" property="pids" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="ctime" jdbcType="BIGINT" property="ctime" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    organization_id, dept_id, pid, name, description, ctime, organization_code
+    organization_id, dept_id, pid, pids, name, description, ctime, organization_code
   </sql>
   <select id="selectByExample" parameterType="com.zheng.upms.dao.model.UpmsOrganizationExample" resultMap="BaseResultMap">
     select
@@ -103,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.zheng.upms.dao.model.UpmsOrganization">
     insert into upms_organization (organization_id, dept_id, pid, 
-      name, description, ctime, 
-      organization_code)
+      pids, name, description, 
+      ctime, organization_code)
     values (#{organizationId,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ctime,jdbcType=BIGINT}, 
-      #{organizationCode,jdbcType=VARCHAR})
+      #{pids,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=BIGINT}, #{organizationCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zheng.upms.dao.model.UpmsOrganization">
     insert into upms_organization
@@ -120,6 +121,9 @@
       </if>
       <if test="pid != null">
         pid,
+      </if>
+      <if test="pids != null">
+        pids,
       </if>
       <if test="name != null">
         name,
@@ -143,6 +147,9 @@
       </if>
       <if test="pid != null">
         #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pids != null">
+        #{pids,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -176,6 +183,9 @@
       <if test="record.pid != null">
         pid = #{record.pid,jdbcType=VARCHAR},
       </if>
+      <if test="record.pids != null">
+        pids = #{record.pids,jdbcType=VARCHAR},
+      </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -198,6 +208,7 @@
     set organization_id = #{record.organizationId,jdbcType=VARCHAR},
       dept_id = #{record.deptId,jdbcType=VARCHAR},
       pid = #{record.pid,jdbcType=VARCHAR},
+      pids = #{record.pids,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=BIGINT},
@@ -214,6 +225,9 @@
       </if>
       <if test="pid != null">
         pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pids != null">
+        pids = #{pids,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -234,6 +248,7 @@
     update upms_organization
     set dept_id = #{deptId,jdbcType=VARCHAR},
       pid = #{pid,jdbcType=VARCHAR},
+      pids = #{pids,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=BIGINT},

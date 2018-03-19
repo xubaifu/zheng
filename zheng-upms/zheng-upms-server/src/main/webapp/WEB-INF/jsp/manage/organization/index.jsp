@@ -175,6 +175,7 @@
 							zNodes[i].pId = data.rows[i].pid;
 							zNodes[i].name = data.rows[i].name;
 							zNodes[i].title = data.rows[i].name;
+							zNodes[i].pIds = data.rows[i].pids;
 						}
 						$.fn.zTree.init($("#tree"), setting, zNodes);
 						//加载BootstrapTable
@@ -193,7 +194,8 @@
 					}
 					$("#listtable").children().remove();
 					$("#listtable").append('<input style="display:none" id="organizationId" value="'+id+'" />'+
-							'<input style="display:none" id="organizationName" value="'+treeNode.name+'" />'
+							'<input style="display:none" id="organizationName" value="'+treeNode.name+'" />'+
+							'<input style="display:none" id="organizationPids" value="'+treeNode.pids+'" />'
 					);
 			        /* for(var i in data.rows[0]) {//获取对象属性
 			            if (data.rows[0].hasOwnProperty(i) && typeof data.rows[0][i] != "function") {
@@ -272,8 +274,10 @@
 				initMaterialInput();
 				var parentId = $("#organizationId").val();//默认采用已选择的部门
 				var parentName = $("#organizationName").val();
+				var pids = $("#organizationPids").val();
 				if(parentId != null && parentId != "" && parentId != "undefined"){
 					$('#pid').val(parentId);
+					$('#pids').val(pids);
 					$('#pName').val(parentName);
 					$('#pName').focus();
 				}
@@ -452,6 +456,7 @@
 	//选中节点，将节点的信息添加到相应的input框
 	function onClickForCheck(event, treeId, treeNode, clickFlag){
 		$("#pid").val(treeNode.id);
+		$("#pids").val(treeNode.pids);
 		$("#pName").val(treeNode.name);
 		$("#pidLable").addClass('active');
 	}
